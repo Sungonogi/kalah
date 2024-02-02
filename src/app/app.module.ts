@@ -1,12 +1,14 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
-import { MatButtonModule } from '@angular/material/button'; 
+import { MatButtonModule } from '@angular/material/button';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { MainComponent } from './main/main.component';
 import { FooterComponent } from './footer/footer.component';
+import { GameComponent } from "./main/game/game.component";
+import { PitComponent } from "./main/game/pit/pit.component";
 
 
 @NgModule({
@@ -14,7 +16,9 @@ import { FooterComponent } from './footer/footer.component';
     AppComponent,
     HeaderComponent,
     MainComponent,
-    FooterComponent
+    FooterComponent,
+    GameComponent,
+    PitComponent
   ],
   imports: [
     BrowserModule,

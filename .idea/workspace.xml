@@ -6,6 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="7f5c1af8-8ae7-4ae3-a6bd-0371c132f563" name="Changes" comment=":tada: ng new kalah">
       <change beforePath="$PROJECT_DIR$/angular.json" beforeDir="false" afterPath="$PROJECT_DIR$/angular.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -117,6 +119,7 @@
       <workItem from="1725184820555" duration="102000" />
       <workItem from="1725184924842" duration="596000" />
       <workItem from="1725185646821" duration="322000" />
+      <workItem from="1725186958335" duration="350000" />
     </task>
     <task id="LOCAL-00001" summary=":tada: ng new kalah">
       <option name="closed" value="true" />

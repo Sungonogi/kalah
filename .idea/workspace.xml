@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7f5c1af8-8ae7-4ae3-a6bd-0371c132f563" name="Changes" comment=":sparkles: you can do moves now">
+    <list default="true" id="7f5c1af8-8ae7-4ae3-a6bd-0371c132f563" name="Changes" comment=":sparkles: update game logic a little bit">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/pages/game-page/board/board.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/pages/game-page/board/board.component.ts" afterDir="false" />
     </list>
@@ -134,7 +134,7 @@
       <workItem from="1725186958335" duration="6192000" />
       <workItem from="1725197478702" duration="9632000" />
       <workItem from="1725306481801" duration="638000" />
-      <workItem from="1725356220505" duration="605000" />
+      <workItem from="1725356220505" duration="919000" />
     </task>
     <task id="LOCAL-00001" summary=":tada: ng new kalah">
       <option name="closed" value="true" />
@@ -176,7 +176,15 @@
       <option name="project" value="LOCAL" />
       <updated>1725306505101</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary=":sparkles: update game logic a little bit">
+      <option name="closed" value="true" />
+      <created>1725357139211</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1725357139211</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -188,7 +196,8 @@
     <MESSAGE value=":tada: create components and pages" />
     <MESSAGE value=":lipstick: make header and footer look cool" />
     <MESSAGE value=":sparkles: you can do moves now" />
-    <option name="LAST_COMMIT_MESSAGE" value=":sparkles: you can do moves now" />
+    <MESSAGE value=":sparkles: update game logic a little bit" />
+    <option name="LAST_COMMIT_MESSAGE" value=":sparkles: update game logic a little bit" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

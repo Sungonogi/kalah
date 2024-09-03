@@ -5,7 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7f5c1af8-8ae7-4ae3-a6bd-0371c132f563" name="Changes" comment=":tada: structure it into backend and frontend">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -58,13 +57,18 @@
     "npm.Angular CLI Server.executor": "Run",
     "npm.start.executor": "Run",
     "npm.test.executor": "Run",
-    "settings.editor.selected.configurable": "preferences.keymap",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
     "ts.external.directory.path": "/home/ingo/IdeaProjects/kalah/node_modules/typescript/lib",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/frontend" />
       <recent name="$PROJECT_DIR$/src/app/pages/game-page/board" />
     </key>
   </component>
@@ -146,7 +150,8 @@
       <workItem from="1725186958335" duration="6192000" />
       <workItem from="1725197478702" duration="9632000" />
       <workItem from="1725306481801" duration="638000" />
-      <workItem from="1725356220505" duration="1222000" />
+      <workItem from="1725356220505" duration="1540000" />
+      <workItem from="1725357775660" duration="1735000" />
     </task>
     <task id="LOCAL-00001" summary=":tada: ng new kalah">
       <option name="closed" value="true" />
@@ -212,7 +217,15 @@
       <option name="project" value="LOCAL" />
       <updated>1725357345345</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary=":tada: structure it into backend and frontend">
+      <option name="closed" value="true" />
+      <created>1725357522877</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1725357522877</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

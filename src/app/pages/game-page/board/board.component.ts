@@ -24,46 +24,50 @@ export class BoardComponent {
         southTurn: true
     }
 
-    move(position: number, southSide: boolean) {
-        console.log(`Move at position ${position} on ${southSide ? 'south' : 'north'} side`);
+    move(position: number, onSouthSide: boolean) {
+        console.log(`Move at position ${position} on ${onSouthSide ? 'south' : 'north'} side`);
 
         const board = this.boardState;
-        if(board.southTurn !== southSide) {
+        if(board.southTurn !== onSouthSide) {
             console.error('Not your turn');
             return;
         }
 
-        const myPits = southSide ? board.southPits : board.northPits;
-        const hisPits = southSide ? board.northPits : board.southPits;
+        const myPits = onSouthSide ? board.southPits : board.northPits;
+        const hisPits = onSouthSide ? board.northPits : board.southPits;
 
         let currentlyMySide = true;
         let hand = myPits[position];
         myPits[position] = 0;
 
         while(hand > 0){
-            position += 1;
-            if(position === board.size){
+            position = (position + 1) % (board.size + 1);
+
+            if(position < board.size){
+                hand--;
+                if(currentlyMySide){
+                    myPits[position]++;
+                } else {
+                    hisPits[position]++;
+                }
+            } else {
+                // only put in our own store,  otherwise skip
                 if(currentlyMySide){
                     hand--;
-                    if(southSide){
+                    if(currentlyMySide === onSouthSide) {
                         board.southStore++;
                     } else {
                         board.northStore++;
                     }
                 }
-                position = 0;
                 currentlyMySide = !currentlyMySide;
-            }
-
-            hand--;
-            if(currentlyMySide){
-                myPits[position]++;
-            } else {
-                hisPits[position]++;
             }
         }
 
-        board.southTurn = !board.southTurn;
+        // don't swap sides if the last stone lands in our store (in that case currentlyMySide was already set to false)
+        if(currentlyMySide || position !== board.size) {
+            board.southTurn = !board.southTurn;
+        }
     }
 
 }

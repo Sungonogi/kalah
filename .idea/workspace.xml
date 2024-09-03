@@ -4,10 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7f5c1af8-8ae7-4ae3-a6bd-0371c132f563" name="Changes" comment=":tada: adjust project structure">
-      <change afterPath="$PROJECT_DIR$/kalah.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+    <list default="true" id="7f5c1af8-8ae7-4ae3-a6bd-0371c132f563" name="Changes" comment=":art: adjust project structure">
+      <change afterPath="$PROJECT_DIR$/backend/src/main/resources/application.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/example/kalah/HelloController.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/example/kalah/HelloController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/example/kalah/KalahApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/example/kalah/KalahApplication.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -81,8 +82,8 @@
 }</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/frontend" />
+      <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/src/app/pages/game-page/board" />
     </key>
   </component>
@@ -125,7 +126,7 @@
       </method>
     </configuration>
     <configuration name="Angular CLI Server" type="js.build_tools.npm">
-      <package-json value="$PROJECT_DIR$/package.json" />
+      <package-json value="$PROJECT_DIR$/frontend/package.json" />
       <command value="run" />
       <scripts>
         <script value="start" />
@@ -184,10 +185,18 @@
       <envs />
       <method v="2" />
     </configuration>
+    <list>
+      <item itemvalue="JavaScript Debug.Angular Application" />
+      <item itemvalue="Jest.AppComponent" />
+      <item itemvalue="npm.Angular CLI Server" />
+      <item itemvalue="npm.start" />
+      <item itemvalue="npm.test" />
+      <item itemvalue="Spring Boot.KalahApplication" />
+    </list>
     <recent_temporary>
       <list>
-        <item itemvalue="npm.test" />
         <item itemvalue="npm.start" />
+        <item itemvalue="npm.test" />
         <item itemvalue="Jest.AppComponent" />
       </list>
     </recent_temporary>
@@ -226,7 +235,7 @@
       <workItem from="1725367618710" duration="177000" />
       <workItem from="1725367809954" duration="106000" />
       <workItem from="1725367931543" duration="105000" />
-      <workItem from="1725368052086" duration="307000" />
+      <workItem from="1725368052086" duration="3417000" />
     </task>
     <task id="LOCAL-00001" summary=":tada: ng new kalah">
       <option name="closed" value="true" />
@@ -324,7 +333,15 @@
       <option name="project" value="LOCAL" />
       <updated>1725368171082</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary=":art: adjust project structure">
+      <option name="closed" value="true" />
+      <created>1725368386112</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1725368386112</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -340,7 +357,8 @@
     <MESSAGE value=":tada: structure it into backend and frontend" />
     <MESSAGE value=":tada: create java spring backend" />
     <MESSAGE value=":tada: adjust project structure" />
-    <option name="LAST_COMMIT_MESSAGE" value=":tada: adjust project structure" />
+    <MESSAGE value=":art: adjust project structure" />
+    <option name="LAST_COMMIT_MESSAGE" value=":art: adjust project structure" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

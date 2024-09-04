@@ -18,7 +18,7 @@ record GreetingResponse(String message) {
 @Controller
 public class WebSocketController {
 
-    @MessageMapping("/chat")
+    @MessageMapping("/request")
     @SendTo("/answer")
     GreetingResponse greet(GreetingRequest request) {
         return new GreetingResponse("Hello, " + request.name());
@@ -33,11 +33,10 @@ class WebSocketConfiguration implements WebSocketMessageBrokerConfigurer {
     @Override
     public void configureMessageBroker(MessageBrokerRegistry registry) {
         registry.enableSimpleBroker("/answer");
-        registry.setApplicationDestinationPrefixes("/app");
     }
 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
-        registry.addEndpoint("/chat").withSockJS();
+        registry.addEndpoint("/request").withSockJS();
     }
 }

@@ -10,7 +10,7 @@
 <script>
 
     window.addEventListener('load', (e) => {
-        const socket = new SockJS('/chat')
+        const socket = new SockJS('/request')
         const stompClient = Stomp.over(socket)
         stompClient.connect({}, (frame) => {
 
@@ -18,8 +18,7 @@
                 console.log('greetings: ' + greeting.body)
             });
 
-            stompClient.send('/app/chat', {}, JSON.stringify({name: 'Tammie'}))
-            stompClient.send('/app/chat', {}, JSON.stringify({name: 'josh'}))
+            stompClient.send('/request', {}, JSON.stringify({name: 'Tammie'}))
         });
 
 

@@ -1,0 +1,24 @@
+.board {
+    display: grid;
+}
+
+.store-container {
+    grid-row: span 2;
+    display: flex;
+    align-content: space-between;
+    text-align: center;
+}
+
+.south-store {
+    flex-direction: column;
+}
+
+.south-store p {
+}
+
+.north-store {
+    flex-direction: column-reverse;
+}
+
+.north-store p {
+}

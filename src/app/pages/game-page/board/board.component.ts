@@ -1,7 +1,8 @@
-import {Component} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {BoardState} from "../../../models/board-state";
 import {PitComponent} from "./pit/pit.component";
 import {NgStyle} from "@angular/common";
+import {WebSocketService} from "../../../services/web-socket.service";
 
 @Component({
     selector: 'app-board',
@@ -13,7 +14,7 @@ import {NgStyle} from "@angular/common";
     templateUrl: './board.component.html',
     styleUrl: './board.component.scss'
 })
-export class BoardComponent {
+export class BoardComponent implements OnInit, OnDestroy {
 
     boardState : BoardState = {
         size: 6,
@@ -24,8 +25,28 @@ export class BoardComponent {
         southTurn: true
     }
 
+    constructor(private webSocketService: WebSocketService) {
+    }
+
+    async ngOnInit() {
+        this.webSocketService.init();
+        // wait for 1 second
+        await new Promise(f => setTimeout(f, 1000));
+
+        this.webSocketService.subscribeToBoardState((boardState: any) => {
+            console.log('Received new board state', boardState);
+            this.boardState = boardState;
+        });
+    }
+
+    ngOnDestroy() {
+        this.webSocketService.destroy();
+    }
+
     move(position: number, onSouthSide: boolean) {
         console.log(`Move at position ${position} on ${onSouthSide ? 'south' : 'north'} side`);
+
+        this.webSocketService.sendMessage(position);
 
         const board = this.boardState;
         if(board.southTurn !== onSouthSide) {

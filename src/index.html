@@ -6,8 +6,12 @@
     <base href="/">
     <meta content="width=device-width, initial-scale=1" name="viewport">
     <link href="favicon.ico" rel="icon" type="image/x-icon">
+
     <!-- custom font Poppins for the header -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap" rel="stylesheet">
+
+  <!-- to fix global undefined error because of sockjs -->
+  <script> var global = window; </script>
 </head>
 <body>
     <app-root></app-root>

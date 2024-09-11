@@ -1,0 +1,17 @@
+.number-input-container {
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.custom-input {
+    background: #352c31;
+    width: 100px;
+    height: 56px;
+}
+
+// remove default padding
+.custom-input .mat-form-field-wrapper {
+    padding: 0;
+}

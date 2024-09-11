@@ -1,0 +1,20 @@
+<div class="number-input-container">
+  <button mat-mini-fab (click)="decrement()">
+    <mat-icon>arrow_downward</mat-icon>
+  </button>
+
+  <mat-form-field appearance="outline" class="custom-input">
+    <mat-label> {{ label }}</mat-label>
+    <input matInput
+           [(ngModel)]="startValue"
+           (keydown)="numberOnly($event)"
+           [maxlength]="Math.floor(Math.log10(max)) + 1"
+    >
+    <mat-error>test</mat-error>
+  </mat-form-field>
+
+  <button mat-mini-fab (click)="increment()">
+    <mat-icon>arrow_upward</mat-icon>
+  </button>
+
+</div>

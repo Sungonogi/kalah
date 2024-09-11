@@ -1,17 +1,23 @@
 import {Component} from '@angular/core';
 import {RouterLink} from "@angular/router";
-import {RedirectButtonComponent} from "../../shared/redirect-button/redirect-button.component";
+import {FormsModule} from "@angular/forms";
+import {NumberInputComponent} from "../../shared/number-input/number-input.component";
+import {MatButtonModule} from "@angular/material/button";
 
 @Component({
     selector: 'app-start-page',
     standalone: true,
     imports: [
         RouterLink,
-        RedirectButtonComponent,
+        FormsModule,
+        NumberInputComponent,
+        MatButtonModule
     ],
     templateUrl: './start-page.component.html',
     styleUrl: './start-page.component.scss'
 })
 export class StartPageComponent {
+
+    protected amount = 3;
 
 }

@@ -1,3 +1,12 @@
 <div class="start-menu">
-    <app-redirect-button link="/play" text="Start Playing"/>
+
+  <app-number-input [startValue]="2" label="seeds" [min]="1" [max]="10"></app-number-input>
+
+  <app-number-input [startValue]="6" label="houses" [min]="2" [max]="20"></app-number-input>
+
+  <button mat-flat-button routerLink="/play">
+    Start Playing
+  </button>
+
+
 </div>

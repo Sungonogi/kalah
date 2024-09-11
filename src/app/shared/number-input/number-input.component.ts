@@ -1,18 +1,18 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
 import {MatError, MatFormField, MatInput, MatLabel} from "@angular/material/input";
-import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {NgIf} from "@angular/common";
+import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
+import {NgClass, NgIf} from "@angular/common";
 
 @Component({
     selector: 'app-number-input',
     standalone: true,
-    imports: [MatButtonModule, MatIconModule, MatInput, FormsModule, MatFormField, MatLabel, MatError, NgIf, ReactiveFormsModule],
+    imports: [MatButtonModule, MatIconModule, MatInput, FormsModule, MatFormField, MatLabel, MatError, NgIf, ReactiveFormsModule, NgClass],
     templateUrl: './number-input.component.html',
     styleUrl: './number-input.component.scss'
 })
-export class NumberInputComponent {
+export class NumberInputComponent implements OnInit {
 
     // named startValue to make this component easier to use, but is also the value that will be updated
     @Input({required: true}) startValue = 0;
@@ -23,25 +23,35 @@ export class NumberInputComponent {
     // to calculate maxlength of input field
     protected readonly Math = Math;
 
+    form!: FormGroup;
+
+    constructor(private fb: FormBuilder) {
+    }
+
+    ngOnInit() {
+        this.form = this.fb.group({
+            number: [this.startValue, [
+                Validators.required,
+                Validators.pattern('^[0-9]*$'),
+                Validators.min(this.min),
+                Validators.max(this.max),
+                ]
+            ]
+        });
+    }
+
     increment() {
-        if (this.startValue < this.max) {
-            this.startValue++;
+        const num = Number(this.form.value['number']);
+        if (num < this.max) {
+            this.form.patchValue({number: num + 1});
         }
     }
 
     decrement() {
-        if (this.startValue > this.min) {
-            this.startValue--;
+        const num = this.form.value['number'];
+        if (num > this.min) {
+            this.form.patchValue({number: num - 1});
         }
-    }
-
-    numberOnly(event: any): boolean {
-        const charCode = (event.which) ? event.which : event.keyCode;
-        if (charCode > 31 && (charCode < 48 || charCode > 57)) {
-            return false;
-        }
-        return true;
-
     }
 
 }

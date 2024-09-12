@@ -6,6 +6,7 @@ import {MatButtonModule} from "@angular/material/button";
 import {MatSelectModule} from "@angular/material/select";
 import {PlayerType} from "../../models/player-type.model";
 import {values} from "lodash";
+import {MatCard} from "@angular/material/card";
 
 @Component({
     selector: 'app-start-page',
@@ -16,7 +17,8 @@ import {values} from "lodash";
         NumberInputComponent,
         MatButtonModule,
         MatSelectModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        MatCard
     ],
     templateUrl: './start-page.component.html',
     styleUrl: './start-page.component.scss'

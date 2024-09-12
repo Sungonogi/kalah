@@ -1,6 +1,13 @@
-.start-menu {
-    height: 100%;
-    gap: 20px;
+.center {
+    margin-top: 32px;
+    margin-bottom: 32px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+mat-card {
+    padding: 32px;
     display: flex;
     flex-direction: column;
     justify-content: center;

@@ -1,34 +1,35 @@
-<div class="start-menu">
+<div class="center">
+  <mat-card appearance="outlined">
 
-  <mat-form-field>
-    <mat-label>Player North</mat-label>
-    <mat-select [(value)]="playerSouth">
-      @for (p of playerTypes; track p) {
-        <mat-option [value]="p">{{ p }}</mat-option>
-      }
-    </mat-select>
-  </mat-form-field>
+    <mat-form-field>
+      <mat-label>Player North</mat-label>
+      <mat-select [(value)]="playerSouth">
+        @for (p of playerTypes; track p) {
+          <mat-option [value]="p">{{ p }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
 
-  <mat-form-field>
-    <mat-label>Player North</mat-label>
-    <mat-select [(value)]="playerNorth">
-      @for (p of playerTypes; track p) {
-        <mat-option [value]="p">{{ p }}</mat-option>
-      }
-    </mat-select>
-  </mat-form-field>
+    <mat-form-field>
+      <mat-label>Player North</mat-label>
+      <mat-select [(value)]="playerNorth">
+        @for (p of playerTypes; track p) {
+          <mat-option [value]="p">{{ p }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
 
-  <app-number-input [startValue]="seeds" label="seeds" [min]="1" [max]="10"
-                    (emitNumber)="seeds = $event" (emitError)="seedsValid = $event">
-  </app-number-input>
+    <app-number-input [startValue]="seeds" label="seeds" [min]="1" [max]="10"
+                      (emitNumber)="seeds = $event" (emitError)="seedsValid = $event">
+    </app-number-input>
 
-  <app-number-input [startValue]="pits" label="pits" [min]="2" [max]="20"
-                    (emitNumber)="seeds = $event" (emitError)="pitsValid = $event">
-  </app-number-input>
+    <app-number-input [startValue]="pits" label="pits" [min]="2" [max]="20"
+                      (emitNumber)="seeds = $event" (emitError)="pitsValid = $event">
+    </app-number-input>
 
-  <button mat-flat-button routerLink="/play" [disabled]="!seedsValid || !pitsValid">
-    Start Playing
-  </button>
+    <button mat-flat-button routerLink="/play" [disabled]="!seedsValid || !pitsValid">
+      Start Playing
+    </button>
 
-
+  </mat-card>
 </div>

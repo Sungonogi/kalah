@@ -8,7 +8,7 @@
     <mat-label> {{ label }}</mat-label>
     <input matInput
            formControlName="number"
-           [maxlength]="Math.floor(Math.log10(max)) + 1"
+           [maxlength]="calcMaxDigits()"
     >
     <!-- Error messages, only show one at a time -->
     <mat-error>

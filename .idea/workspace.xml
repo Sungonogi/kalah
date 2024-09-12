@@ -4,11 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ff32ea9a-e283-4b66-afcf-3b0581baeb3b" name="Changes" comment=":necktie: communicate with backend using the webSocketService">
+    <list default="true" id="ff32ea9a-e283-4b66-afcf-3b0581baeb3b" name="Changes" comment=":necktie: output the value of number input">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/pages/start-page/start-page.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/pages/start-page/start-page.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/pages/start-page/start-page.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/pages/start-page/start-page.component.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/shared/number-input/number-input.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/shared/number-input/number-input.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/shared/number-input/number-input.component.spec.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/shared/number-input/number-input.component.spec.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/shared/number-input/number-input.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/shared/number-input/number-input.component.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -39,30 +38,45 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/stern/IdeaProjects/fe-kalah&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;npm.Angular CLI Server.executor&quot;: &quot;Run&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;C:\\Users\\stern\\IdeaProjects\\fe-kalah\\node_modules\\typescript\\lib&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Karma.NumberInputComponent.should correctly calculate the max digits.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "main",
+    "ignore.virus.scanning.warn.message": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/stern/IdeaProjects/fe-kalah",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "npm.Angular CLI Server.executor": "Run",
+    "settings.editor.selected.configurable": "preferences.lookFeel",
+    "ts.external.directory.path": "C:\\Users\\stern\\IdeaProjects\\fe-kalah\\node_modules\\typescript\\lib",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\stern\IdeaProjects\fe-kalah\src\app\services" />
     </key>
   </component>
-  <component name="RunManager" selected="JavaScript Debug.Angular Application">
+  <component name="RunManager" selected="Karma.NumberInputComponent.should correctly calculate the max digits">
+    <configuration name="NumberInputComponent.should correctly calculate the max digits" type="JavaScriptTestRunnerKarma" temporary="true" nameIsGenerated="true">
+      <config-file value="$PROJECT_DIR$/karma.conf.js" />
+      <karma-package-dir value="$PROJECT_DIR$/node_modules/@angular/cli" />
+      <working-directory value="$PROJECT_DIR$" />
+      <node-interpreter value="project" />
+      <envs />
+      <scope-kind value="TEST" />
+      <test-file-path value="$PROJECT_DIR$/src/app/shared/number-input/number-input.component.spec.ts" />
+      <test-names>
+        <test-name value="NumberInputComponent" />
+        <test-name value="should correctly calculate the max digits" />
+      </test-names>
+      <method v="2" />
+    </configuration>
     <configuration name="Tests (kalah)" type="JavaScriptTestRunnerKarma">
       <config-file value="$PROJECT_DIR$/karma.conf.js" />
       <karma-package-dir value="$PROJECT_DIR$/node_modules/@angular/cli" />
@@ -84,6 +98,11 @@
       <envs />
       <method v="2" />
     </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Karma.NumberInputComponent.should correctly calculate the max digits" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
@@ -108,7 +127,7 @@
       <workItem from="1726060730204" duration="9000" />
       <workItem from="1726060748981" duration="3755000" />
       <workItem from="1726069394915" duration="2250000" />
-      <workItem from="1726163825963" duration="1435000" />
+      <workItem from="1726163825963" duration="2161000" />
     </task>
     <task id="LOCAL-00001" summary=":recycle: move backend to separate repo">
       <option name="closed" value="true" />
@@ -126,7 +145,15 @@
       <option name="project" value="LOCAL" />
       <updated>1725733656276</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary=":necktie: output the value of number input">
+      <option name="closed" value="true" />
+      <created>1726165601874</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1726165601874</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -134,6 +161,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value=":recycle: move backend to separate repo" />
-    <option name="LAST_COMMIT_MESSAGE" value=":recycle: move backend to separate repo" />
+    <MESSAGE value=":necktie: output the value of number input" />
+    <option name="LAST_COMMIT_MESSAGE" value=":necktie: output the value of number input" />
   </component>
 </project>

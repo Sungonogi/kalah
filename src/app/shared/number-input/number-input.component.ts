@@ -70,4 +70,7 @@ export class NumberInputComponent implements OnInit {
         }
     }
 
+    calcMaxDigits() {
+        return Math.floor(Math.log10(this.max)) + 1;
+    }
 }

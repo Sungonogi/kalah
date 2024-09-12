@@ -21,6 +21,8 @@
     "@angular/platform-browser-dynamic": "^18.2.0",
     "@angular/router": "^18.2.0",
     "@stomp/rx-stomp": "^0.3.3",
+    "@types/lodash": "^4.17.7",
+    "lodash": "^4.17.21",
     "rxjs": "~7.8.0",
     "sockjs-client": "^1.6.1",
     "tslib": "^2.3.0",

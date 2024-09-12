@@ -1,12 +1,12 @@
 import {Injectable, signal, WritableSignal} from '@angular/core';
-import {BoardState} from "../models/board-state";
+import {BoardStateModel} from "../models/board-state.model";
 
 @Injectable({
     providedIn: 'root'
 })
 export class BoardService {
 
-    private board!: WritableSignal<BoardState>;
+    private board!: WritableSignal<BoardStateModel>;
 
     init(size: number, seeds: number) {
         this.board = signal({
@@ -19,7 +19,7 @@ export class BoardService {
         });
     }
 
-    getBoardState(): WritableSignal<BoardState> {
+    getBoardState(): WritableSignal<BoardStateModel> {
         if(!this.board)
             throw new Error('Board state not initialized');
 

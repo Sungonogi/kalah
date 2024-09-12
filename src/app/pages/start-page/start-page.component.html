@@ -1,5 +1,23 @@
 <div class="start-menu">
 
+  <mat-form-field>
+    <mat-label>Player North</mat-label>
+    <mat-select [(value)]="playerSouth">
+      @for (p of playerTypes; track p) {
+        <mat-option [value]="p">{{ p }}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Player North</mat-label>
+    <mat-select [(value)]="playerNorth">
+      @for (p of playerTypes; track p) {
+        <mat-option [value]="p">{{ p }}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+
   <app-number-input [startValue]="seeds" label="seeds" [min]="1" [max]="10"
                     (emitNumber)="seeds = $event" (emitError)="seedsValid = $event">
   </app-number-input>

@@ -8,7 +8,18 @@ import {NgClass, NgIf} from "@angular/common";
 @Component({
     selector: 'app-number-input',
     standalone: true,
-    imports: [MatButtonModule, MatIconModule, MatInput, FormsModule, MatFormField, MatLabel, MatError, NgIf, ReactiveFormsModule, NgClass],
+    imports: [
+        MatButtonModule,
+        MatIconModule,
+        MatInput,
+        FormsModule,
+        MatFormField,
+        MatLabel,
+        MatError,
+        NgIf,
+        ReactiveFormsModule,
+        NgClass
+    ],
     templateUrl: './number-input.component.html',
     styleUrl: './number-input.component.scss'
 })
@@ -23,9 +34,6 @@ export class NumberInputComponent implements OnInit {
     // to send out the new value
     @Output() emitNumber = new EventEmitter<number>();
     @Output() emitError = new EventEmitter<boolean>();
-
-    // to calculate maxlength of input field
-    protected readonly Math = Math;
 
     form!: FormGroup;
 
@@ -70,6 +78,8 @@ export class NumberInputComponent implements OnInit {
         }
     }
 
+
+    // to calculate the max length of the input field
     calcMaxDigits() {
         return Math.floor(Math.log10(this.max)) + 1;
     }

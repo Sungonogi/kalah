@@ -4,16 +4,30 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ff32ea9a-e283-4b66-afcf-3b0581baeb3b" name="Changes" comment=":necktie: output the value of number input">
+    <list default="true" id="ff32ea9a-e283-4b66-afcf-3b0581baeb3b" name="Changes" comment=":white_check_mark: add test for calcMaxDigits()">
+      <change afterPath="$PROJECT_DIR$/src/app/models/player-type.model.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/shared/number-input/number-input.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/shared/number-input/number-input.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/shared/number-input/number-input.component.spec.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/shared/number-input/number-input.component.spec.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/models/board-state.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/models/board-state.model.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/pages/game-page/board/board.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/pages/game-page/board/board.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/pages/start-page/start-page.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/pages/start-page/start-page.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/pages/start-page/start-page.component.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/pages/start-page/start-page.component.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/pages/start-page/start-page.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/pages/start-page/start-page.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/services/board.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/services/board.service.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/shared/number-input/number-input.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/shared/number-input/number-input.component.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="TypeScript File" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -40,6 +54,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Karma.NumberInputComponent.executor": "Run",
     "Karma.NumberInputComponent.should correctly calculate the max digits.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "main",
@@ -62,7 +77,20 @@
       <recent name="C:\Users\stern\IdeaProjects\fe-kalah\src\app\services" />
     </key>
   </component>
-  <component name="RunManager" selected="Karma.NumberInputComponent.should correctly calculate the max digits">
+  <component name="RunManager" selected="npm.Angular CLI Server">
+    <configuration name="NumberInputComponent" type="JavaScriptTestRunnerKarma" temporary="true" nameIsGenerated="true">
+      <config-file value="$PROJECT_DIR$/karma.conf.js" />
+      <karma-package-dir value="$PROJECT_DIR$/node_modules/@angular/cli" />
+      <working-directory value="$PROJECT_DIR$" />
+      <node-interpreter value="project" />
+      <envs />
+      <scope-kind value="SUITE" />
+      <test-file-path value="$PROJECT_DIR$/src/app/shared/number-input/number-input.component.spec.ts" />
+      <test-names>
+        <test-name value="NumberInputComponent" />
+      </test-names>
+      <method v="2" />
+    </configuration>
     <configuration name="NumberInputComponent.should correctly calculate the max digits" type="JavaScriptTestRunnerKarma" temporary="true" nameIsGenerated="true">
       <config-file value="$PROJECT_DIR$/karma.conf.js" />
       <karma-package-dir value="$PROJECT_DIR$/node_modules/@angular/cli" />
@@ -100,6 +128,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Karma.NumberInputComponent" />
         <item itemvalue="Karma.NumberInputComponent.should correctly calculate the max digits" />
       </list>
     </recent_temporary>
@@ -127,7 +156,7 @@
       <workItem from="1726060730204" duration="9000" />
       <workItem from="1726060748981" duration="3755000" />
       <workItem from="1726069394915" duration="2250000" />
-      <workItem from="1726163825963" duration="2161000" />
+      <workItem from="1726163825963" duration="3892000" />
     </task>
     <task id="LOCAL-00001" summary=":recycle: move backend to separate repo">
       <option name="closed" value="true" />
@@ -153,7 +182,15 @@
       <option name="project" value="LOCAL" />
       <updated>1726165601874</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary=":white_check_mark: add test for calcMaxDigits()">
+      <option name="closed" value="true" />
+      <created>1726166195704</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1726166195704</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -162,6 +199,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value=":recycle: move backend to separate repo" />
     <MESSAGE value=":necktie: output the value of number input" />
-    <option name="LAST_COMMIT_MESSAGE" value=":necktie: output the value of number input" />
+    <MESSAGE value=":white_check_mark: add test for calcMaxDigits()" />
+    <option name="LAST_COMMIT_MESSAGE" value=":white_check_mark: add test for calcMaxDigits()" />
   </component>
 </project>

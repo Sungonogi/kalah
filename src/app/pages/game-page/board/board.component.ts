@@ -2,7 +2,7 @@ import {Component, inject, OnInit, WritableSignal} from '@angular/core';
 import {PitComponent} from "./pit/pit.component";
 import {NgStyle} from "@angular/common";
 import {BoardService} from "../../../services/board.service";
-import {BoardState} from "../../../models/board-state";
+import {BoardStateModel} from "../../../models/board-state.model";
 
 @Component({
     selector: 'app-board',
@@ -17,7 +17,7 @@ import {BoardState} from "../../../models/board-state";
 export class BoardComponent implements OnInit {
 
     private boardService: BoardService = inject(BoardService);
-    protected boardState: WritableSignal<BoardState> | undefined;
+    protected boardState: WritableSignal<BoardStateModel> | undefined;
 
     ngOnInit() {
         this.boardService.init(6, 2);

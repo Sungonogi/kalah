@@ -18,6 +18,10 @@ import {MatButtonModule} from "@angular/material/button";
 })
 export class StartPageComponent {
 
-    protected amount = 3;
+    seeds = 4;
+    pits = 6;
+
+    seedsValid = true;
+    pitsValid = true;
 
 }

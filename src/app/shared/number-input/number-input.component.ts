@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
 import {MatError, MatFormField, MatInput, MatLabel} from "@angular/material/input";
@@ -20,6 +20,10 @@ export class NumberInputComponent implements OnInit {
     @Input() min = -Number.MAX_VALUE;
     @Input() max = Number.MAX_VALUE;
 
+    // to send out the new value
+    @Output() emitNumber = new EventEmitter<number>();
+    @Output() emitError = new EventEmitter<boolean>();
+
     // to calculate maxlength of input field
     protected readonly Math = Math;
 
@@ -32,11 +36,23 @@ export class NumberInputComponent implements OnInit {
         this.form = this.fb.group({
             number: [this.startValue, [
                 Validators.required,
-                Validators.pattern('^[0-9]*$'),
+                Validators.pattern('^\-?[0-9]*$'),
                 Validators.min(this.min),
                 Validators.max(this.max),
                 ]
             ]
+        });
+
+        this.form.valueChanges.subscribe(() => {
+            this.emitNumber.emit(this.form.value['number']);
+        });
+
+        this.form.statusChanges.subscribe(() => {
+            if (this.form.invalid) {
+                this.emitError.emit(false);
+            } else {
+                this.emitError.emit(true);
+            }
         });
     }
 

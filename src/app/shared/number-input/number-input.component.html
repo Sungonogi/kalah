@@ -1,5 +1,6 @@
 <form [formGroup]="form">
-  <button mat-mini-fab (click)="decrement()">
+  <button mat-mini-fab (click)="decrement()"
+          [disabled]="form.controls['number'].hasError('pattern') || form.value['number'] <= min">
     <mat-icon>arrow_downward</mat-icon>
   </button>
 
@@ -24,7 +25,8 @@
 
   </mat-form-field>
 
-  <button mat-mini-fab (click)="increment()">
+  <button mat-mini-fab (click)="increment()"
+          [disabled]="form.controls['number'].hasError('pattern') || form.value['number'] >= max">
     <mat-icon>arrow_upward</mat-icon>
   </button>
 

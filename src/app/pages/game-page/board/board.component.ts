@@ -3,6 +3,8 @@ import {PitComponent} from "./pit/pit.component";
 import {NgStyle} from "@angular/common";
 import {BoardService} from "../../../services/board.service";
 import {BoardStateModel} from "../../../models/board-state.model";
+import {StartParamsStore} from "../../../stores/start-params/start-params.store";
+import {Router} from "@angular/router";
 
 @Component({
     selector: 'app-board',
@@ -19,8 +21,19 @@ export class BoardComponent implements OnInit {
     private boardService: BoardService = inject(BoardService);
     protected boardState: WritableSignal<BoardStateModel> | undefined;
 
+    startParamsStore = inject(StartParamsStore);
+
+    constructor(private router: Router) {
+    }
+
     ngOnInit() {
-        this.boardService.init(6, 2);
+        if(!this.startParamsStore.defined()){
+            this.router.navigate(['/start']);
+        }
+
+        const startParams = this.startParamsStore.startParams();
+
+        this.boardService.init(startParams.pits, startParams.seeds);
         this.boardState = this.boardService.getBoardState();
     }
 

@@ -1,6 +1,7 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {NumberInputComponent} from './number-input.component';
+import {NoopAnimationsModule} from "@angular/platform-browser/animations";
 
 describe('NumberInputComponent', () => {
     let component: NumberInputComponent;
@@ -9,7 +10,8 @@ describe('NumberInputComponent', () => {
     beforeEach(async () => {
         await TestBed.configureTestingModule({
             imports: [
-                NumberInputComponent
+                NumberInputComponent,
+                NoopAnimationsModule
             ]
         }).compileComponents();
 

@@ -1,4 +1,5 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
+import {NoopAnimationsModule} from "@angular/platform-browser/animations";
 
 import {StartPageComponent} from './start-page.component';
 
@@ -8,7 +9,7 @@ describe('StartPageComponent', () => {
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            imports: [StartPageComponent]
+            imports: [StartPageComponent, NoopAnimationsModule]
         })
             .compileComponents();
 

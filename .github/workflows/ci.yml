@@ -24,8 +24,5 @@ jobs:
       - name: Run lint
         run: npm run lint
 
-      - name: set env for tests
-        run: echo ${DISPLAY}={:0}" >> $GITHUB_ENV
-
       - name: Run tests
         run: npm test -- --watch=false --no-progress

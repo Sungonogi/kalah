@@ -2,8 +2,8 @@
     represents one state of the board
  */
 
-export interface BoardStateModel {
-    size: number, // size of southPits and northPits
+export interface BoardState {
+    pits: number, // size of southPits and northPits
     southPits: number[],
     northPits: number[],
     southStore: number,

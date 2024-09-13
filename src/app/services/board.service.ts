@@ -1,26 +1,36 @@
 import {Injectable, signal, WritableSignal} from '@angular/core';
 
-import {BoardStateModel} from "../models/board-state.model";
+import {BoardState} from "../models/board.state";
+import {PlayerType} from "../models/player-type.enum";
+import {StartParams} from "../models/start-params.model";
+import {BotService} from "./bot.service";
 
 @Injectable({
     providedIn: 'root'
 })
 export class BoardService {
 
-    private board!: WritableSignal<BoardStateModel>;
+    private board!: WritableSignal<BoardState>;
+    private southTurnToPlayerType = new Map<boolean, string>();
 
-    init(size: number, seeds: number) {
+    constructor(private botService: BotService) {
+    }
+
+    init(startParams: StartParams) {
         this.board = signal({
-            size: size,
-            southPits: Array(size).fill(seeds),
-            northPits: Array(size).fill(seeds),
+            pits: startParams.pits,
+            southPits: Array(startParams.pits).fill(startParams.seeds),
+            northPits: Array(startParams.pits).fill(startParams.seeds),
             southStore: 0,
             northStore: 0,
             southTurn: true
         });
+
+        this.southTurnToPlayerType.set(true, startParams.playerSouth);
+        this.southTurnToPlayerType.set(false, startParams.playerNorth);
     }
 
-    getBoardState(): WritableSignal<BoardStateModel> {
+    getBoardState(): WritableSignal<BoardState> {
         if(!this.board)
             throw new Error('Board state not initialized');
 
@@ -32,7 +42,7 @@ export class BoardService {
             throw new Error('Board state not initialized');
 
         const board = structuredClone(this.board());
-        if(board.southTurn !== onSouthSide) {
+        if(this.southTurnToPlayerType.get(board.southTurn) !== PlayerType.Local){
             console.error('Not your turn');
             return;
         }
@@ -51,9 +61,9 @@ export class BoardService {
         myPits[position] = 0;
 
         while(hand > 0){
-            position = (position + 1) % (board.size + 1);
+            position = (position + 1) % (board.pits + 1);
 
-            if(position < board.size){
+            if(position < board.pits){
                 hand--;
                 if(currentlyMySide){
                     myPits[position]++;
@@ -71,7 +81,7 @@ export class BoardService {
         }
 
         // check for steal
-        const mirrored = board.size - position - 1;
+        const mirrored = board.pits - position - 1;
         if(currentlyMySide && myPits[position] === 1 && hisPits[mirrored] > 0) {
             board[myStore] += myPits[position] + hisPits[mirrored];
             myPits[position] = 0;
@@ -79,7 +89,7 @@ export class BoardService {
         }
 
         // don't swap sides if the last stone lands in our store (in that case currentlyMySide was already set to false)
-        if(currentlyMySide || position !== board.size) {
+        if(currentlyMySide || position !== board.pits) {
             board.southTurn = !board.southTurn;
         }
 
@@ -87,16 +97,22 @@ export class BoardService {
         const sum = (a: number, b: number) => a + b;
         const southSum = board.southPits.reduce(sum);
         const northSum = board.northPits.reduce(sum);
-        if(southSum === 0){
+        const gameOver = southSum === 0 || northSum === 0;
+        if(gameOver){
             board.northStore += northSum;
             board.northPits.fill(0);
-        }
-        if(northSum === 0){
             board.southStore += southSum;
             board.southPits.fill(0);
         }
 
         this.board.update(() => board);
+
+        // if the game is not over we have to let the bot move
+        const nextPlayer = this.southTurnToPlayerType.get(board.southTurn) as PlayerType;
+        if(!gameOver && nextPlayer !== PlayerType.Local){
+            this.botService.requestMove(board, nextPlayer).then(move => this.doMove(move, board.southTurn));
+        }
+
     }
 
 

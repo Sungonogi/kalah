@@ -1,20 +1,26 @@
-@if(boardState && boardState(); as board){
-  <div class="board" [ngStyle]="{'grid-template-columns' : 'repeat(' + (board.size+2) + ', 1fr)'}">
+@if(boardState(); as board){
+  <div class="board" [ngStyle]="{'grid-template-columns' : 'repeat(' + (board.pits+2) + ', 1fr)'}">
 
     <div class="store-container south-store">
       <app-pit [stones]="board.northStore" aspectRatio="2/3"/>
-      <p> Player North </p>
+      <div>
+        <p> Player North </p>
+        <p> {{ playerNorth }} </p>
+      </div>
     </div>
 
 
-    @for (i of getIndexArray(board.size); track i) {
-      <app-pit [stones]="board.northPits[board.size - i - 1]" (click)="move(board.size - i - 1, false)"/>
+    @for (i of getIndexArray(board.pits); track i) {
+      <app-pit [stones]="board.northPits[board.pits - i - 1]" (click)="move(board.pits - i - 1, false)"/>
     }
 
     <div class="store-container north-store">
       <!-- will be reversed by flexbox reverse-->
       <app-pit [stones]="board.southStore" aspectRatio="2/3"/>
-      <p> Player South</p>
+      <div>
+        <p> Player South </p>
+        <p> {{ playerSouth}} </p>
+      </div>
     </div>
 
     @for (stones of board.southPits; track i; let i = $index) {

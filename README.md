@@ -1,7 +1,5 @@
 # Kalah
 
-[![CI](https://github.com/IngoSternberg/fe-kalah/actions/workflows/ci.yml/badge.svg)](https://github.com/IngoSternberg/fe-kalah/actions/workflows/ci.yml)
-
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.2.2.
 
 ## Development server

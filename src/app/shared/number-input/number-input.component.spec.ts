@@ -11,8 +11,7 @@ describe('NumberInputComponent', () => {
             imports: [
                 NumberInputComponent
             ]
-        })
-            .compileComponents();
+        }).compileComponents();
 
         fixture = TestBed.createComponent(NumberInputComponent);
         component = fixture.componentInstance;

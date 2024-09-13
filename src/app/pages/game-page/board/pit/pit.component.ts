@@ -1,5 +1,5 @@
-import {Component, Input} from '@angular/core';
 import {NgStyle} from "@angular/common";
+import {Component, Input} from '@angular/core';
 
 @Component({
     selector: 'app-pit',

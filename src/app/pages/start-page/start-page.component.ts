@@ -1,14 +1,15 @@
 import {Component, inject, OnInit} from '@angular/core';
-import {Router, RouterLink} from "@angular/router";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {NumberInputComponent} from "../../shared/number-input/number-input.component";
 import {MatButtonModule} from "@angular/material/button";
-import {MatSelectModule} from "@angular/material/select";
-import {PlayerType} from "../../models/player-type.enum";
-import {values} from "lodash";
 import {MatCard} from "@angular/material/card";
-import {StartParamsStore} from "../../stores/start-params/start-params.store";
+import {MatSelectModule} from "@angular/material/select";
+import {Router, RouterLink} from "@angular/router";
+import {values} from "lodash";
+
+import {PlayerType} from "../../models/player-type.enum";
 import {StartParams} from "../../models/start-params.model";
+import {NumberInputComponent} from "../../shared/number-input/number-input.component";
+import {StartParamsStore} from "../../stores/start-params/start-params.store";
 
 @Component({
     selector: 'app-start-page',

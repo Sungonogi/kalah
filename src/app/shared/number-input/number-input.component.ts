@@ -1,9 +1,9 @@
+import {NgClass, NgIf} from "@angular/common";
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
 import {MatError, MatFormField, MatInput, MatLabel} from "@angular/material/input";
-import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
-import {NgClass, NgIf} from "@angular/common";
 
 @Component({
     selector: 'app-number-input',

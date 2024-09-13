@@ -1,11 +1,12 @@
 import {patchState, signalStore, withMethods, withState} from '@ngrx/signals';
-import {StartParams} from '../../models/start-params.model';
+
 import {PlayerType} from "../../models/player-type.enum";
+import {StartParams} from '../../models/start-params.model';
 
 interface StartParamsState {
     defined: boolean;
     startParams: StartParams;
-};
+}
 
 const initialState: StartParamsState = {
     defined: false,

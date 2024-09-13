@@ -1,10 +1,11 @@
-import {Component, inject, OnInit, WritableSignal} from '@angular/core';
-import {PitComponent} from "./pit/pit.component";
 import {NgStyle} from "@angular/common";
-import {BoardService} from "../../../services/board.service";
-import {BoardStateModel} from "../../../models/board-state.model";
-import {StartParamsStore} from "../../../stores/start-params/start-params.store";
+import {Component, inject, OnInit, WritableSignal} from '@angular/core';
 import {Router} from "@angular/router";
+
+import {BoardStateModel} from "../../../models/board-state.model";
+import {BoardService} from "../../../services/board.service";
+import {StartParamsStore} from "../../../stores/start-params/start-params.store";
+import {PitComponent} from "./pit/pit.component";
 
 @Component({
     selector: 'app-board',

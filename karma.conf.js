@@ -33,6 +33,7 @@ module.exports = function (config) {
     },
     reporters: ['progress', 'kjhtml'],
     browsers: ['Firefox'],
+    flags: ['-headless'],
     restartOnFileChange: true
   });
 };

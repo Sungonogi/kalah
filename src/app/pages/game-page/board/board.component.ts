@@ -3,10 +3,10 @@ import {Component, inject, OnInit, WritableSignal} from '@angular/core';
 import {Router} from "@angular/router";
 
 import {BoardState} from "../../../models/board.state";
+import {PlayerType} from "../../../models/player-type.enum";
 import {BoardService} from "../../../services/board.service";
 import {StartParamsStore} from "../../../stores/start-params/start-params.store";
 import {PitComponent} from "./pit/pit.component";
-import {PlayerType} from "../../../models/player-type.enum";
 
 @Component({
     selector: 'app-board',

@@ -1,9 +1,9 @@
 import {Injectable, signal, WritableSignal} from '@angular/core';
 
-import {BoardState} from "../models/board.state";
+import {BoardState} from "../models/board-state.model";
 import {PlayerType} from "../models/player-type.enum";
 import {StartParams} from "../models/start-params.model";
-import {BotService} from "./bot.service";
+import {ComputerMoveService} from "./computer-move.service";
 
 @Injectable({
     providedIn: 'root'
@@ -13,7 +13,7 @@ export class BoardService {
     private board!: WritableSignal<BoardState>;
     private southTurnToPlayerType = new Map<boolean, string>();
 
-    constructor(private botService: BotService) {
+    constructor(private botService: ComputerMoveService) {
     }
 
     init(startParams: StartParams) {
@@ -42,10 +42,6 @@ export class BoardService {
             throw new Error('Board state not initialized');
 
         const board = structuredClone(this.board());
-        if(this.southTurnToPlayerType.get(board.southTurn) !== PlayerType.Local){
-            console.error('Not your turn');
-            return;
-        }
 
         const myPits = onSouthSide ? board.southPits : board.northPits;
         if(myPits[position] === 0) {
@@ -110,7 +106,11 @@ export class BoardService {
         // if the game is not over we have to let the bot move
         const nextPlayer = this.southTurnToPlayerType.get(board.southTurn) as PlayerType;
         if(!gameOver && nextPlayer !== PlayerType.Local){
-            this.botService.requestMove(board, nextPlayer).then(move => this.doMove(move, board.southTurn));
+            this.botService.requestMove(board, nextPlayer).subscribe((move) => {
+                setTimeout(() => {
+                    this.doMove(move, board.southTurn);
+                }, 500);
+            });
         }
 
     }

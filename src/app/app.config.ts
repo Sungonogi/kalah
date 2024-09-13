@@ -1,3 +1,4 @@
+import {provideHttpClient} from "@angular/common/http";
 import {ApplicationConfig, importProvidersFrom, provideZoneChangeDetection} from '@angular/core';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {provideAnimationsAsync} from '@angular/platform-browser/animations/async';
@@ -10,6 +11,7 @@ export const appConfig: ApplicationConfig = {
         provideZoneChangeDetection({eventCoalescing: true}),
         provideRouter(routes),
         provideAnimationsAsync(),
-        importProvidersFrom([BrowserAnimationsModule])
+        importProvidersFrom([BrowserAnimationsModule]),
+        provideHttpClient()
     ]
 };

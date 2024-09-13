@@ -1,9 +1,8 @@
 import {patchState, signalStore, withMethods, withState} from '@ngrx/signals';
 import {StartParams} from '../../models/start-params.model';
 import {PlayerType} from "../../models/player-type.enum";
-import {update} from "lodash";
 
-type StartParamsState = {
+interface StartParamsState {
     defined: boolean;
     startParams: StartParams;
 };
@@ -23,7 +22,7 @@ export const StartParamsStore = signalStore(
         withState(initialState),
         withMethods((store) => ({
             setStartParams(startParams: StartParams){
-                patchState(store, (state) => ({ defined: true, startParams: startParams}));
+                patchState(store, () => ({ defined: true, startParams: startParams}));
             }
         }))
 );

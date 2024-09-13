@@ -44,7 +44,7 @@ export class NumberInputComponent implements OnInit {
         this.form = this.fb.group({
             number: [this.startValue, [
                 Validators.required,
-                Validators.pattern('^\-?[0-9]*$'),
+                Validators.pattern('^-?[0-9]*$'),
                 Validators.min(this.min),
                 Validators.max(this.max),
                 ]

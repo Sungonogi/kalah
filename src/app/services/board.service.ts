@@ -84,8 +84,8 @@ export class BoardService {
 
         // check if the game is over
         const sum = (a: number, b: number) => a + b;
-        let southSum = board.southPits.reduce(sum);
-        let northSum = board.northPits.reduce(sum);
+        const southSum = board.southPits.reduce(sum);
+        const northSum = board.northPits.reduce(sum);
         if(southSum === 0){
             board.northStore += northSum;
             board.northPits.fill(0);

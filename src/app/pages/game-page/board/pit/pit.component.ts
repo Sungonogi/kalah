@@ -1,6 +1,5 @@
 import {Component, Input} from '@angular/core';
 import {NgStyle} from "@angular/common";
-import {map} from "rxjs";
 
 @Component({
     selector: 'app-pit',
@@ -13,8 +12,8 @@ import {map} from "rxjs";
 })
 export class PitComponent {
     // will be overwritten
-    @Input({required: true}) stones: number = 0;
-    @Input() aspectRatio: string = '1/1';
+    @Input({required: true}) stones = 0;
+    @Input() aspectRatio = '1/1';
 
     /**
         @for which we use for the stones needs unique identifiers

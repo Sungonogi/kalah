@@ -32,7 +32,7 @@ export class StartPageComponent implements OnInit{
     startParams!: StartParams;
 
     // possible values for the player inputs
-    playerTypes = values(PlayerType)
+    playerTypes = values(PlayerType);
 
     // validation flags
     seedsValid = true;

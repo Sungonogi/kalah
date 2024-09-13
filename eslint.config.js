@@ -20,6 +20,9 @@ module.exports = tseslint.config(
         },
         rules: {
             "indent": ["warn", 4],
+            "semi": ["error", "always"],
+            "eqeqeq": ["warn", "always"],
+            "no-multiple-empty-lines": ["warn", { "max": 2 }],
             "object-curly-spacing": ["warn", "never"],
             "simple-import-sort/imports": "error",
             "simple-import-sort/exports": "error",

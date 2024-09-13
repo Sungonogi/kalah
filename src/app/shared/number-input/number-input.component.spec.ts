@@ -14,7 +14,7 @@ describe('NumberInputComponent', () => {
                 NoopAnimationsModule
             ]
         })
-        .compileComponents();
+            .compileComponents();
 
         fixture = TestBed.createComponent(NumberInputComponent);
         component = fixture.componentInstance;

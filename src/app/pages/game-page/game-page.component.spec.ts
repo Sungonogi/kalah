@@ -10,7 +10,7 @@ describe('GamePageComponent', () => {
         await TestBed.configureTestingModule({
             imports: [GamePageComponent]
         })
-        .compileComponents();
+            .compileComponents();
 
         fixture = TestBed.createComponent(GamePageComponent);
         component = fixture.componentInstance;

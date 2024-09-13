@@ -19,11 +19,11 @@ const initialState: StartParamsState = {
 };
 
 export const StartParamsStore = signalStore(
-        {providedIn: 'root'},
-        withState(initialState),
-        withMethods((store) => ({
-            setStartParams(startParams: StartParams){
-                patchState(store, () => ({ defined: true, startParams: startParams}));
-            }
-        }))
+    {providedIn: 'root'},
+    withState(initialState),
+    withMethods((store) => ({
+        setStartParams(startParams: StartParams) {
+            patchState(store, () => ({defined: true, startParams: startParams}));
+        }
+    }))
 );

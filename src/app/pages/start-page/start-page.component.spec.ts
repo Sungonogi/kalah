@@ -10,7 +10,7 @@ describe('StartPageComponent', () => {
         await TestBed.configureTestingModule({
             imports: [StartPageComponent]
         })
-        .compileComponents();
+            .compileComponents();
 
         fixture = TestBed.createComponent(StartPageComponent);
         component = fixture.componentInstance;

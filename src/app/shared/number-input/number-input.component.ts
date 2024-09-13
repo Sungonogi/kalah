@@ -47,7 +47,7 @@ export class NumberInputComponent implements OnInit {
                 Validators.pattern('^-?[0-9]*$'),
                 Validators.min(this.min),
                 Validators.max(this.max),
-                ]
+            ]
             ]
         });
 

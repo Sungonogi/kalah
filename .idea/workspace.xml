@@ -6,9 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="ff32ea9a-e283-4b66-afcf-3b0581baeb3b" name="Changes" comment=":fire: make BoardPosition an interface">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/models/board-position.model.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/models/board-position.model.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/pages/start-page/start-page.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/pages/start-page/start-page.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/stores/board-state/board-state.actions.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/stores/board-state/board-state.actions.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/app.config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/app.config.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/pages/game-page/board/board.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/pages/game-page/board/board.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/stores/board-state/board-state.effects.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/stores/board-state/board-state.effects.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/stores/board-state/board-state.reducer.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/stores/board-state/board-state.reducer.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -196,7 +196,7 @@
       <workItem from="1726163825963" duration="20004000" />
       <workItem from="1726251767991" duration="11503000" />
       <workItem from="1726313891606" duration="467000" />
-      <workItem from="1726319716227" duration="2526000" />
+      <workItem from="1726319716227" duration="5015000" />
     </task>
     <task id="LOCAL-00001" summary=":recycle: move backend to separate repo">
       <option name="closed" value="true" />
@@ -430,7 +430,15 @@
       <option name="project" value="LOCAL" />
       <updated>1726321751498</updated>
     </task>
-    <option name="localTasksCounter" value="30" />
+    <task id="LOCAL-00030" summary=":fire: make BoardPosition an interface">
+      <option name="closed" value="true" />
+      <created>1726322304162</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1726322304162</updated>
+    </task>
+    <option name="localTasksCounter" value="31" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

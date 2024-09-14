@@ -8,6 +8,7 @@ import {provideStore} from '@ngrx/store';
 
 import {routes} from './app.routes';
 import {boardStateReducer} from "./stores/board-state/board-state.reducer";
+import {BoardStateEffects} from "./stores/board-state/board-state.effects";
 
 export const appConfig: ApplicationConfig = {
     providers: [
@@ -17,6 +18,6 @@ export const appConfig: ApplicationConfig = {
         importProvidersFrom([BrowserAnimationsModule]),
         provideHttpClient(),
         provideStore({boardState: boardStateReducer}),
-        provideEffects()
+        provideEffects(BoardStateEffects),
     ]
 };

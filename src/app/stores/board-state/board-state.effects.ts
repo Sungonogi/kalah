@@ -1,7 +1,8 @@
 import {HttpClient} from '@angular/common/http';
-import {Injectable} from '@angular/core';
+import {inject, Injectable} from '@angular/core';
 import {Actions, createEffect, ofType} from '@ngrx/effects';
-import {EMPTY} from 'rxjs';
+import {Store} from "@ngrx/store";
+import {EMPTY, withLatestFrom} from 'rxjs';
 import {catchError, filter, map, switchMap} from 'rxjs/operators';
 
 import {BoardState} from '../../models/board-state.model';
@@ -9,16 +10,18 @@ import {BoardState} from '../../models/board-state.model';
 @Injectable()
 export class BoardStateEffects {
 
+    private actions$ = inject(Actions);
+
     constructor(
-            private actions$: Actions,
-            private http: HttpClient
+            private http: HttpClient,
     ) {
     }
 
     waitingForCPUEffect$ = createEffect(() => this.actions$.pipe(
         ofType('[Board State] playerAttemptsMove'),
-        filter((state: BoardState) => state.waitingForCPU),
-        switchMap((state: BoardState) => {
+        withLatestFrom(inject( Store<{ boardState: BoardState }>).select('boardState')),
+        filter(([, state]) => state.waitingForCPU),
+        switchMap(([, state]) => {
             const request = {
                 boardPosition: state.boardPosition,
                 playerType: state.boardPosition.southTurn ? state.playerSouth : state.playerNorth

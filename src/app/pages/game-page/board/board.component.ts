@@ -1,15 +1,15 @@
 import {NgStyle} from "@angular/common";
-import {Component, inject, OnInit, WritableSignal} from '@angular/core';
+import {Component, inject, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
+import {Store} from "@ngrx/store";
+import {Observable} from "rxjs";
 
 import {BoardPosition} from "../../../models/board-position.model";
+import {BoardState} from "../../../models/board-state.model";
 import {PlayerType} from "../../../models/player-type.enum";
 import {playerAttemptsMove} from "../../../stores/board-state/board-state.actions";
 import {StartParamsStore} from "../../../stores/start-params/start-params.store";
 import {PitComponent} from "./pit/pit.component";
-import {Store} from "@ngrx/store";
-import {Observable} from "rxjs";
-import {BoardState} from "../../../models/board-state.model";
 
 @Component({
     selector: 'app-board',
@@ -23,7 +23,6 @@ import {BoardState} from "../../../models/board-state.model";
 })
 export class BoardComponent implements OnInit {
 
-    private boardState!: Observable<BoardState>;
     protected board!: BoardPosition;
 
     protected playerSouth!: PlayerType;

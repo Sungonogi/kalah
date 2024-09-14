@@ -14,7 +14,7 @@ export const boardStateReducer = createReducer(
     initialState,
     on(init, (_state, {startParams}) => ({
         initialized: true,
-        waitingForCPU: false,
+        waitingForCPU: true,
         playerSouth: startParams.playerSouth,
         playerNorth: startParams.playerNorth,
         boardPosition: initBoardPosition(startParams.pits, startParams.seeds)

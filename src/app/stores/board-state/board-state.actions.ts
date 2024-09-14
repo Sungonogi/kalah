@@ -12,5 +12,8 @@ export const playerAttemptsMove = createAction(
     props<{move: number, onSouthSide: boolean}>()
 );
 
-export const comMove = createAction('[Board State] comMove ');
+export const comMove = createAction(
+    '[Board State] comMove ',
+    props<{move: number}>()
+);
 

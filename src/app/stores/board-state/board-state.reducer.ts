@@ -32,22 +32,40 @@ export const boardStateReducer = createReducer(
 
         const player = onSouthSide ? state.playerSouth : state.playerNorth;
         if(player !== PlayerType.Local){
+            console.error('Not your side');
+            return state;
+        }
+
+        if(state.boardPosition.southTurn !== onSouthSide){
             console.error('Not your turn');
             return state;
         }
 
         const legal = checkLegalMove(state.boardPosition, move, onSouthSide);
         if(!legal){
-            console.error('Game over or illegal move');
+            console.error('Illegal move');
             return state;
         }
 
-        state.boardPosition = performLegalMove(state.boardPosition, move);
+        const newBoardPosition = performLegalMove(state.boardPosition, move);
 
-        const newPlayer = state.boardPosition.southTurn ? state.playerSouth : state.playerNorth;
-        state.waitingForCPU = newPlayer !== PlayerType.Local;
+        const newPlayer = newBoardPosition.southTurn ? state.playerSouth : state.playerNorth;
+        const newWaitingForCPU = newPlayer !== PlayerType.Local;
 
-        return state;
+        return {
+            ...state,
+            boardPosition: newBoardPosition,
+            waitingForCPU: newWaitingForCPU
+        };
     }),
-    on(comMove, (state) => state)
+    on(comMove, (state, {move}) => {
+        const newBoardPosition = performLegalMove(state.boardPosition, move);
+        const newPlayer = newBoardPosition.southTurn ? state.playerSouth : state.playerNorth;
+        const newWaitingForCPU = newPlayer !== PlayerType.Local;
+        return {
+            ...state,
+            boardPosition: newBoardPosition,
+            waitingForCPU: newWaitingForCPU
+        };
+    })
 );

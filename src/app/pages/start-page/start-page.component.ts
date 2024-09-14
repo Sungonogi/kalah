@@ -4,14 +4,14 @@ import {MatButtonModule} from "@angular/material/button";
 import {MatCard} from "@angular/material/card";
 import {MatSelectModule} from "@angular/material/select";
 import {Router, RouterLink} from "@angular/router";
+import {Store} from "@ngrx/store";
 import {values} from "lodash";
 
+import {BoardState} from "../../models/board-state.model";
 import {PlayerType} from "../../models/player-type.enum";
 import {StartParams} from "../../models/start-params.model";
 import {NumberInputComponent} from "../../shared/number-input/number-input.component";
 import {StartParamsStore} from "../../stores/start-params/start-params.store";
-import {Store} from "@ngrx/store";
-import {BoardState} from "../../models/board-state.model";
 
 @Component({
     selector: 'app-start-page',

@@ -53,11 +53,13 @@ export function checkLegalMove(board: BoardPosition, position: number, onSouthSi
 export function performLegalMove(board: BoardPosition, position: number): BoardPosition {
     const myPits = board.southTurn ? [...board.southPits] : [...board.northPits];
     const hisPits = board.southTurn ? [...board.northPits] : [...board.southPits];
-    const myStore = board.southTurn ? 'southStore' : 'northStore';
+    const myStore = board.southTurn ? board.southStore : board.northStore;
 
     let currentlyMySide = true;
     let hand = myPits[position];
     myPits[position] = 0;
+
+    let updatedMyStore = myStore;
 
     while (hand > 0) {
         position = (position + 1) % (board.pits + 1);
@@ -72,7 +74,7 @@ export function performLegalMove(board: BoardPosition, position: number): BoardP
         } else {
             if (currentlyMySide) {
                 hand--;
-                board[myStore]++;
+                updatedMyStore++;
             }
             currentlyMySide = !currentlyMySide;
         }
@@ -81,38 +83,43 @@ export function performLegalMove(board: BoardPosition, position: number): BoardP
     // Check for steal
     const mirrored = board.pits - position - 1;
     if (currentlyMySide && myPits[position] === 1 && hisPits[mirrored] > 0) {
-        board[myStore] += myPits[position] + hisPits[mirrored];
+        updatedMyStore += myPits[position] + hisPits[mirrored];
         myPits[position] = 0;
         hisPits[mirrored] = 0;
     }
 
-    // Check for bonus move in case it lands in our store
-    if (currentlyMySide || position !== board.pits) {
-        board.southTurn = !board.southTurn;
-    }
+    // Check for bonus move (if not landing in the store)
+    const updatedSouthTurn = currentlyMySide || position !== board.pits ? !board.southTurn : board.southTurn;
 
-    // Update the original arrays with the new values
-    if (board.southTurn) {
-        board.southPits = myPits;
-        board.northPits = hisPits;
-    } else {
-        board.southPits = hisPits;
-        board.northPits = myPits;
-    }
+    // Prepare the new pit arrays and store values
+
+    const newSouthPits = board.southTurn ? myPits : hisPits;
+    const newNorthPits = board.southTurn ? hisPits : myPits;
+    let newSouthStore = board.southTurn ? updatedMyStore : board.southStore;
+    let newNorthStore = board.southTurn ? board.northStore : updatedMyStore;
 
     // Check if the game is over
     const sum = (a: number, b: number) => a + b;
-    const southSum = board.southPits.reduce(sum);
-    const northSum = board.northPits.reduce(sum);
+    const southSum = newSouthPits.reduce(sum);
+    const northSum = newNorthPits.reduce(sum);
+    let gameOver = false;
+
     if (southSum === 0 || northSum === 0) {
-        board.northStore += northSum;
-        board.northPits.fill(0);
-        board.southStore += southSum;
-        board.southPits.fill(0);
-        board.gameOver = true;
-    } else {
-        board.gameOver = false;
+        newSouthStore += southSum;
+        newNorthStore += northSum;
+        newSouthPits.fill(0);
+        newNorthPits.fill(0);
+        gameOver = true;
     }
 
-    return board;
+    // Return a new BoardPosition instance with the updated state
+    return {
+        pits: board.pits,
+        southPits: newSouthPits,
+        northPits: newNorthPits,
+        southStore: newSouthStore,
+        northStore: newNorthStore,
+        southTurn: updatedSouthTurn,
+        gameOver: gameOver
+    };
 }

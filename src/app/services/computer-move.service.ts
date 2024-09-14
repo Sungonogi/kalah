@@ -1,10 +1,9 @@
+import {HttpClient} from "@angular/common/http";
 import {Injectable} from '@angular/core';
 
 import {BoardState} from "../models/board-state.model";
-import {PlayerType} from "../models/player-type.enum";
-import {HttpClient} from "@angular/common/http";
 import {ComMoveRequest} from "../models/COM-move-request.model";
-import {BoardService} from "./board.service";
+import {PlayerType} from "../models/player-type.enum";
 
 @Injectable({
     providedIn: 'root'

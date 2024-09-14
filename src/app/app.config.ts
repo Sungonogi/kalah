@@ -3,8 +3,11 @@ import {ApplicationConfig, importProvidersFrom, provideZoneChangeDetection} from
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {provideAnimationsAsync} from '@angular/platform-browser/animations/async';
 import {provideRouter} from '@angular/router';
+import {provideEffects} from '@ngrx/effects';
+import {provideStore} from '@ngrx/store';
 
 import {routes} from './app.routes';
+import {boardStateReducer} from "./stores/board-state/board-state.reducer";
 
 export const appConfig: ApplicationConfig = {
     providers: [
@@ -12,6 +15,8 @@ export const appConfig: ApplicationConfig = {
         provideRouter(routes),
         provideAnimationsAsync(),
         importProvidersFrom([BrowserAnimationsModule]),
-        provideHttpClient()
+        provideHttpClient(),
+        provideStore({boardState: boardStateReducer}),
+        provideEffects()
     ]
 };

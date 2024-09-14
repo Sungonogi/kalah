@@ -1,12 +1,15 @@
+import {BoardPosition} from "./board-position.class";
+import {PlayerType} from "./player-type.enum";
+
 /*
-    represents one state of the board
+    not only the logical position of the board but also other relevant data for the application
  */
 
 export interface BoardState {
-    pits: number, // size of southPits and northPits
-    southPits: number[],
-    northPits: number[],
-    southStore: number,
-    northStore: number,
-    southTurn: boolean, // true if south has the turn
+    initialized: boolean,
+    waitingForCPU: boolean,
+    gameOver: boolean,
+    playerSouth: PlayerType,
+    playerNorth: PlayerType,
+    boardPosition: BoardPosition,
 }

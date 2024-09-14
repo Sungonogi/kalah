@@ -2,11 +2,14 @@ import {NgStyle} from "@angular/common";
 import {Component, inject, OnInit, WritableSignal} from '@angular/core';
 import {Router} from "@angular/router";
 
-import {BoardState} from "../../../models/board-state.model";
+import {BoardPosition} from "../../../models/board-position.class";
 import {PlayerType} from "../../../models/player-type.enum";
-import {BoardService} from "../../../services/board.service";
+import {playerAttemptsMove} from "../../../stores/board-state/board-state.actions";
 import {StartParamsStore} from "../../../stores/start-params/start-params.store";
 import {PitComponent} from "./pit/pit.component";
+import {Store} from "@ngrx/store";
+import {Observable} from "rxjs";
+import {BoardState} from "../../../models/board-state.model";
 
 @Component({
     selector: 'app-board',
@@ -20,37 +23,42 @@ import {PitComponent} from "./pit/pit.component";
 })
 export class BoardComponent implements OnInit {
 
-    private boardService: BoardService = inject(BoardService);
-    protected boardState!: WritableSignal<BoardState>;
+    private boardState!: Observable<BoardState>;
+    protected board!: BoardPosition;
 
     protected playerSouth!: PlayerType;
     protected playerNorth!: PlayerType;
 
     startParamsStore = inject(StartParamsStore);
 
-    constructor(private router: Router) {
+    constructor(
+            private router: Router,
+            private store: Store<{ boardState: BoardState }>
+    ) {
+        store.select('boardState').subscribe((state) => {
+            this.board = state.boardPosition;
+        });
     }
 
+
     ngOnInit() {
-        if(!this.startParamsStore.defined()){
+        if (!this.startParamsStore.defined()) {
             this.router.navigate(['/start']);
         }
 
         const startParams = this.startParamsStore.startParams();
         this.playerSouth = startParams.playerSouth;
         this.playerNorth = startParams.playerNorth;
-        this.boardService.init(startParams);
 
-        this.boardState = this.boardService.getBoardState();
     }
 
     move(position: number, onSouthSide: boolean) {
         console.log('move', position, onSouthSide);
-        this.boardService.doMove(position, onSouthSide);
+        this.store.dispatch(playerAttemptsMove({move: position, onSouthSide}));
     }
 
     getIndexArray(size: number) {
-        return Array(size).fill(0).map((e,i)=>i);
+        return Array(size).fill(0).map((e, i) => i);
     }
 
 }

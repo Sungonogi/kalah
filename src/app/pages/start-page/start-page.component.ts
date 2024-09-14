@@ -10,6 +10,8 @@ import {PlayerType} from "../../models/player-type.enum";
 import {StartParams} from "../../models/start-params.model";
 import {NumberInputComponent} from "../../shared/number-input/number-input.component";
 import {StartParamsStore} from "../../stores/start-params/start-params.store";
+import {Store} from "@ngrx/store";
+import {BoardState} from "../../models/board-state.model";
 
 @Component({
     selector: 'app-start-page',
@@ -41,7 +43,10 @@ export class StartPageComponent implements OnInit{
     // inject the start params store
     startParamsStore = inject(StartParamsStore);
 
-    constructor(private router: Router) {
+    constructor(
+            private router: Router,
+            private store: Store<{ boardState: BoardState }>
+    ) {
     }
 
     ngOnInit() {
@@ -50,6 +55,7 @@ export class StartPageComponent implements OnInit{
 
     submitStartParams(){
         this.startParamsStore.setStartParams(this.startParams);
+        this.store.dispatch({type: '[Board State] init', startParams: this.startParams});
         this.router.navigate(['/play']);
     }
 }

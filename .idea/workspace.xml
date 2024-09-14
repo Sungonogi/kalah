@@ -4,24 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ff32ea9a-e283-4b66-afcf-3b0581baeb3b" name="Changes" comment=":rotating_light: autosort imports">
-      <change afterPath="$PROJECT_DIR$/src/app/models/board-position.class.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/stores/board-state/board-state.actions.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/stores/board-state/board-state.effects.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/stores/board-state/board-state.reducer.ts" afterDir="false" />
+    <list default="true" id="ff32ea9a-e283-4b66-afcf-3b0581baeb3b" name="Changes" comment=":construction: try ngrx store for the boardstate">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/app.config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/app.config.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/models/COM-move-request.model.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/models/COM-move-request.model.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/models/board-position.class.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/models/board-position.model.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/models/board-state.model.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/models/board-state.model.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/pages/game-page/board/board.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/pages/game-page/board/board.component.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/pages/game-page/board/board.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/pages/game-page/board/board.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/pages/start-page/start-page.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/pages/start-page/start-page.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/services/board.service.spec.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/services/board.service.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/services/computer-move.service.spec.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/services/computer-move.service.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/stores/board-state/board-state.reducer.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/stores/board-state/board-state.reducer.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -208,7 +197,7 @@
       <workItem from="1726163825963" duration="20004000" />
       <workItem from="1726251767991" duration="11503000" />
       <workItem from="1726313891606" duration="467000" />
-      <workItem from="1726319716227" duration="1000000" />
+      <workItem from="1726319716227" duration="1864000" />
     </task>
     <task id="LOCAL-00001" summary=":recycle: move backend to separate repo">
       <option name="closed" value="true" />
@@ -426,7 +415,15 @@
       <option name="project" value="LOCAL" />
       <updated>1726305880023</updated>
     </task>
-    <option name="localTasksCounter" value="28" />
+    <task id="LOCAL-00028" summary=":construction: try ngrx store for the boardstate">
+      <option name="closed" value="true" />
+      <created>1726321018375</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1726321018375</updated>
+    </task>
+    <option name="localTasksCounter" value="29" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -455,6 +452,7 @@
     <MESSAGE value=":construction: testing how player vs computer could be implemented" />
     <MESSAGE value=":alien: get moves from the backend" />
     <MESSAGE value=":rotating_light: autosort imports" />
-    <option name="LAST_COMMIT_MESSAGE" value=":rotating_light: autosort imports" />
+    <MESSAGE value=":construction: try ngrx store for the boardstate" />
+    <option name="LAST_COMMIT_MESSAGE" value=":construction: try ngrx store for the boardstate" />
   </component>
 </project>

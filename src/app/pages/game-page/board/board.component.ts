@@ -2,7 +2,7 @@ import {NgStyle} from "@angular/common";
 import {Component, inject, OnInit, WritableSignal} from '@angular/core';
 import {Router} from "@angular/router";
 
-import {BoardPosition} from "../../../models/board-position.class";
+import {BoardPosition} from "../../../models/board-position.model";
 import {PlayerType} from "../../../models/player-type.enum";
 import {playerAttemptsMove} from "../../../stores/board-state/board-state.actions";
 import {StartParamsStore} from "../../../stores/start-params/start-params.store";

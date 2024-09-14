@@ -1,4 +1,4 @@
-import {BoardPosition} from "./board-position.class";
+import {BoardPosition} from "./board-position.model";
 import {PlayerType} from "./player-type.enum";
 
 /*
@@ -8,7 +8,6 @@ import {PlayerType} from "./player-type.enum";
 export interface BoardState {
     initialized: boolean,
     waitingForCPU: boolean,
-    gameOver: boolean,
     playerSouth: PlayerType,
     playerNorth: PlayerType,
     boardPosition: BoardPosition,

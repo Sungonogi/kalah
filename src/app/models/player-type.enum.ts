@@ -1,7 +1,7 @@
 export enum PlayerType {
     Local = 'Local',
-    EasyCPU = 'Easy CPU',
-    MediumCPU = 'Medium CPU',
-    HardCPU = 'Hard CPU',
+    EasyCom = 'Easy Com',
+    MediumCom = 'Medium Com',
+    HardCom = 'Hard Com',
     Stickfish = 'Stickfish'
 }

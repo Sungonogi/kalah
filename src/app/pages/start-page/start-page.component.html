@@ -27,7 +27,8 @@
                       (emitNumber)="startParams.pits = $event" (emitError)="pitsValid = $event">
     </app-number-input>
 
-    <button mat-flat-button (click)="submitStartParams()" [disabled]="!seedsValid || !pitsValid">
+    <button mat-flat-button (click)="submitStartParams()" routerLink="/play"
+            [disabled]="!seedsValid || !pitsValid">
       Start Playing
     </button>
 

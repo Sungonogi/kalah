@@ -1,4 +1,4 @@
-import {effect, inject, Injectable, Signal, signal, WritableSignal} from '@angular/core';
+import {inject, Injectable, signal, WritableSignal} from '@angular/core';
 
 import {checkLegalMove, performLegalMove} from "../models/board-position.helpers";
 import {BoardPosition} from "../models/board-position.model";
@@ -13,46 +13,20 @@ export class BoardService {
 
     startParams = inject(StartParamsStore);
 
-    playerSouth: Signal<PlayerType>;
-    playerNorth: Signal<PlayerType>;
-
-    boardPosition: WritableSignal<BoardPosition>;
+    // will be assigned in the resetBoard method
+    playerSouth!: PlayerType;
+    playerNorth!: PlayerType;
+    boardPosition!: WritableSignal<BoardPosition>;
+    moveRequested!: boolean; // to avoid multiple calls at once
 
     constructor(private comMoveService: ComMoveService) {
-
-        this.playerNorth = this.startParams.playerNorth;
-        this.playerSouth = this.startParams.playerSouth;
-
-        const pits = this.startParams.pits();
-        const seeds = this.startParams.seeds();
-
-        const boardPosition = {
-            pits: pits,
-            southPits: Array(pits).fill(seeds),
-            northPits: Array(pits).fill(seeds),
-            southStore: 0,
-            northStore: 0,
-            southTurn: true,
-            gameOver: false
-        };
-        this.boardPosition = signal(boardPosition);
-
-        effect(() => {
-            // Com move
-            const boardPosition = this.boardPosition();
-
-            const player = boardPosition.southTurn ? this.playerSouth() : this.playerNorth();
-            console.log('player', player);
-            if(player !== PlayerType.Local){
-                this.comMoveService.requestMove(boardPosition, player).subscribe(move => {
-                    this.boardPosition.set(performLegalMove(boardPosition, move));
-                });
-            }
-
-        });
     }
 
+    // has to be called before any other functions
     resetBoard(): void {
+        this.playerSouth = this.startParams.playerSouth();
+        this.playerNorth = this.startParams.playerNorth();
+
         const pits = this.startParams.pits();
         const seeds = this.startParams.seeds();
 
@@ -65,7 +39,32 @@ export class BoardService {
             southTurn: true,
             gameOver: false
         };
-        this.boardPosition.set(boardPosition);
+
+        if(!this.boardPosition){
+            this.boardPosition = signal(boardPosition);
+        } else {
+            this.boardPosition.set(boardPosition);
+        }
+
+        this.moveRequested = false;
+        this.checkAndPerformComMove();
+    }
+
+    // checks if the computer has the next move and if yes does the move
+    checkAndPerformComMove(){
+        const boardPosition = this.boardPosition();
+
+        const player = boardPosition.southTurn ? this.playerSouth : this.playerNorth;
+
+        if(!boardPosition.gameOver && player !== PlayerType.Local && !this.moveRequested){
+            this.moveRequested = true;
+            this.comMoveService.requestMove(boardPosition, player).subscribe(move => {
+                this.boardPosition.set(performLegalMove(boardPosition, move));
+
+                this.moveRequested = false;
+                this.checkAndPerformComMove();
+            });
+        }
     }
 
     playerAttemptsMove(move: number, onSouthSide: boolean): void {
@@ -77,7 +76,7 @@ export class BoardService {
             return;
         }
 
-        const player = onSouthSide ? this.playerSouth() : this.playerNorth();
+        const player = onSouthSide ? this.playerSouth : this.playerNorth;
         if(player !== PlayerType.Local){
             console.error('Not your side');
             return;
@@ -94,7 +93,10 @@ export class BoardService {
             return;
         }
 
-        this.boardPosition.set(performLegalMove(boardPosition, move));
+        const newPosition = performLegalMove(boardPosition, move);
+        this.boardPosition.set(newPosition);
+
+        this.checkAndPerformComMove();
     }
 
 

@@ -1,4 +1,4 @@
-@if(board){
+@if(board(); as board){
   <div class="board" [ngStyle]="{'grid-template-columns' : 'repeat(' + (board.pits+2) + ', 1fr)'}">
 
     <div class="store-container south-store">

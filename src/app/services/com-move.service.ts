@@ -1,6 +1,6 @@
 import {HttpClient} from "@angular/common/http";
 import {Injectable} from '@angular/core';
-import {forkJoin, map, timer} from "rxjs";
+import {forkJoin, map, Observable, timer} from "rxjs";
 
 import {BoardPosition} from "../models/board-position.model";
 import {ComMoveRequest} from "../models/COM-move-request.model";
@@ -14,7 +14,7 @@ export class ComMoveService {
     constructor(private http: HttpClient) {
     }
   
-    requestMove(boardPosition: BoardPosition, playerType: PlayerType) {
+    requestMove(boardPosition: BoardPosition, playerType: PlayerType): Observable<number> {
         const request: ComMoveRequest = {
             playerType: playerType,
             boardPosition: boardPosition

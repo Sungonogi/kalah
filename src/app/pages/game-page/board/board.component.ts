@@ -1,5 +1,5 @@
 import {NgStyle} from "@angular/common";
-import {Component, effect, inject, OnInit} from '@angular/core';
+import {Component, effect, inject, OnInit, Signal} from '@angular/core';
 import {MatButton} from "@angular/material/button";
 import {MatDialog} from "@angular/material/dialog";
 import {Router, RouterLink} from "@angular/router";
@@ -31,7 +31,7 @@ export interface DialogData {
 })
 export class BoardComponent implements OnInit {
 
-    protected board!: BoardPosition;
+    protected board!: Signal<BoardPosition>;
 
     protected playerSouth!: PlayerType;
     protected playerNorth!: PlayerType;
@@ -45,14 +45,12 @@ export class BoardComponent implements OnInit {
     ) {
 
         effect(() => {
-            this.board = this.boardService.boardPosition();
-            if(this.board.gameOver){
-
-                console.log("test");
+            const board = this.board();
+            if(board.gameOver){
 
                 const dialogRef = this.matDialog.open(GameOverDialogComponent, {
                     data: {
-                        board: this.board,
+                        board: board,
                         playerSouth: this.playerSouth,
                         playerNorth: this.playerNorth
                     }
@@ -74,6 +72,8 @@ export class BoardComponent implements OnInit {
 
     ngOnInit() {
         this.boardService.resetBoard();
+
+        this.board = this.boardService.boardPosition;
         this.playerSouth = this.startParamsStore.playerSouth();
         this.playerNorth = this.startParamsStore.playerNorth();
     }

@@ -1,13 +1,21 @@
 import {NgStyle} from "@angular/common";
 import {Component, effect, inject, OnInit} from '@angular/core';
+import {MatButton} from "@angular/material/button";
+import {MatDialog} from "@angular/material/dialog";
+import {Router, RouterLink} from "@angular/router";
 
 import {BoardPosition} from "../../../models/board-position.model";
 import {PlayerType} from "../../../models/player-type.enum";
 import {BoardService} from "../../../services/board.service";
 import {StartParamsStore} from "../../../stores/start-params/start-params.store";
+import {GameOverDialogComponent} from "./game-over-dialog/game-over-dialog.component";
 import {PitComponent} from "./pit/pit.component";
-import {MatButton} from "@angular/material/button";
-import {RouterLink} from "@angular/router";
+
+export interface DialogData {
+    board: BoardPosition;
+    playerSouth: PlayerType;
+    playerNorth: PlayerType;
+}
 
 @Component({
     selector: 'app-board',
@@ -30,10 +38,35 @@ export class BoardComponent implements OnInit {
 
     startParamsStore = inject(StartParamsStore);
 
-    constructor(private boardService: BoardService) {
+    constructor(
+            private boardService: BoardService,
+            private matDialog: MatDialog,
+            private router: Router
+    ) {
 
         effect(() => {
             this.board = this.boardService.boardPosition();
+            if(this.board.gameOver){
+
+                console.log("test");
+
+                const dialogRef = this.matDialog.open(GameOverDialogComponent, {
+                    data: {
+                        board: this.board,
+                        playerSouth: this.playerSouth,
+                        playerNorth: this.playerNorth
+                    }
+                });
+
+                dialogRef.afterClosed().subscribe(result => {
+                    if(result){
+                        this.boardService.resetBoard();
+                    } else {
+                        this.router.navigate(["start"]);
+                    }
+                });
+
+            }
         });
 
     }

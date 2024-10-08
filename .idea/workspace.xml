@@ -6,7 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="ff32ea9a-e283-4b66-afcf-3b0581baeb3b" name="Changes" comment=":recycle: use signals instead of the ngrx store and it works">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/services/com-move.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/services/com-move.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/pages/game-page/board/board.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/pages/game-page/board/board.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/pages/game-page/board/board.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/pages/game-page/board/board.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/pages/game-page/game-page.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/pages/game-page/game-page.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/pages/game-page/game-page.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/pages/game-page/game-page.component.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -46,33 +49,33 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Karma.NumberInputComponent.executor": "Run",
-    "Karma.NumberInputComponent.should correctly calculate the max digits.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "ToolWindow.GitHub Copilot Chat.ShowToolbar": "false",
-    "git-widget-placeholder": "main",
-    "ignore.virus.scanning.warn.message": "true",
-    "js.linters.configure.manually.selectedeslint": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/stern/IdeaProjects/fe-kalah",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.standard": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.standard": "",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "npm.Angular CLI Server.executor": "Run",
-    "npm.lint.executor": "Run",
-    "npm.test.executor": "Run",
-    "npm.watch.executor": "Run",
-    "settings.editor.selected.configurable": "settings.javascript.linters.eslint",
-    "ts.external.directory.path": "C:\\Users\\stern\\IdeaProjects\\fe-kalah\\node_modules\\typescript\\lib",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Karma.NumberInputComponent.executor&quot;: &quot;Run&quot;,
+    &quot;Karma.NumberInputComponent.should correctly calculate the max digits.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;ToolWindow.GitHub Copilot Chat.ShowToolbar&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;js.linters.configure.manually.selectedeslint&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/stern/IdeaProjects/fe-kalah&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.standard&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.standard&quot;: &quot;&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;npm.Angular CLI Server.executor&quot;: &quot;Run&quot;,
+    &quot;npm.lint.executor&quot;: &quot;Run&quot;,
+    &quot;npm.test.executor&quot;: &quot;Run&quot;,
+    &quot;npm.watch.executor&quot;: &quot;Run&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;settings.javascript.linters.eslint&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;C:\\Users\\stern\\IdeaProjects\\fe-kalah\\node_modules\\typescript\\lib&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\stern\IdeaProjects\fe-kalah\src\app\services" />
@@ -197,6 +200,8 @@
       <workItem from="1726313891606" duration="467000" />
       <workItem from="1726319716227" duration="7476000" />
       <workItem from="1726774484345" duration="6293000" />
+      <workItem from="1728028439824" duration="3679000" />
+      <workItem from="1728045799797" duration="1730000" />
     </task>
     <task id="LOCAL-00001" summary=":recycle: move backend to separate repo">
       <option name="closed" value="true" />

@@ -1,8 +1,8 @@
 import {Component} from '@angular/core';
-
-import {BoardComponent} from "./board/board.component";
 import {MatButton} from "@angular/material/button";
 import {RouterLink} from "@angular/router";
+
+import {BoardComponent} from "./board/board.component";
 
 @Component({
     selector: 'app-game-page',

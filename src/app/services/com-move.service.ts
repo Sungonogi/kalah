@@ -1,9 +1,9 @@
 import {HttpClient} from "@angular/common/http";
 import {Injectable} from '@angular/core';
-import {forkJoin, map, Observable, timer} from "rxjs";
+import {forkJoin, map, Observable, tap, timer} from "rxjs";
 
 import {BoardPosition} from "../models/board-position.model";
-import {ComMoveRequest} from "../models/COM-move-request.model";
+import {ComMoveRequest, ComMoveResponse} from "../models/COM.models";
 import {PlayerType} from "../models/player-type.enum";
 
 @Injectable({
@@ -21,12 +21,14 @@ export class ComMoveService {
         };
 
         // ensure that the backend call takes at least 1 second
-        const backendCall$ = this.http.post<number>("http://localhost:9090/api/computerMove", request);
+        const backendCall$ = this.http.post<ComMoveResponse>("http://localhost:9090/api/computerMove", request);
         const minDelay$ = timer(1000);
 
         // wait for both, but only return the response
         return forkJoin([backendCall$, minDelay$]).pipe(
-            map(([response]) => response)
+            map(([response]) => response),
+            tap((x: ComMoveResponse) => console.log("Computer \"" + playerType + "\" commented\n" + x.comment)),
+            map((x: ComMoveResponse) => x.move)
         );
     }
 

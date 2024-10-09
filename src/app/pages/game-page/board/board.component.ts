@@ -1,5 +1,5 @@
 import {NgStyle} from "@angular/common";
-import {Component, effect, inject, OnInit, Signal} from '@angular/core';
+import {Component, effect, inject, OnDestroy, OnInit, Signal} from '@angular/core';
 import {MatButton} from "@angular/material/button";
 import {MatDialog} from "@angular/material/dialog";
 import {Router, RouterLink} from "@angular/router";
@@ -29,7 +29,7 @@ export interface DialogData {
     templateUrl: './board.component.html',
     styleUrl: './board.component.scss'
 })
-export class BoardComponent implements OnInit {
+export class BoardComponent implements OnInit, OnDestroy {
 
     protected board!: Signal<BoardPosition>;
 
@@ -76,6 +76,10 @@ export class BoardComponent implements OnInit {
         this.board = this.boardService.boardPosition;
         this.playerSouth = this.startParamsStore.playerSouth();
         this.playerNorth = this.startParamsStore.playerNorth();
+    }
+
+    ngOnDestroy() {
+        this.boardService.stopGame();
     }
 
     move(position: number, onSouthSide: boolean) {

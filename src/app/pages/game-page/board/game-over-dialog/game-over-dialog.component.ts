@@ -45,6 +45,6 @@ export class GameOverDialogComponent {
         }
 
         // print out the winner (north or south)
-        return this.board.southStore > this.board.northStore ? 'South won' : 'North won';
+        return this.board.southStore > this.board.northStore ? 'South ('  + this.playerSouth + ') won' : 'North (' + this.playerNorth + ') won';
     }
 }

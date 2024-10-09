@@ -1,4 +1,4 @@
-import {inject, Injectable, signal, WritableSignal} from '@angular/core';
+import {inject, Injectable, OnDestroy, signal, WritableSignal} from '@angular/core';
 
 import {checkLegalMove, performLegalMove} from "../models/board-position.helpers";
 import {BoardPosition} from "../models/board-position.model";
@@ -9,7 +9,7 @@ import {ComMoveService} from "./com-move.service";
 @Injectable({
     providedIn: 'root'
 })
-export class BoardService {
+export class BoardService implements OnDestroy {
 
     startParams = inject(StartParamsStore);
 
@@ -18,6 +18,7 @@ export class BoardService {
     playerNorth!: PlayerType;
     boardPosition!: WritableSignal<BoardPosition>;
     moveRequested!: boolean; // to avoid multiple calls at once
+    kill!: boolean; // to stop the game when the board component is destroyed
 
     constructor(private comMoveService: ComMoveService) {
     }
@@ -47,24 +48,33 @@ export class BoardService {
         }
 
         this.moveRequested = false;
+        this.kill = false;
+
         this.checkAndPerformComMove();
     }
 
     // checks if the computer has the next move and if yes does the move
     checkAndPerformComMove(){
+
+        if(this.kill || this.moveRequested)
+            return;
+
         const boardPosition = this.boardPosition();
+        if(boardPosition.gameOver)
+            return;
+
 
         const player = boardPosition.southTurn ? this.playerSouth : this.playerNorth;
+        if(player === PlayerType.Local)
+            return;
 
-        if(!boardPosition.gameOver && player !== PlayerType.Local && !this.moveRequested){
-            this.moveRequested = true;
-            this.comMoveService.requestMove(boardPosition, player).subscribe(move => {
-                this.boardPosition.set(performLegalMove(boardPosition, move));
+        this.moveRequested = true;
+        this.comMoveService.requestMove(boardPosition, player).subscribe(move => {
+            this.boardPosition.set(performLegalMove(boardPosition, move));
 
-                this.moveRequested = false;
-                this.checkAndPerformComMove();
-            });
-        }
+            this.moveRequested = false;
+            this.checkAndPerformComMove();
+        });
     }
 
     playerAttemptsMove(move: number, onSouthSide: boolean): void {
@@ -97,6 +107,15 @@ export class BoardService {
         this.boardPosition.set(newPosition);
 
         this.checkAndPerformComMove();
+    }
+
+    stopGame(): void {
+        // don't request moves anymore (otherwise games between coms will keep going on)
+        this.kill = true;
+    }
+
+    ngOnDestroy(): void {
+        console.log("destroyed");
     }
 
 

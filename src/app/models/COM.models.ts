@@ -5,3 +5,8 @@ export interface ComMoveRequest {
     playerType: PlayerType;
     boardPosition: BoardPosition
 }
+
+export interface ComMoveResponse {
+    move: number;
+    comment: string;
+}

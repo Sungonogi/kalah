@@ -19,7 +19,7 @@ export class PitComponent {
 
     // public method that returns the center of the pit
     getCenterPosition(): {x: number, y: number} {
-        const rect = this.elementRef.nativeElement.getBoundingClientRect();
+        const rect = this.elementRef.nativeElement.querySelector('.pit').getBoundingClientRect();
         const x = rect.left + rect.width / 2;
         const y = rect.top + rect.height / 2;
         return {x, y};

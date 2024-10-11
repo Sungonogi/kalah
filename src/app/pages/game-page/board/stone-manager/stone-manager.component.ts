@@ -1,5 +1,16 @@
 import {NgStyle} from "@angular/common";
-import {AfterViewInit, Component, effect, ElementRef, Input, QueryList, Signal, ViewChildren} from '@angular/core';
+import {
+    AfterViewInit,
+    Component,
+    effect,
+    ElementRef,
+    HostListener,
+    Input, OnInit,
+    QueryList,
+    Signal,
+    ViewChildren
+} from '@angular/core';
+import {isEqual} from "lodash";
 
 import {BoardPosition} from "../../../../models/board-position.model";
 
@@ -12,18 +23,31 @@ import {BoardPosition} from "../../../../models/board-position.model";
     templateUrl: './stone-manager.component.html',
     styleUrl: './stone-manager.component.scss'
 })
-export class StoneManagerComponent implements AfterViewInit {
+export class StoneManagerComponent implements OnInit, AfterViewInit {
 
-    protected readonly stoneSize = 60;
-    protected readonly offset = 80;
+    protected readonly maxScreenSize = 1400;
+    protected readonly minScreenSize = 800;
 
-    @Input({required: true}) totalStones!: number;
-    @Input({required: true}) board!: Signal<BoardPosition>;
-    @Input({required: true}) pitPositions!: {x:number, y: number}[];
+    protected readonly maxStoneSize = 60;
+    protected readonly minStoneSize = 20;
+
+    protected readonly maxOffset = 80;
+    protected readonly minOffset = 20;
+
+    protected stoneSize!: number;
+    protected offset!: number;
 
     @ViewChildren('stoneElement') stones!: QueryList<ElementRef>;
 
+    @Input({required: true}) totalStones!: number;
+    @Input({required: true}) pitPositions!: Signal<{x:number, y: number}[]>;
+    @Input({required: true}) board!: Signal<BoardPosition>;
+
+    previousBoard: BoardPosition | undefined = undefined;
+
     pits!: number;
+
+    rendered = false;
     
     northStoreStones: ElementRef[] = [];
     southStoreStones: ElementRef[] = [];
@@ -31,6 +55,10 @@ export class StoneManagerComponent implements AfterViewInit {
     // initialize with pits empty arrays
     northPitStones: ElementRef[][] = [];
     southPitStones: ElementRef[][] = [];
+
+    ngOnInit() {
+        this.updateSizeAndOffset();
+    }
 
     ngAfterViewInit() {
         this.pits = this.board().pits;
@@ -50,50 +78,95 @@ export class StoneManagerComponent implements AfterViewInit {
             }
         }
 
-        this.northStoreStones.push(stones[stoneCount++]);
-        this.southStoreStones.push(stones[stoneCount++]);
+        this.previousBoard = this.board();
+    }
 
-        console.log("rendering");
-
+    @HostListener('window:resize')
+    onResize() {
+        this.updateSizeAndOffset();
         this.renderStones();
     }
 
     constructor() {
+        // effect to rerender when the pitPositions change
         effect(() => {
+            this.pitPositions();
+            this.renderStones();
+        });
+
+        // effect to adjust positions of stones when moves are made
+        effect(() => {
+
+            if(this.previousBoard === undefined || !this.rendered){
+                return;
+            }
+
             // move the stones to the new positions when the boardState changes
             const board = this.board();
 
-            // empty the arrays
-            this.northStoreStones = [];
-            this.southStoreStones = [];
-            this.northPitStones = this.northPitStones.map(() => []);
-            this.southPitStones = this.southPitStones.map(() => []);
+            // check for deep equality
+            if(isEqual(this.previousBoard, board)){
+                return;
+            }
 
-            // fill the arrays with the stones
-            let stoneCount = 0;
-            const stones = this.stones.toArray();
-            for(let i = 0; i < board.pits; i++) {
-                for(let j = 0; j < board.northPits[i]; j++) {
-                    this.northPitStones[i].push(stones[stoneCount++]);
-                }
-                for(let j = 0; j < board.southPits[i]; j++) {
-                    this.southPitStones[i].push(stones[stoneCount++]);
+            // check where the stones were removed
+            const checkSouth = this.previousBoard.southTurn;
+            const before = checkSouth ? this.previousBoard.southPits : this.previousBoard.northPits;
+            const after = checkSouth ? board.southPits : board.northPits;
+            let removedStones: ElementRef[] = [];
+            for(let i = 0; i < this.pits; i++){
+                if(after[i] < before[i]){
+                    removedStones = checkSouth ? this.southPitStones[i] : this.northPitStones[i];
                 }
             }
 
-            for(let i = 0; i < board.northStore; i++) {
-                this.northStoreStones.push(stones[stoneCount++]);
-            }
-            for(let i = 0; i < board.southStore; i++) {
-                this.southStoreStones.push(stones[stoneCount++]);
+            // move the stones to the new position
+            for(let i = 0; i < this.pits; i++) {
+                // check if stones were added
+                if(board.northPits[i] > this.previousBoard.northPits[i]){
+                    // we know that there are still stones left
+                    const stone = removedStones.pop() as ElementRef;
+                    this.northPitStones[i].push(stone);
+
+                    const northPosition = this.getNorthPitPosition(i);
+                    this.adjustStonePosition(stone, northPosition);
+                }
+
+                if(board.southPits[i] > this.previousBoard.southPits[i]){
+                    // we know that there are still stones left
+                    const stone = removedStones.pop() as ElementRef;
+                    this.southPitStones[i].push(stone);
+
+                    const southPosition = this.getSouthPitPosition(i);
+                    this.adjustStonePosition(stone, southPosition);
+                }
             }
 
-            this.renderStones();
+            // check if stones were added to the stores
+            if(board.northStore > this.previousBoard.northStore){
+                const stone = removedStones.pop() as ElementRef;
+                this.northStoreStones.push(stone);
 
+                const northStorePosition = this.getNorthStorePosition();
+                this.adjustStonePosition(stone, northStorePosition, true);
+            }
+
+            if(board.southStore > this.previousBoard.southStore){
+                const stone = removedStones.pop() as ElementRef;
+                this.southStoreStones.push(stone);
+
+                const southStorePosition = this.getSouthStorePosition();
+                this.adjustStonePosition(stone, southStorePosition, true);
+            }
+
+            this.previousBoard = board;
         });
     }
 
     renderStones() {
+
+        this.rendered = true;
+
         // position the stones in the arrays accordingly
         for(let i = 0; i < this.pits; i++) {
             const northPit = this.northPitStones[i];
@@ -118,31 +191,30 @@ export class StoneManagerComponent implements AfterViewInit {
 
         const northStorePosition = this.getNorthStorePosition();
         const southStorePosition = this.getSouthStorePosition();
-        console.log(southStorePosition);
 
         northStore.forEach(stone => {
-            this.adjustStonePosition(stone, northStorePosition);
+            this.adjustStonePosition(stone, northStorePosition, true);
         });
 
         southStore.forEach(stone => {
-            this.adjustStonePosition(stone, southStorePosition);
+            this.adjustStonePosition(stone, southStorePosition, true);
         });
     }
 
     getNorthStorePosition() {
-        return this.pitPositions[0];
+        return this.pitPositions()[0];
     }
 
     getSouthStorePosition() {
-        return this.pitPositions[this.pits + 1];
+        return this.pitPositions()[this.pits + 1];
     }
 
     getNorthPitPosition(index: number) {
-        return this.pitPositions[this.pits - index];
+        return this.pitPositions()[this.pits - index];
     }
 
     getSouthPitPosition(index: number) {
-        return this.pitPositions[this.pits + 2 + index];
+        return this.pitPositions()[this.pits + 2 + index];
     }
 
     /**
@@ -153,16 +225,32 @@ export class StoneManagerComponent implements AfterViewInit {
         return Array(stones).fill(0).map((e,i)=>i);
     }
 
-    adjustPosition(initial : number){
-        return initial + (Math.random() * this.offset - this.offset / 2) - 0.5 * this.stoneSize;
-    }
+    adjustStonePosition(stone: ElementRef, position: {x: number, y: number}, store = false) {
+        const x = position.x + (Math.random() * this.offset - this.offset / 2) - this.stoneSize / 2;
 
-    adjustStonePosition(stone: ElementRef, position: {x: number, y: number}) {
-        const x = this.adjustPosition(position.x);
-        const y = this.adjustPosition(position.y);
+        const yOffset = store ? 2 * this.offset : this.offset;
+        const y = position.y + (Math.random() * yOffset - yOffset / 2) - this.stoneSize / 2;
 
         stone.nativeElement.style.left = x + "px";
         stone.nativeElement.style.top = y + "px";
+    }
+
+    // dynamically scale the stoneSize and offset between the max and min values
+    updateSizeAndOffset(){
+        const width = window.innerWidth;
+
+        if(width < this.minScreenSize){
+            this.stoneSize = this.minStoneSize;
+            this.offset = this.minOffset;
+        } else if(width > this.maxScreenSize){
+            this.stoneSize = this.maxStoneSize;
+            this.offset = this.maxOffset;
+        } else {
+            const factor = (width - this.minScreenSize) / (this.maxScreenSize - this.minScreenSize);
+            this.stoneSize = this.minStoneSize + factor * (this.maxStoneSize - this.minStoneSize);
+            this.offset = this.minOffset + factor * (this.maxOffset - this.minOffset);
+        }
+
     }
 
 

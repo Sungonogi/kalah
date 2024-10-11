@@ -3,12 +3,12 @@ import {
     AfterViewInit,
     Component,
     effect,
-    ElementRef,
+    HostListener,
     inject,
     OnDestroy,
     OnInit,
-    QueryList,     Signal,
-signal,
+    QueryList, Signal,
+    signal,
     ViewChildren,
     WritableSignal
 } from '@angular/core';
@@ -97,10 +97,6 @@ export class BoardComponent implements OnInit, AfterViewInit, OnDestroy {
         this.totalStones = 2 * this.startParamsStore.seeds() *  this.startParamsStore.pits();
     }
 
-    ngAfterViewInit() {
-        this.updatePitPositions();
-    }
-
     ngOnDestroy() {
         this.boardService.stopGame();
     }
@@ -113,6 +109,15 @@ export class BoardComponent implements OnInit, AfterViewInit, OnDestroy {
         return Array(size).fill(0).map((e, i) => i);
     }
 
+    ngAfterViewInit() {
+        this.updatePitPositions();
+    }
+
+    // call updatePositions when view is resized
+    @HostListener('window:resize')
+    onResize() {
+        this.updatePitPositions();
+    }
 
     updatePitPositions(){
         const positions = this.pitElements.map(pit => pit.getCenterPosition());
@@ -120,5 +125,9 @@ export class BoardComponent implements OnInit, AfterViewInit, OnDestroy {
         console.log("updating pit positions", positions);
 
         this.pitPositions.set(positions);
+    }
+
+    castPitPositions() {
+        return this.pitPositions as Signal<{x: number, y: number}[]>;
     }
 }

@@ -24,4 +24,17 @@ export class PitComponent {
         return Array(stones).fill(0).map((e,i)=>i);
     }
 
+
+    getRandomPosition() {
+        const offset = 80; // Controls the randomness range around the center
+        const randomX = Math.random() * offset - offset / 2;  // Random offset between -offset/2 and offset/2
+        const randomY = Math.random() * offset - offset / 2;
+
+        return {
+            top: `calc(50% + ${randomY}px)`,  // Position relative to the center
+            left: `calc(50% + ${randomX}px)`, // Position relative to the center
+            transform: 'translate(-50%, -50%)' // Ensure the center of the stone aligns with the random position
+        };
+    }
+
 }

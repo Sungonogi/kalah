@@ -1,11 +1,11 @@
-import {NgStyle} from "@angular/common";
+import {NgClass} from "@angular/common";
 import {Component, ElementRef, Input} from '@angular/core';
 
 @Component({
     selector: 'app-pit',
     standalone: true,
     imports: [
-        NgStyle
+        NgClass
     ],
     templateUrl: './pit.component.html',
     styleUrl: './pit.component.scss'
@@ -13,7 +13,8 @@ import {Component, ElementRef, Input} from '@angular/core';
 export class PitComponent {
     // will be overwritten
     @Input({required: true}) stones!: number;
-    @Input() aspectRatio = '1/1';
+    @Input() store = false;
+    @Input() hoverEffect = false;
 
     constructor(public elementRef: ElementRef) { }
 

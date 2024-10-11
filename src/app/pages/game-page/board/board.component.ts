@@ -103,14 +103,6 @@ export class BoardComponent implements OnInit, AfterViewInit, OnDestroy {
         this.boardService.stopGame();
     }
 
-    move(position: number, onSouthSide: boolean) {
-        this.boardService.playerAttemptsMove(position, onSouthSide);
-    }
-
-    getIndexArray(size: number) {
-        return Array(size).fill(0).map((e, i) => i);
-    }
-
     // call updatePitPositions when view is rendered
     ngAfterViewInit() {
         /*
@@ -145,5 +137,17 @@ export class BoardComponent implements OnInit, AfterViewInit, OnDestroy {
 
     castPitPositions() {
         return this.pitPositions as Signal<{x: number, y: number}[]>;
+    }
+
+    move(position: number, onSouthSide: boolean) {
+        this.boardService.playerAttemptsMove(position, onSouthSide);
+    }
+
+    getIndexArray(size: number) {
+        return Array(size).fill(0).map((e, i) => i);
+    }
+
+    movePossible(position: number, onSouthSide: boolean) {
+        return this.boardService.movePossible(position, onSouthSide);
     }
 }

@@ -1,22 +1,44 @@
+$radius : 10px;
+
 .outer-pit {
     background: #902424;
-    margin: 10px;
-    border-radius: 10px;
+    margin: 15px;
+    border-radius: $radius ;
+
+    // make it light up when hovered
+    transition: background 0.5s ease;
 }
 
 .pit {
-    position: relative;
-    overflow: hidden;
+    border-radius: $radius ;
+
+    aspect-ratio: 1 / 1;
+
+    position: relative; // allows clicks through the stones to be detected
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+.twoThreeAspectRatio {
+    aspect-ratio: 2 / 3;
+}
+
+.hoverEffect:hover {
+    cursor: pointer;
+    box-shadow: 0 0 8px 4px rgba(255, 255, 255, 0.6); /* Glow effect */
 }
 
 p {
-    z-index: 100 !important;
+    z-index: 100 !important; // be in front of the stones
+    pointer-events: none; // still be click through
 
-    margin-top: -40px;
-    max-height: 40px;
-    max-width: 40px;
+    height: 40px;
+    width: 40px;
 
-    border-bottom-left-radius: 10px;
+    margin: 0; // remove default margin
+
+    border-bottom-left-radius: $radius ;
 
     color: white;
     font-size: 25px;

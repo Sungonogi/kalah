@@ -25,14 +25,14 @@ import {BoardPosition} from "../../../../models/board-position.model";
 })
 export class StoneManagerComponent implements OnInit, AfterViewInit {
 
-    protected readonly maxScreenSize = 1400;
+    protected readonly maxScreenSize = 1700;
     protected readonly minScreenSize = 800;
 
-    protected readonly maxStoneSize = 60;
+    protected readonly maxStoneSize = 80;
     protected readonly minStoneSize = 20;
 
-    protected readonly maxOffset = 80;
-    protected readonly minOffset = 20;
+    protected readonly maxOffset = 100;
+    protected readonly minOffset = 30;
 
     protected stoneSize!: number;
     protected offset!: number;

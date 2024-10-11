@@ -1,0 +1,10 @@
+.stone {
+    position: absolute;
+    background: radial-gradient(circle, rgba(70, 70, 70) 0%, #0c0b0b 70%);
+    border-radius: 50%;
+    aspect-ratio: 1/1;
+    margin: 5px;
+    box-shadow: inset -1px -1px 3px rgba(255, 255, 255, 0.1),
+    inset 1px 1px 3px rgba(0, 0, 0, 0.3),
+    0px 0px 3px rgba(0, 0, 0, 0.3);
+}

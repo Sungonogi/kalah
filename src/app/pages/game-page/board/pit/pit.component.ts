@@ -1,5 +1,5 @@
 import {NgStyle} from "@angular/common";
-import {Component, Input} from '@angular/core';
+import {Component, ElementRef, Input} from '@angular/core';
 
 @Component({
     selector: 'app-pit',
@@ -12,29 +12,17 @@ import {Component, Input} from '@angular/core';
 })
 export class PitComponent {
     // will be overwritten
-    @Input({required: true}) stones = 0;
+    @Input({required: true}) stones!: number;
     @Input() aspectRatio = '1/1';
 
-    /**
-        @for which we use for the stones needs unique identifiers
-        so I generate an array with numbers from 0 to stones - 1
-     */
+    constructor(public elementRef: ElementRef) { }
 
-    getIndexArray(stones: number) {
-        return Array(stones).fill(0).map((e,i)=>i);
-    }
-
-
-    getRandomPosition() {
-        const offset = 80; // Controls the randomness range around the center
-        const randomX = Math.random() * offset - offset / 2;  // Random offset between -offset/2 and offset/2
-        const randomY = Math.random() * offset - offset / 2;
-
-        return {
-            top: `calc(50% + ${randomY}px)`,  // Position relative to the center
-            left: `calc(50% + ${randomX}px)`, // Position relative to the center
-            transform: 'translate(-50%, -50%)' // Ensure the center of the stone aligns with the random position
-        };
+    // public method that returns the center of the pit
+    getCenterPosition(): {x: number, y: number} {
+        const rect = this.elementRef.nativeElement.getBoundingClientRect();
+        const x = rect.left + rect.width / 2;
+        const y = rect.top + rect.height / 2;
+        return {x, y};
     }
 
 }

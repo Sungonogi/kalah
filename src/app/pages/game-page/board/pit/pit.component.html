@@ -1,8 +1,5 @@
 <div class="outer-pit">
   <div class="pit" [ngStyle]="{'aspect-ratio' : aspectRatio}">
-      @for (stone of getIndexArray(stones); track stone) {
-          <div class="stone" [ngStyle]="getRandomPosition()"></div>
-      }
   </div>
   <p>{{ stones }}</p>
 </div>

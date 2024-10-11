@@ -1,0 +1,6 @@
+@for (stone of getIndexArray(totalStones + 2); track stone) {
+  <div class="stone"
+       [id]="'stone-' + stone"
+       [ngStyle]="{'height': stoneSize + 'px'}"
+       #stoneElement></div>
+}

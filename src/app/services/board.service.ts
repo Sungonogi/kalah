@@ -9,7 +9,7 @@ import {ComMoveService} from "./com-move.service";
 @Injectable({
     providedIn: 'root'
 })
-export class BoardService implements OnDestroy {
+export class BoardService {
 
     startParams = inject(StartParamsStore);
 
@@ -112,10 +112,6 @@ export class BoardService implements OnDestroy {
     stopGame(): void {
         // don't request moves anymore (otherwise games between coms will keep going on)
         this.kill = true;
-    }
-
-    ngOnDestroy(): void {
-        console.log("destroyed");
     }
 
 

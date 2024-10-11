@@ -54,7 +54,9 @@ export class BoardComponent implements OnInit, AfterViewInit, OnDestroy {
     startParamsStore = inject(StartParamsStore);
 
     protected pitPositions: WritableSignal<{x: number, y: number}[] | undefined>  = signal(undefined);
-    @ViewChildren('pitElement') pitElements!: QueryList<PitComponent>;
+    @ViewChildren(PitComponent) pitElements!: QueryList<PitComponent>;
+
+    private intervalId : NodeJS.Timeout | undefined = undefined;
 
     constructor(
             private boardService: BoardService,
@@ -109,8 +111,24 @@ export class BoardComponent implements OnInit, AfterViewInit, OnDestroy {
         return Array(size).fill(0).map((e, i) => i);
     }
 
+    // call updatePitPositions when view is rendered
     ngAfterViewInit() {
-        this.updatePitPositions();
+        /*
+           sometimes there is a bug that the start-page component is not deleted before this component is rendered
+           (you can check this by adding "debugger;" in the updatePitPositions function)
+           because of this the y coordinate of the pit positions will be way too high
+           after a very short time the start-page component is deleted
+           We have to detect that and periodically check if the y coordinate is too high until it is not anymore
+           (after testing I found that the delay of setInterval is enough to await the deletion of the start-page
+           so in theory we could just use setTimeout instead of setInterval, but I want to be sure)
+         */
+        this.intervalId = setInterval(() => {
+            const positions = this.pitElements.map(pit => pit.getCenterPosition());
+            if(positions[0].y < 500){
+                this.updatePitPositions();
+                clearInterval(this.intervalId);
+            }
+        });
     }
 
     // call updatePositions when view is resized
@@ -121,8 +139,6 @@ export class BoardComponent implements OnInit, AfterViewInit, OnDestroy {
 
     updatePitPositions(){
         const positions = this.pitElements.map(pit => pit.getCenterPosition());
-
-        console.log("updating pit positions", positions);
 
         this.pitPositions.set(positions);
     }

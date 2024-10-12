@@ -23,24 +23,29 @@ $radius : 10px;
 
 .hoverEffect:hover {
     cursor: pointer;
-    box-shadow: 0 0 8px 4px rgba(255, 255, 255, 0.6); /* Glow effect */
+    box-shadow: 0 0 8px 4px rgba(255, 255, 255, 0.6); // Glow effect
+}
+
+.text-area {
+    z-index: 1; //Ensure it's in front of the stones
+    pointer-events: none; // Click-through behavior
+
+    // Use min to adjust between 40px or half of the parent
+    width: min(40px, 50%);
+    height: min(40px, 50%);
+
+    border-bottom-left-radius: $radius;
+
+    // Transparent dark background
+    background: rgba(0, 0, 0, 0.5);
+
+    // Center the text inside
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 p {
-    z-index: 100 !important; // be in front of the stones
-    pointer-events: none; // still be click through
-
-    height: 40px;
-    width: 40px;
-
-    margin: 0; // remove default margin
-
-    border-bottom-left-radius: $radius ;
-
     color: white;
     font-size: 25px;
-    text-align: center;
-    line-height: 40px;
-    // transparent dark background color
-    background: rgba(0, 0, 0, 0.5);
 }

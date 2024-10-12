@@ -1,12 +1,15 @@
 .board {
+    margin: 0 auto;
     display: grid;
-    background: #280404;
+    background: #2e0b05;
+    max-height: 60vh;
 }
 
 .store-container {
     grid-row: span 2;
     display: flex;
     align-content: space-between;
+    justify-content: space-between;
     text-align: center;
 }
 
@@ -14,14 +17,8 @@
     flex-direction: column;
 }
 
-.south-store p {
-}
-
 .north-store {
     flex-direction: column-reverse;
-}
-
-.north-store p {
 }
 
 button {

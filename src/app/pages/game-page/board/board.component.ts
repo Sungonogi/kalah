@@ -54,7 +54,6 @@ export class BoardComponent implements OnInit, AfterViewInit, OnDestroy {
     protected playerNorth!: PlayerType;
 
     private startParamsStore = inject(StartParamsStore);
-    protected width = '100vw';
 
     // get the pit elements using ViewChildren
     protected southPitPositions: WritableSignal<{x:number, y: number}[]> = signal([]);
@@ -110,15 +109,6 @@ export class BoardComponent implements OnInit, AfterViewInit, OnDestroy {
         this.playerSouth = this.startParamsStore.playerSouth();
         this.playerNorth = this.startParamsStore.playerNorth();
         this.totalStones = 2 * this.startParamsStore.seeds() * this.startParamsStore.pits();
-
-        // adjust the width
-        const numberOfPits = this.startParamsStore.pits() + 2;
-
-        // if there are too few pits the width should also be reduced
-        // maybe it is a skill issue and could also be done with css only, but I could not find a way
-        if (numberOfPits < 7) {
-            this.width = `${100 - 15 * (7 - numberOfPits)}vw`;
-        }
     }
 
     ngOnDestroy() {

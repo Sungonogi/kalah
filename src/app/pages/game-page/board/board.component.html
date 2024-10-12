@@ -10,7 +10,10 @@
       />
     }
 
-  <div class="board" [ngStyle]="{'grid-template-columns' : 'repeat(' + (board.pits+2) + ', 1fr)'}">
+  <div class="board" [ngStyle]="{
+  'grid-template-columns' : 'repeat(' + (board.pits+2) + ', 1fr)',
+  'aspect-ratio' : (board.pits + 2) + ' / 2',
+  }">
 
     <div class="store-container south-store">
       <app-pit [stones]="board.northStore" [store]="true" #northStore/>

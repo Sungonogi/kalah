@@ -1,4 +1,4 @@
-import {inject, Injectable, OnDestroy, signal, WritableSignal} from '@angular/core';
+import {inject, Injectable, signal, WritableSignal} from '@angular/core';
 
 import {checkLegalMove, performLegalMove} from "../models/board-position.helpers";
 import {BoardPosition} from "../models/board-position.model";

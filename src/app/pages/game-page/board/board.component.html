@@ -1,13 +1,19 @@
 @if(boardSignal(); as board){
 
-  @if(pitPositions() !== undefined){
-    <app-stone-manager [totalStones]="totalStones" [board]="boardSignal" [pitPositions]="castPitPositions()"/>
-  }
+    @if(rendered){
+      <app-stone-manager [totalStones]="totalStones" [board]="boardSignal"
+                         [southPitPositions]="southPitPositions"
+                         [northPitPositions]="northPitPositions"
+                         [southStorePosition]="southStorePosition"
+                         [northStorePosition]="northStorePosition"
+                         [pitSize]="pitSize"
+      />
+    }
 
   <div class="board" [ngStyle]="{'grid-template-columns' : 'repeat(' + (board.pits+2) + ', 1fr)'}">
 
     <div class="store-container south-store">
-      <app-pit [stones]="board.northStore" [store]="true"/>
+      <app-pit [stones]="board.northStore" [store]="true" #northStore/>
       <div>
         <p> Player North </p>
         <p> {{ playerNorth }} </p>
@@ -18,12 +24,13 @@
     @for (i of getIndexArray(board.pits); track i) {
       <app-pit [stones]="board.northPits[board.pits - i - 1]"
                [hoverEffect]="movePossible(board.pits - i - 1, false)"
-               (click)="move(board.pits - i - 1, false)"/>
+               (click)="move(board.pits - i - 1, false)"
+                #northPits/>
     }
 
     <div class="store-container north-store">
       <!-- will be reversed by flexbox reverse-->
-      <app-pit [stones]="board.southStore" [store]="true"/>
+      <app-pit [stones]="board.southStore" [store]="true" #southStore/>
       <div>
         <p> Player South </p>
         <p> {{ playerSouth}} </p>
@@ -33,7 +40,8 @@
     @for (stones of board.southPits; track i; let i = $index) {
       <app-pit [stones]="stones"
                [hoverEffect]="movePossible(i, true)"
-               (click)="move(i, true)"/>
+               (click)="move(i, true)"
+                #southPits/>
     }
 
   </div>

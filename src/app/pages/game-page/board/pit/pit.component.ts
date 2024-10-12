@@ -26,4 +26,10 @@ export class PitComponent {
         return {x, y};
     }
 
+    // width and height are the same (except for the store but that is not relevant here)
+    getSize(): number {
+        const rect = this.elementRef.nativeElement.querySelector('.pit').getBoundingClientRect();
+        return rect.width;
+    }
+
 }

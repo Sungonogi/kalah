@@ -25,22 +25,19 @@ import {BoardPosition} from "../../../../models/board-position.model";
 })
 export class StoneManagerComponent implements OnInit, AfterViewInit {
 
-    protected readonly maxScreenSize = 1700;
-    protected readonly minScreenSize = 800;
-
-    protected readonly maxStoneSize = 80;
-    protected readonly minStoneSize = 20;
-
-    protected readonly maxOffset = 100;
-    protected readonly minOffset = 30;
-
     protected stoneSize!: number;
     protected offset!: number;
 
     @ViewChildren('stoneElement') stones!: QueryList<ElementRef>;
 
     @Input({required: true}) totalStones!: number;
-    @Input({required: true}) pitPositions!: Signal<{x:number, y: number}[]>;
+
+    @Input({required: true}) southPitPositions!: Signal<{x:number, y: number}[]>;
+    @Input({required: true}) northPitPositions!: Signal<{x:number, y: number}[]>;
+    @Input({required: true}) northStorePosition!: Signal<{x:number, y: number}>;
+    @Input({required: true}) southStorePosition!: Signal<{x: number, y: number}>;
+    @Input({required: true}) pitSize!: Signal<number>;
+
     @Input({required: true}) board!: Signal<BoardPosition>;
 
     previousBoard: BoardPosition | undefined = undefined;
@@ -61,6 +58,7 @@ export class StoneManagerComponent implements OnInit, AfterViewInit {
     }
 
     ngAfterViewInit() {
+        this.updateSizeAndOffset();
         this.pits = this.board().pits;
         const stones = this.stones.toArray();
         const startAmount = this.totalStones / (2 * this.pits);
@@ -90,7 +88,12 @@ export class StoneManagerComponent implements OnInit, AfterViewInit {
     constructor() {
         // effect to rerender when the pitPositions change
         effect(() => {
-            this.pitPositions();
+            this.southPitPositions();
+            this.northPitPositions();
+            this.northStorePosition();
+            this.southStorePosition();
+            this.pitSize();
+
             this.renderStones();
         });
 
@@ -128,7 +131,7 @@ export class StoneManagerComponent implements OnInit, AfterViewInit {
                     const stone = removedStones.pop() as ElementRef;
                     this.northPitStones[i].push(stone);
 
-                    const northPosition = this.getNorthPitPosition(i);
+                    const northPosition = this.northPitPositions()[i];
                     this.adjustStonePosition(stone, northPosition);
                 }
 
@@ -137,7 +140,7 @@ export class StoneManagerComponent implements OnInit, AfterViewInit {
                     const stone = removedStones.pop() as ElementRef;
                     this.southPitStones[i].push(stone);
 
-                    const southPosition = this.getSouthPitPosition(i);
+                    const southPosition = this.southPitPositions()[i];
                     this.adjustStonePosition(stone, southPosition);
                 }
             }
@@ -147,7 +150,7 @@ export class StoneManagerComponent implements OnInit, AfterViewInit {
                 const stone = removedStones.pop() as ElementRef;
                 this.northStoreStones.push(stone);
 
-                const northStorePosition = this.getNorthStorePosition();
+                const northStorePosition = this.northStorePosition();
                 this.adjustStonePosition(stone, northStorePosition, true);
             }
 
@@ -155,7 +158,7 @@ export class StoneManagerComponent implements OnInit, AfterViewInit {
                 const stone = removedStones.pop() as ElementRef;
                 this.southStoreStones.push(stone);
 
-                const southStorePosition = this.getSouthStorePosition();
+                const southStorePosition = this.southStorePosition();
                 this.adjustStonePosition(stone, southStorePosition, true);
             }
 
@@ -172,8 +175,8 @@ export class StoneManagerComponent implements OnInit, AfterViewInit {
             const northPit = this.northPitStones[i];
             const southPit = this.southPitStones[i];
 
-            const northPosition = this.getNorthPitPosition(i);
-            const southPosition = this.getSouthPitPosition(i);
+            const northPosition = this.northPitPositions()[i];
+            const southPosition = this.southPitPositions()[i];
 
             northPit.forEach(stone => {
                 this.adjustStonePosition(stone, northPosition);
@@ -189,8 +192,8 @@ export class StoneManagerComponent implements OnInit, AfterViewInit {
         const northStore = this.northStoreStones;
         const southStore = this.southStoreStones;
 
-        const northStorePosition = this.getNorthStorePosition();
-        const southStorePosition = this.getSouthStorePosition();
+        const northStorePosition = this.northStorePosition();
+        const southStorePosition = this.southStorePosition();
 
         northStore.forEach(stone => {
             this.adjustStonePosition(stone, northStorePosition, true);
@@ -199,22 +202,6 @@ export class StoneManagerComponent implements OnInit, AfterViewInit {
         southStore.forEach(stone => {
             this.adjustStonePosition(stone, southStorePosition, true);
         });
-    }
-
-    getNorthStorePosition() {
-        return this.pitPositions()[0];
-    }
-
-    getSouthStorePosition() {
-        return this.pitPositions()[this.pits + 1];
-    }
-
-    getNorthPitPosition(index: number) {
-        return this.pitPositions()[this.pits - index];
-    }
-
-    getSouthPitPosition(index: number) {
-        return this.pitPositions()[this.pits + 2 + index];
     }
 
     /**
@@ -237,20 +224,10 @@ export class StoneManagerComponent implements OnInit, AfterViewInit {
 
     // dynamically scale the stoneSize and offset between the max and min values
     updateSizeAndOffset(){
-        const width = window.innerWidth;
-
-        if(width < this.minScreenSize){
-            this.stoneSize = this.minStoneSize;
-            this.offset = this.minOffset;
-        } else if(width > this.maxScreenSize){
-            this.stoneSize = this.maxStoneSize;
-            this.offset = this.maxOffset;
-        } else {
-            const factor = (width - this.minScreenSize) / (this.maxScreenSize - this.minScreenSize);
-            this.stoneSize = this.minStoneSize + factor * (this.maxStoneSize - this.minStoneSize);
-            this.offset = this.minOffset + factor * (this.maxOffset - this.minOffset);
-        }
-
+        const pitSize = this.pitSize();
+        this.stoneSize = pitSize / 3;
+        // allow it to get in 5px range of the pit border
+        this.offset = pitSize - this.stoneSize - 5;
     }
 
 

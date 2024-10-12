@@ -7,8 +7,10 @@ import {
     inject,
     OnDestroy,
     OnInit,
-    QueryList, Signal,
+    QueryList,
+    Signal,
     signal,
+    ViewChild,
     ViewChildren,
     WritableSignal
 } from '@angular/core';
@@ -53,8 +55,18 @@ export class BoardComponent implements OnInit, AfterViewInit, OnDestroy {
 
     startParamsStore = inject(StartParamsStore);
 
-    protected pitPositions: WritableSignal<{x: number, y: number}[] | undefined>  = signal(undefined);
-    @ViewChildren(PitComponent) pitElements!: QueryList<PitComponent>;
+    // get the pit elements using ViewChildren
+    protected southPitPositions: WritableSignal<{x:number, y: number}[]> = signal([]);
+    protected northPitPositions: WritableSignal<{x:number, y: number}[]> = signal([]);
+    protected northStorePosition: WritableSignal<{x:number, y: number}> = signal({x: 0, y: 0});
+    protected southStorePosition: WritableSignal<{x: number, y: number}>   = signal({x: 0, y: 0});
+    protected pitSize: WritableSignal<number> = signal(0);
+    protected rendered = false;
+
+    @ViewChildren('northPits') northPitElements!: QueryList<PitComponent>;
+    @ViewChildren('southPits') southPitElements!: QueryList<PitComponent>;
+    @ViewChild('northStore') northStoreElement!: PitComponent;
+    @ViewChild('southStore') southStoreElement!: PitComponent;
 
     private intervalId : NodeJS.Timeout | undefined = undefined;
 
@@ -115,12 +127,13 @@ export class BoardComponent implements OnInit, AfterViewInit, OnDestroy {
            so in theory we could just use setTimeout instead of setInterval, but I want to be sure)
          */
         this.intervalId = setInterval(() => {
-            const positions = this.pitElements.map(pit => pit.getCenterPosition());
-            if(positions[0].y < 500){
+            const position = this.southStorePosition();
+            if(position.y < 500){
                 this.updatePitPositions();
                 clearInterval(this.intervalId);
             }
         });
+
     }
 
     // call updatePositions when view is resized
@@ -130,13 +143,13 @@ export class BoardComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     updatePitPositions(){
-        const positions = this.pitElements.map(pit => pit.getCenterPosition());
-
-        this.pitPositions.set(positions);
-    }
-
-    castPitPositions() {
-        return this.pitPositions as Signal<{x: number, y: number}[]>;
+        this.southPitPositions.set(this.southPitElements.map(pit => pit.getCenterPosition()));
+        // reverse the north pit positions because the pits are in the opposite order
+        this.northPitPositions.set(this.northPitElements.map(pit => pit.getCenterPosition()).reverse());
+        this.northStorePosition.set(this.northStoreElement.getCenterPosition());
+        this.southStorePosition.set(this.southStoreElement.getCenterPosition());
+        this.pitSize.set(this.southPitElements.first.getSize());
+        this.rendered = true;
     }
 
     move(position: number, onSouthSide: boolean) {

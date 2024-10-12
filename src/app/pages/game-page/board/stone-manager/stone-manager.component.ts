@@ -46,8 +46,6 @@ export class StoneManagerComponent implements OnInit, AfterViewInit {
 
     ngOnInit(): void {
         this.updateSizeAndOffset();
-        console.log(this.pitSize());
-        console.log(this.board());
     }
 
     ngAfterViewInit(): void {

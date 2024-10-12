@@ -13,15 +13,23 @@
     text-align: center;
 }
 
-.south-store {
+.north-store {
     flex-direction: column;
 }
 
-.north-store {
+.south-store {
     flex-direction: column-reverse;
 }
 
 button {
     margin-left: 1rem;
     margin-right: 1rem;
+}
+
+p {
+    max-height: 0; // don't mess with the size of other things
+}
+
+.north-store p {
+    margin-bottom: 50%;
 }

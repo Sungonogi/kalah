@@ -27,12 +27,11 @@ $radius : 10px;
 }
 
 .text-area {
-    z-index: 1; //Ensure it's in front of the stones
     pointer-events: none; // Click-through behavior
 
-    // Use min to adjust between 40px or half of the parent
-    width: min(40px, 50%);
-    height: min(40px, 50%);
+    // Use min to adjust between 40px or 40% of the parent
+    width: min(40px, 40%);
+    height: min(40px, 40%);
 
     border-bottom-left-radius: $radius;
 
@@ -47,5 +46,5 @@ $radius : 10px;
 
 p {
     color: white;
-    font-size: 25px;
+    font-size: clamp(15px, 2vw, 25px);
 }

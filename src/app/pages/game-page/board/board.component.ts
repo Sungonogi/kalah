@@ -3,6 +3,7 @@ import {
     AfterViewInit,
     Component,
     effect,
+    ElementRef,
     HostListener,
     inject,
     OnDestroy,
@@ -70,6 +71,9 @@ export class BoardComponent implements OnInit, AfterViewInit, OnDestroy {
 
     private intervalId : NodeJS.Timeout | undefined = undefined;
 
+    // dynamically adjust the font size of the north store (also depending on pitSize)
+    @ViewChildren('p') storeParagraphs!: QueryList<ElementRef>;
+
     constructor(
             private boardService: BoardService,
             private matDialog: MatDialog,
@@ -130,6 +134,7 @@ export class BoardComponent implements OnInit, AfterViewInit, OnDestroy {
             const position = this.southStorePosition();
             if(position.y < 500){
                 this.updatePitPositions();
+                this.updateFontSize();
                 clearInterval(this.intervalId);
             }
         });
@@ -140,6 +145,7 @@ export class BoardComponent implements OnInit, AfterViewInit, OnDestroy {
     @HostListener('window:resize')
     onResize() {
         this.updatePitPositions();
+        this.updateFontSize();
     }
 
     updatePitPositions(){
@@ -150,6 +156,12 @@ export class BoardComponent implements OnInit, AfterViewInit, OnDestroy {
         this.southStorePosition.set(this.southStoreElement.getCenterPosition());
         this.pitSize.set(this.southPitElements.first.getSize());
         this.rendered = true;
+    }
+
+    updateFontSize(){
+        const pitSize = this.pitSize() + 30; // + 30 because of the margin: 15px in the pit component
+        const fontSize = Math.min(30, Math.floor(pitSize / 6));
+        this.storeParagraphs.forEach(paragraph => paragraph.nativeElement.style.fontSize = `${fontSize}px`);
     }
 
     move(position: number, onSouthSide: boolean) {

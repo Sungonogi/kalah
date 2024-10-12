@@ -1,4 +1,8 @@
 .stone {
+    // in front of the board but click through
+    z-index: 1;
+    pointer-events: none;
+
     position: absolute;
     border-radius: 50%;
 

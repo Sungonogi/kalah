@@ -6,7 +6,7 @@ import {StartParams} from '../../models/start-params.model';
 const initialState: StartParams = {
     playerSouth: PlayerType.Local,
     playerNorth: PlayerType.EasyCom,
-    seeds: 4,
+    seeds: 3,
     pits: 6
 };
 

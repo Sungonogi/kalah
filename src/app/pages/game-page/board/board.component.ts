@@ -159,7 +159,7 @@ export class BoardComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     updateFontSize(){
-        const pitSize = this.pitSize() + 30; // + 30 because of the margin: 15px in the pit component
+        const pitSize = this.pitSize() + 15; // because of the gap: 15px
         const fontSize = Math.min(30, Math.floor(pitSize / 6));
         this.storeParagraphs.forEach(paragraph => paragraph.nativeElement.style.fontSize = `${fontSize}px`);
     }

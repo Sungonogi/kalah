@@ -1,3 +1,4 @@
+import {withStorageSync} from "@angular-architects/ngrx-toolkit";
 import {patchState, signalStore, withMethods, withState} from '@ngrx/signals';
 
 import {PlayerType} from "../../models/player-type.enum";
@@ -17,5 +18,9 @@ export const StartParamsStore = signalStore(
         setStartParams(startParams: StartParams) {
             patchState(store, () => ({...startParams}));
         }
-    }))
+    })),
+    withStorageSync({
+        key: 'start-params',
+        storage: () => sessionStorage
+    })
 );

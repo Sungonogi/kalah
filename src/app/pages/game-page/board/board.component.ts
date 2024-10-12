@@ -53,7 +53,8 @@ export class BoardComponent implements OnInit, AfterViewInit, OnDestroy {
     protected playerSouth!: PlayerType;
     protected playerNorth!: PlayerType;
 
-    startParamsStore = inject(StartParamsStore);
+    private startParamsStore = inject(StartParamsStore);
+    protected width = '100vw';
 
     // get the pit elements using ViewChildren
     protected southPitPositions: WritableSignal<{x:number, y: number}[]> = signal([]);
@@ -108,7 +109,16 @@ export class BoardComponent implements OnInit, AfterViewInit, OnDestroy {
         this.boardSignal = this.boardService.boardPosition;
         this.playerSouth = this.startParamsStore.playerSouth();
         this.playerNorth = this.startParamsStore.playerNorth();
-        this.totalStones = 2 * this.startParamsStore.seeds() *  this.startParamsStore.pits();
+        this.totalStones = 2 * this.startParamsStore.seeds() * this.startParamsStore.pits();
+
+        // adjust the width
+        const numberOfPits = this.startParamsStore.pits() + 2;
+
+        // if there are too few pits the width should also be reduced
+        // maybe it is a skill issue and could also be done with css only, but I could not find a way
+        if (numberOfPits < 7) {
+            this.width = `${100 - 15 * (7 - numberOfPits)}vw`;
+        }
     }
 
     ngOnDestroy() {
@@ -156,11 +166,12 @@ export class BoardComponent implements OnInit, AfterViewInit, OnDestroy {
         this.boardService.playerAttemptsMove(position, onSouthSide);
     }
 
+    movePossible(position: number, onSouthSide: boolean) {
+        return this.boardService.movePossible(position, onSouthSide);
+    }
+
     getIndexArray(size: number) {
         return Array(size).fill(0).map((e, i) => i);
     }
 
-    movePossible(position: number, onSouthSide: boolean) {
-        return this.boardService.movePossible(position, onSouthSide);
-    }
 }

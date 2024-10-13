@@ -1,4 +1,5 @@
 import {BoardPosition} from "./board-position.model";
+import {MoveType} from "./move-type.enum";
 
 /**
  * Creates an instance of BoardPosition.
@@ -38,7 +39,7 @@ export function checkLegalMove(board: BoardPosition, position: number, onSouthSi
  * @param {number} position - The position of the pit to move from.
  * @returns {BoardPosition} - The new board position after the move.
  */
-export function performLegalMove(board: BoardPosition, position: number): BoardPosition {
+export function performLegalMove(board: BoardPosition, position: number): { board: BoardPosition, moveType: MoveType } {
     const myPits = board.southTurn ? [...board.southPits] : [...board.northPits];
     const hisPits = board.southTurn ? [...board.northPits] : [...board.southPits];
     const myStore = board.southTurn ? board.southStore : board.northStore;
@@ -69,18 +70,23 @@ export function performLegalMove(board: BoardPosition, position: number): BoardP
     }
 
     // Check for steal
+    let moveType = MoveType.Move;
     const mirrored = board.pits - position - 1;
     if (currentlyMySide && myPits[position] === 1 && hisPits[mirrored] > 0) {
         updatedMyStore += myPits[position] + hisPits[mirrored];
         myPits[position] = 0;
         hisPits[mirrored] = 0;
+        moveType = MoveType.CaptureMove;
     }
 
     // Check for bonus move (if not landing in the store)
-    const updatedSouthTurn = currentlyMySide || position !== board.pits ? !board.southTurn : board.southTurn;
+    let updatedSouthTurn = !board.southTurn;
+    if (!currentlyMySide && position === board.pits) {
+        updatedSouthTurn = board.southTurn;
+        moveType = MoveType.ExtraMove;
+    }
 
     // Prepare the new pit arrays and store values
-
     const newSouthPits = board.southTurn ? myPits : hisPits;
     const newNorthPits = board.southTurn ? hisPits : myPits;
     let newSouthStore = board.southTurn ? updatedMyStore : board.southStore;
@@ -101,7 +107,7 @@ export function performLegalMove(board: BoardPosition, position: number): BoardP
     }
 
     // Return a new BoardPosition instance with the updated state
-    return {
+    const newBoard = {
         pits: board.pits,
         southPits: newSouthPits,
         northPits: newNorthPits,
@@ -110,4 +116,6 @@ export function performLegalMove(board: BoardPosition, position: number): BoardP
         southTurn: updatedSouthTurn,
         gameOver: gameOver
     };
+
+    return {board: newBoard, moveType: moveType};
 }

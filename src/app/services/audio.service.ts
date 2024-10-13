@@ -1,5 +1,4 @@
 import {Injectable} from '@angular/core';
-
 import {MoveType} from "../models/move-type.enum";
 
 @Injectable({
@@ -24,17 +23,25 @@ export class AudioService {
     }
 
     audioForMove(moveType: MoveType) {
+        // Stop any currently playing sound by resetting the playback position
+        this.moveSound.pause();
+        this.moveSound.currentTime = 0;
+
+        // Play the moveSound again
         this.moveSound.play();
 
-        // Wait for the moveSound audio to finish before playing the next sound
+        // Handle follow-up sounds
         this.moveSound.onended = () => {
             if (moveType === MoveType.ExtraMove) {
+                this.extraSound.pause();
+                this.extraSound.currentTime = 0;
                 this.extraSound.play();
             } else if (moveType === MoveType.CaptureMove) {
+                this.stealSound.pause();
+                this.stealSound.currentTime = 0;
                 this.stealSound.play();
             }
         };
     }
-
 
 }

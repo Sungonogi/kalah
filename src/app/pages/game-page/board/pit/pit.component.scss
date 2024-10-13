@@ -22,7 +22,6 @@ $radius : 10px;
 }
 
 .inner-pit {
-    z-index: 0;
     background: #6e2516;
     border-radius: $radius;
 
@@ -70,5 +69,10 @@ $radius : 10px;
 
     position: absolute;
     left: 50%;
+    top: 50%;
     transform: translate(-50%, -50%);
+}
+
+p {
+    margin: 0;
 }

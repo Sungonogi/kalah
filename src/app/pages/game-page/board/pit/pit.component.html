@@ -6,16 +6,18 @@
     <div class="inner-pit" #innerPit
          [ngStyle]="{'aspect-ratio': innerAspectRatio}"
          [ngClass]="{'hoverEffect' : hoverEffect}">
-      <div class="text-area" #stoneCountD>
+      <div class="stoneCountD" #stoneCountD>
         <p #stoneCountP>{{ stones }}</p>
       </div>
     </div>
   </div>
 
   @if (store) {
-    <p #playerP>
-      Player {{ south ? 'South' : 'North' }}<br>
-      {{ playerType }}
-    </p>
+    <div class="playerD" [ngStyle]="{}">
+      <p class="absolute" #playerP>
+        Player {{ south ? 'South' : 'North' }}<br>
+        {{ playerType }}
+      </p>
+    </div>
   }
 </div>

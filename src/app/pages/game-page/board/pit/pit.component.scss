@@ -39,7 +39,7 @@ $radius : 10px;
     box-shadow: 0 0 8px 4px rgba(255, 255, 255, 0.6); // Glow effect
 }
 
-.text-area {
+.stoneCountD {
     z-index: 2; // above the stones
 
     pointer-events: none; // Click-through behavior
@@ -57,4 +57,18 @@ $radius : 10px;
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.playerD {
+    flex-grow: 1;
+    position: relative;
+}
+
+.absolute {
+    // don't wrap the text
+    white-space: nowrap;
+
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }

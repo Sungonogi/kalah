@@ -34,6 +34,7 @@ export class PitComponent implements OnInit, AfterViewInit {
     innerAspectRatio = '1 / 1';
 
     storeClass = '';
+    movedDirection = '';
 
     // to give the stone manager the correct size
     @ViewChild('innerPit') innerPit!: ElementRef;
@@ -48,6 +49,7 @@ export class PitComponent implements OnInit, AfterViewInit {
             this.outerAspectRatio = '1 / 2';
             this.innerAspectRatio = '2 / 3';
             this.storeClass = this.south ? 'south-store-container' : 'north-store-container';
+            this.movedDirection = this.south ? 'top' : 'bottom';
         }
     }
 

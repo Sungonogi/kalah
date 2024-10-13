@@ -16,13 +16,7 @@
   }">
 
     <div class="store-container north-store">
-      <app-pit [stones]="board.northStore" [store]="true" #northStore/>
-      <div class="store-text">
-        <p #p>
-          Player North <br>
-          {{ playerNorth }}
-        </p>
-      </div>
+      <app-pit [stones]="board.northStore" [store]="true" [south]="false" [playerType]="playerNorth" #northStore/>
     </div>
 
 
@@ -35,13 +29,7 @@
 
     <div class="store-container south-store">
       <!-- will be reversed by flexbox reverse-->
-      <app-pit [stones]="board.southStore" [store]="true" #southStore/>
-      <div class="store-text">
-        <p #p>
-          Player South <br>
-          {{ playerSouth }}
-        </p>
-      </div>
+      <app-pit [stones]="board.southStore" [store]="true" [south]="true" [playerType]="playerSouth" #southStore/>
     </div>
 
     @for (stones of board.southPits; track i; let i = $index) {

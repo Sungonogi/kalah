@@ -1,9 +1,18 @@
-<div class="outer-pit" [ngClass]="{'oneTwoAspectRatio' : store}">
+<div class="outer-pit" [ngStyle]="{'aspect-ratio': outerAspectRatio, 'flex-direction': storeFlexDirection}">
   <div class="middle-pit">
-    <div class="pit" [ngClass]="{'twoThreeAspectRatio': store, 'hoverEffect' : hoverEffect}">
-      <div class="text-area">
-        <p>{{ stones }}</p>
+    <div class="inner-pit" #innerPit
+         [ngStyle]="{'aspect-ratio': innerAspectRatio}"
+         [ngClass]="{'hoverEffect' : hoverEffect}">
+      <div class="text-area" #stoneCount>
+        <p #p>{{ stones }}</p>
       </div>
     </div>
   </div>
+
+  @if (store) {
+    <p #p>
+      Player {{ south ? 'South' : 'North' }}<br>
+      {{ playerType }}
+    </p>
+  }
 </div>

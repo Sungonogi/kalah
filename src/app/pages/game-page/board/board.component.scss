@@ -24,18 +24,3 @@ button {
     margin-left: 1rem;
     margin-right: 1rem;
 }
-
-.store-text {
-    // ignore the gap 15px
-    margin-left: -15px;
-    width: calc(100% + 30px);
-    height: 0;
-}
-
-p {
-    max-height: 0; // don't mess with the size of other things
-}
-
-.north-store p {
-    margin-bottom: 50%;
-}

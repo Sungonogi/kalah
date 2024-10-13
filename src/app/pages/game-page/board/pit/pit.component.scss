@@ -1,31 +1,29 @@
 $radius : 10px;
 
 .outer-pit {
-    aspect-ratio: 1 / 1;
+    z-index: 0;
     background: #2e0b05;
+
+    display: flex;
+    justify-content: space-between;
 }
 
-.oneTwoAspectRatio {
-    aspect-ratio: 1 / 2;
-}
-
+// we need this because padding on outer-pit or margin on inner-it breaks the aspect ratio
 .middle-pit {
     padding: 15px;
 }
 
-.pit {
-    aspect-ratio: 1/1;
+.inner-pit {
+    z-index: 0;
     background: #6e2516;
     border-radius: $radius;
 
     position: relative; // allows clicks through the stones to be detected
+
+    // position the number of stones at the bottom
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
-}
-
-.twoThreeAspectRatio {
-    aspect-ratio: 2 / 3;
 }
 
 .hoverEffect:hover {
@@ -51,9 +49,4 @@ $radius : 10px;
     display: flex;
     justify-content: center;
     align-items: center;
-}
-
-p {
-    color: white;
-    font-size: clamp(15px, 2vw, 25px);
 }

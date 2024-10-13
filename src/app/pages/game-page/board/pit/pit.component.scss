@@ -1,9 +1,22 @@
 $radius : 10px;
 
-.pit {
+.outer-pit {
     aspect-ratio: 1 / 1;
+    background: #2e0b05;
+}
+
+.oneTwoAspectRatio {
+    aspect-ratio: 1 / 2;
+}
+
+.middle-pit {
+    padding: 15px;
+}
+
+.pit {
+    aspect-ratio: 1/1;
     background: #6e2516;
-    border-radius: $radius ;
+    border-radius: $radius;
 
     position: relative; // allows clicks through the stones to be detected
     display: flex;

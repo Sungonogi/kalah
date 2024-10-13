@@ -1,9 +1,6 @@
 .board {
     margin: 0 auto;
     display: grid;
-    gap: 15px;
-    padding:15px;
-    background: #2e0b05;
     max-height: 60vh;
 }
 
@@ -16,12 +13,10 @@
 }
 
 .north-store {
-    margin-right: 15px;
     flex-direction: column;
 }
 
 .south-store {
-    margin-left: 15px;
     flex-direction: column-reverse;
 }
 
@@ -34,6 +29,7 @@ button {
     // ignore the gap 15px
     margin-left: -15px;
     width: calc(100% + 30px);
+    height: 0;
 }
 
 p {

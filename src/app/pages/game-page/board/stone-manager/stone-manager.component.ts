@@ -183,7 +183,7 @@ export class StoneManagerComponent implements OnInit, AfterViewInit {
 
     adjustStonePosition(stone: ElementRef, position: { x: number; y: number }, store = false): void {
         const x = position.x + (Math.random() * this.offset - this.offset / 2) - this.stoneSize / 2;
-        const yOffset = store ? 2 * this.offset : this.offset;
+        const yOffset = store ? 1.5 * this.offset : this.offset;
         const y = position.y + (Math.random() * yOffset - yOffset / 2) - this.stoneSize / 2;
 
         stone.nativeElement.style.left = `${x}px`;

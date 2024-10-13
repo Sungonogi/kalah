@@ -3,9 +3,17 @@ $radius : 10px;
 .outer-pit {
     z-index: 0;
     background: #2e0b05;
-
-    display: flex;
     justify-content: space-between;
+}
+
+.north-store-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.south-store-container {
+    display: flex;
+    flex-direction: column-reverse;
 }
 
 // we need this because padding on outer-pit or margin on inner-it breaks the aspect ratio

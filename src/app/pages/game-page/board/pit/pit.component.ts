@@ -6,8 +6,7 @@ import {
     HostListener,
     Input,
     OnInit,
-    QueryList, ViewChild,
-    ViewChildren
+    ViewChild,
 } from '@angular/core';
 
 @Component({
@@ -34,24 +33,21 @@ export class PitComponent implements OnInit, AfterViewInit {
     outerAspectRatio = '1 / 1';
     innerAspectRatio = '1 / 1';
 
-    // only relevant for stores
-    storeFlexDirection = 'column';
+    storeClass = '';
 
     // to give the stone manager the correct size
     @ViewChild('innerPit') innerPit!: ElementRef;
 
     // dynamically adjust the font size of the paragraph elements
-    @ViewChildren('p') storeParagraphs!: QueryList<ElementRef>;
-    @ViewChild('stoneCount') stoneCountElement!: ElementRef;
-
+    @ViewChild('stoneCountD') stoneCountD!: ElementRef;
+    @ViewChild('stoneCountP') stoneCountP!: ElementRef;
+    @ViewChild('playerP') playerP!: ElementRef;
 
     ngOnInit() {
         if(this.store) {
             this.outerAspectRatio = '1 / 2';
             this.innerAspectRatio = '2 / 3';
-            if(this.south) {
-                this.storeFlexDirection = 'column-reverse';
-            }
+            this.storeClass = this.south ? 'south-store-container' : 'north-store-container';
         }
     }
 
@@ -82,13 +78,16 @@ export class PitComponent implements OnInit, AfterViewInit {
     }
 
     updateFontSize(){
-        const pitSize = this.getSize() + 15;
+        const pitSize = this.getSize();
         const fontSize = Math.min(30, Math.floor(pitSize / 6));
-        this.storeParagraphs.forEach(paragraph => paragraph.nativeElement.style.fontSize = `${fontSize}px`);
+        this.stoneCountP.nativeElement.style.fontSize = `${fontSize}px`;
+        if(this.store) {
+            this.playerP.nativeElement.style.fontSize = `${fontSize}px`;
+        }
 
         const stoneCountSize = Math.floor(fontSize * 1.5);
-        this.stoneCountElement.nativeElement.style.width = `${stoneCountSize}px`;
-        this.stoneCountElement.nativeElement.style.height = `${stoneCountSize}px`;
+        this.stoneCountD.nativeElement.style.width = `${stoneCountSize}px`;
+        this.stoneCountD.nativeElement.style.height = `${stoneCountSize}px`;
     }
 
 }

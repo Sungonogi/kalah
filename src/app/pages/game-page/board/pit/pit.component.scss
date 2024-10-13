@@ -1,14 +1,74 @@
-.pit {
-    background: #a54901;
-    margin: 10px;
-    display: flex;
-    flex-wrap: wrap;
+$radius : 10px;
+
+.outer-pit {
+    z-index: 0;
+    background: #2e0b05;
+    justify-content: space-between;
 }
 
-.stone {
-    height: 30px;
-    background: #0c0b0b;
-    border-radius: 50%;
-    aspect-ratio: 1/1;
-    margin: 5px;
+.north-store-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.south-store-container {
+    display: flex;
+    flex-direction: column-reverse;
+}
+
+// we need this because padding on outer-pit or margin on inner-it breaks the aspect ratio
+.middle-pit {
+    padding: 15px;
+}
+
+.inner-pit {
+    z-index: 0;
+    background: #6e2516;
+    border-radius: $radius;
+
+    position: relative; // allows clicks through the stones to be detected
+
+    // position the number of stones at the bottom
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+.hoverEffect:hover {
+    cursor: pointer;
+    box-shadow: 0 0 8px 4px rgba(255, 255, 255, 0.6); // Glow effect
+}
+
+.stoneCountD {
+    z-index: 2; // above the stones
+
+    pointer-events: none; // Click-through behavior
+
+    // Use min to adjust between 40px or 40% of the parent
+    width: min(40px, 40%);
+    height: min(40px, 40%);
+
+    border-bottom-left-radius: $radius;
+
+    // Transparent dark background
+    background: rgba(0, 0, 0, 0.5);
+
+    // Center the text inside
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.playerD {
+    flex-grow: 1;
+    position: relative;
+}
+
+.absolute {
+    // don't wrap the text
+    white-space: nowrap;
+
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }

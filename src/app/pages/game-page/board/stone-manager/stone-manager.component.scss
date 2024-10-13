@@ -1,0 +1,15 @@
+.stone {
+    // in front of the board but click through
+    z-index: 1;
+    pointer-events: none;
+
+    position: absolute;
+    border-radius: 50%;
+
+    background: radial-gradient(circle, rgba(70, 70, 70) 0%, #0c0b0b 70%);
+    box-shadow: inset -1px -1px 3px rgba(255, 255, 255, 0.1),
+    inset 1px 1px 3px rgba(0, 0, 0, 0.3),
+    0px 0px 3px rgba(0, 0, 0, 0.3);
+
+    transition: left 0.5s ease, top 0.5s ease;
+}

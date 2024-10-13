@@ -1,4 +1,4 @@
-import {inject, Injectable, OnDestroy, signal, WritableSignal} from '@angular/core';
+import {inject, Injectable, signal, WritableSignal} from '@angular/core';
 
 import {checkLegalMove, performLegalMove} from "../models/board-position.helpers";
 import {BoardPosition} from "../models/board-position.model";
@@ -10,7 +10,7 @@ import {ComMoveService} from "./com-move.service";
 @Injectable({
     providedIn: 'root'
 })
-export class BoardService implements OnDestroy {
+export class BoardService {
 
     startParams = inject(StartParamsStore);
 
@@ -84,29 +84,33 @@ export class BoardService implements OnDestroy {
         });
     }
 
-    playerAttemptsMove(move: number, onSouthSide: boolean): void {
-
-        const boardPosition = this.boardPosition();
+    // boardPosition is optional, if not provided the current boardPosition is used
+    movePossible(move: number, onSouthSide: boolean, boardPosition: BoardPosition | undefined = undefined): boolean {
+        if(!boardPosition) {
+            boardPosition = this.boardPosition();
+        }
 
         if(boardPosition.gameOver){
-            console.error('Game over');
-            return;
+            return false;
         }
 
         const player = onSouthSide ? this.playerSouth : this.playerNorth;
         if(player !== PlayerType.Local){
-            console.error('Not your side');
-            return;
+            return false;
         }
 
         if(boardPosition.southTurn !== onSouthSide){
-            console.error('Not your turn');
-            return;
+            return false;
         }
 
-        const legal = checkLegalMove(boardPosition, move, onSouthSide);
-        if(!legal){
-            console.error('Illegal move');
+        return checkLegalMove(boardPosition, move, onSouthSide);
+    }
+
+    playerAttemptsMove(move: number, onSouthSide: boolean): void {
+
+        const boardPosition = this.boardPosition();
+
+        if(!this.movePossible(move, onSouthSide, boardPosition)){
             return;
         }
 
@@ -126,10 +130,6 @@ export class BoardService implements OnDestroy {
     stopGame(): void {
         // don't request moves anymore (otherwise games between coms will keep going on)
         this.kill = true;
-    }
-
-    ngOnDestroy(): void {
-        console.log("destroyed");
     }
 
 

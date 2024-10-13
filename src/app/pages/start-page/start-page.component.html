@@ -19,11 +19,11 @@
       </mat-select>
     </mat-form-field>
 
-    <app-number-input [startValue]="startParams.seeds" label="seeds" [min]="1" [max]="10"
+    <app-number-input [startValue]="startParams.seeds" label="seeds" [min]="1" [max]="20"
                       (emitNumber)="startParams.seeds = $event" (emitError)="seedsValid = $event">
     </app-number-input>
 
-    <app-number-input [startValue]="startParams.pits" label="pits" [min]="2" [max]="20"
+    <app-number-input [startValue]="startParams.pits" label="pits" [min]="2" [max]="14"
                       (emitNumber)="startParams.pits = $event" (emitError)="pitsValid = $event">
     </app-number-input>
 

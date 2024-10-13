@@ -1,30 +1,42 @@
-@if(board(); as board){
-  <div class="board" [ngStyle]="{'grid-template-columns' : 'repeat(' + (board.pits+2) + ', 1fr)'}">
+@if (boardSignal(); as board) {
 
-    <div class="store-container south-store">
-      <app-pit [stones]="board.northStore" aspectRatio="2/3"/>
-      <div>
-        <p> Player North </p>
-        <p> {{ playerNorth }} </p>
-      </div>
+  @if (rendered) {
+    <app-stone-manager [totalStones]="totalStones" [board]="boardSignal"
+                       [southPitPositions]="southPitPositions"
+                       [northPitPositions]="northPitPositions"
+                       [southStorePosition]="southStorePosition"
+                       [northStorePosition]="northStorePosition"
+                       [pitSize]="pitSize"
+    />
+  }
+
+  <div class="board" [ngStyle]="{
+  'grid-template-columns' : 'repeat(' + (board.pits+2) + ', 1fr)',
+  'aspect-ratio' : (board.pits + 2) + ' / 2',
+  }">
+
+    <div class="store-container north-store">
+      <app-pit [stones]="board.northStore" [store]="true" [south]="false" [playerType]="playerNorth" #northStore/>
     </div>
 
 
     @for (i of getIndexArray(board.pits); track i) {
-      <app-pit [stones]="board.northPits[board.pits - i - 1]" (click)="move(board.pits - i - 1, false)"/>
+      <app-pit [stones]="board.northPits[board.pits - i - 1]"
+               [hoverEffect]="movePossible(board.pits - i - 1, false)"
+               (click)="move(board.pits - i - 1, false)"
+               #northPits/>
     }
 
-    <div class="store-container north-store">
+    <div class="store-container south-store">
       <!-- will be reversed by flexbox reverse-->
-      <app-pit [stones]="board.southStore" aspectRatio="2/3"/>
-      <div>
-        <p> Player South </p>
-        <p> {{ playerSouth}} </p>
-      </div>
+      <app-pit [stones]="board.southStore" [store]="true" [south]="true" [playerType]="playerSouth" #southStore/>
     </div>
 
     @for (stones of board.southPits; track i; let i = $index) {
-      <app-pit [stones]="stones" (click)="move(i, true)"/>
+      <app-pit [stones]="stones"
+               [hoverEffect]="movePossible(i, true)"
+               (click)="move(i, true)"
+               #southPits/>
     }
 
   </div>

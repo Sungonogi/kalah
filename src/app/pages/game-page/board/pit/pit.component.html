@@ -1,5 +1,23 @@
-<div class="pit" [ngStyle]="{'aspect-ratio' : aspectRatio}">
-    @for (stone of getIndexArray(stones); track stone) {
-        <div class="stone"></div>
-    }
+<div class="outer-pit"
+     [ngStyle]="{'aspect-ratio': outerAspectRatio}"
+     [ngClass]="storeClass"
+>
+  <div class="middle-pit">
+    <div class="inner-pit" #innerPit
+         [ngStyle]="{'aspect-ratio': innerAspectRatio}"
+         [ngClass]="{'hoverEffect' : hoverEffect}">
+      <div class="stoneCountD" #stoneCountD>
+        <p #stoneCountP>{{ stones }}</p>
+      </div>
+    </div>
+  </div>
+
+  @if (store) {
+    <div class="playerD" [ngStyle]="{}">
+      <p class="absolute" #playerP>
+        Player {{ south ? 'South' : 'North' }}<br>
+        {{ playerType }}
+      </p>
+    </div>
+  }
 </div>

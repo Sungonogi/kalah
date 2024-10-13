@@ -1,27 +1,23 @@
 .board {
-    width: 100vw;
+    margin: 0 auto;
     display: grid;
+    max-height: 60vh;
 }
 
 .store-container {
     grid-row: span 2;
     display: flex;
     align-content: space-between;
+    justify-content: space-between;
     text-align: center;
 }
 
-.south-store {
+.north-store {
     flex-direction: column;
 }
 
-.south-store p {
-}
-
-.north-store {
+.south-store {
     flex-direction: column-reverse;
-}
-
-.north-store p {
 }
 
 button {

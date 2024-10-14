@@ -84,11 +84,10 @@ export class BoardService {
         });
     }
 
-    // boardPosition is optional, if not provided the current boardPosition is used
-    movePossible(move: number, onSouthSide: boolean, boardPosition: BoardPosition | undefined = undefined): boolean {
-        if(!boardPosition) {
-            boardPosition = this.boardPosition();
-        }
+    moveLegal(move: number, onSouthSide: boolean): boolean {
+
+        const boardPosition = this.boardPosition();
+
 
         if(boardPosition.gameOver){
             return false;
@@ -104,17 +103,6 @@ export class BoardService {
         }
 
         return checkLegalMove(boardPosition, move, onSouthSide);
-    }
-
-    playerAttemptsMove(move: number, onSouthSide: boolean): void {
-
-        const boardPosition = this.boardPosition();
-
-        if(!this.movePossible(move, onSouthSide, boardPosition)){
-            return;
-        }
-
-        this.doLegalMove(move);
     }
 
     doLegalMove(move: number): void {

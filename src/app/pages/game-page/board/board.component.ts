@@ -48,6 +48,7 @@ export interface DialogData {
 export class BoardComponent implements OnInit, AfterViewInit, OnDestroy {
 
     protected boardSignal!: Signal<BoardPosition>;
+    protected animatedBoardSignal!: Signal<BoardPosition>;
 
     protected totalStones!: number;
     protected playerSouth!: PlayerType;
@@ -77,24 +78,27 @@ export class BoardComponent implements OnInit, AfterViewInit, OnDestroy {
     ) {
 
         effect(() => {
-            const board = this.boardSignal();
+            const board = this.animatedBoardSignal();
             if(board.gameOver){
 
-                const dialogRef = this.matDialog.open(GameOverDialogComponent, {
-                    data: {
-                        board: board,
-                        playerSouth: this.playerSouth,
-                        playerNorth: this.playerNorth
-                    }
-                });
+                // wait 500ms before showing the dialog
+                setTimeout(() => {
+                    const dialogRef = this.matDialog.open(GameOverDialogComponent, {
+                        data: {
+                            board: board,
+                            playerSouth: this.playerSouth,
+                            playerNorth: this.playerNorth
+                        }
+                    });
 
-                dialogRef.afterClosed().subscribe(result => {
-                    if(result){
-                        this.boardService.resetBoard();
-                    } else {
-                        this.router.navigate(["start"]);
-                    }
-                });
+                    dialogRef.afterClosed().subscribe(result => {
+                        if (result) {
+                            this.boardService.resetBoard();
+                        } else {
+                            this.router.navigate(["start"]);
+                        }
+                    });
+                }, 500);
 
             }
         });
@@ -106,6 +110,7 @@ export class BoardComponent implements OnInit, AfterViewInit, OnDestroy {
         this.boardService.resetBoard();
 
         this.boardSignal = this.boardService.boardPosition;
+        this.animatedBoardSignal = this.boardService.animatedBoardPosition;
         this.playerSouth = this.startParamsStore.playerSouth();
         this.playerNorth = this.startParamsStore.playerNorth();
         this.totalStones = 2 * this.startParamsStore.seeds() * this.startParamsStore.pits();

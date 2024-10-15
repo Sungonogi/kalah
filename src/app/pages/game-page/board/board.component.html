@@ -1,7 +1,7 @@
 @if (boardSignal(); as board) {
 
   @if (rendered) {
-    <app-stone-manager [totalStones]="totalStones" [board]="boardSignal"
+    <app-stone-manager [totalStones]="totalStones" [board]="animatedBoardSignal"
                        [southPitPositions]="southPitPositions"
                        [northPitPositions]="northPitPositions"
                        [southStorePosition]="southStorePosition"

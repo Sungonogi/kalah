@@ -130,7 +130,10 @@ export class BoardService {
             });
         } else if (result.moveType === MoveType.ExtraMove) {
             this.audioService.moveAudio(() => {
-                this.audioService.extraAudio();
+                // no sound if game ends
+                if(result.boards.length === 1) {
+                    this.audioService.extraAudio();
+                }
                 this.checkGameOver(result.boards);
             });
         } else {

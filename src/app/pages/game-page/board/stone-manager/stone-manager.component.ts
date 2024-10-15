@@ -50,19 +50,7 @@ export class StoneManagerComponent implements OnInit, AfterViewInit {
     }
 
     ngAfterViewInit(): void {
-        const stonesArray = this.stones.toArray();
-        const stonesPerPit = this.totalStones / (2 * this.pits);
-
-        let stoneIndex = 0;
-        for (let i = 0; i < this.pits; i++) {
-            this.northPitStones[i] = [];
-            this.southPitStones[i] = [];
-
-            for (let j = 0; j < stonesPerPit; j++) {
-                this.northPitStones[i].push(stonesArray[stoneIndex++]);
-                this.southPitStones[i].push(stonesArray[stoneIndex++]);
-            }
-        }
+        this.resetBoard();
     }
 
     @HostListener("window:resize")
@@ -88,9 +76,33 @@ export class StoneManagerComponent implements OnInit, AfterViewInit {
             const currentBoard = this.board();
             if (isEqual(this.previousBoard, currentBoard)) return;
 
-            this.handleBoardChange(currentBoard);
+            if(this.previousBoard.gameOver){
+                this.resetBoard();
+                this.renderStones();
+            } else {
+                this.handleBoardChange(currentBoard);
+            }
             this.previousBoard = currentBoard;
         });
+    }
+
+    private resetBoard(): void {
+        const stonesArray = this.stones.toArray();
+        const stonesPerPit = this.totalStones / (2 * this.pits);
+
+        let stoneIndex = 0;
+        for (let i = 0; i < this.pits; i++) {
+            this.northPitStones[i] = [];
+            this.southPitStones[i] = [];
+
+            for (let j = 0; j < stonesPerPit; j++) {
+                this.northPitStones[i].push(stonesArray[stoneIndex++]);
+                this.southPitStones[i].push(stonesArray[stoneIndex++]);
+            }
+
+            this.southStoreStones = [];
+            this.northStoreStones = [];
+        }
     }
 
     private handleBoardChange(currentBoard: BoardPosition): void {

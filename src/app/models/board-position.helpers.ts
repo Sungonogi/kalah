@@ -15,6 +15,7 @@ export function initBoardPosition(pits: number, seeds: number): BoardPosition {
         northStore: 0,
         southTurn: true,
         gameOver: false,
+        temporaryPosition: false
     };
 }
 
@@ -72,11 +73,23 @@ export function performLegalMove(board: BoardPosition, position: number): { boar
     // Check for steal
     let moveType = MoveType.Move;
     const mirrored = board.pits - position - 1;
+    console.log(myPits);
     if (currentlyMySide && myPits[position] === 1 && hisPits[mirrored] > 0) {
-        updatedMyStore += myPits[position] + hisPits[mirrored];
-        myPits[position] = 0;
-        hisPits[mirrored] = 0;
+        // don't perform the steal now instead return a temporary board position
+        console.log("Steal");
         moveType = MoveType.CaptureMove;
+        const tempBoard = {
+            pits: board.pits,
+            southPits: board.southTurn ? myPits : hisPits,
+            northPits: board.southTurn ? hisPits : myPits,
+            southStore: board.southTurn ? updatedMyStore : board.southStore,
+            northStore: board.southTurn ? board.northStore : updatedMyStore,
+            southTurn: !board.southTurn, // change the turn now
+            gameOver: false,
+            temporaryPosition: true,
+            captureEndPosition: position,
+        };
+        return {board: tempBoard, moveType: moveType};
     }
 
     // Check for bonus move (if not landing in the store)
@@ -114,8 +127,53 @@ export function performLegalMove(board: BoardPosition, position: number): { boar
         southStore: newSouthStore,
         northStore: newNorthStore,
         southTurn: updatedSouthTurn,
-        gameOver: gameOver
+        gameOver: gameOver,
+        temporaryPosition: false,
     };
 
     return {board: newBoard, moveType: moveType};
+}
+
+export function performSteal(board: BoardPosition, position: number): BoardPosition {
+    const prevSouthTurn = !board.southTurn;
+
+    const myPits = prevSouthTurn ? [...board.southPits] : [...board.northPits];
+    const hisPits = prevSouthTurn ? [...board.northPits] : [...board.southPits];
+    const mirrored = board.pits - position - 1;
+    let updatedMyStore = prevSouthTurn ? board.southStore : board.northStore;
+
+    updatedMyStore += myPits[position] + hisPits[mirrored];
+    myPits[position] = 0;
+    hisPits[mirrored] = 0;
+
+    // also check for game over
+    const newSouthPits = prevSouthTurn ? myPits : hisPits;
+    const newNorthPits = prevSouthTurn ? hisPits : myPits;
+    let newSouthStore = prevSouthTurn ? updatedMyStore : board.southStore;
+    let newNorthStore = prevSouthTurn ? board.northStore : updatedMyStore;
+
+    const sum = (a: number, b: number) => a + b;
+    const southSum = newSouthPits.reduce(sum);
+    const northSum = newNorthPits.reduce(sum);
+    let gameOver = false;
+
+    if (southSum === 0 || northSum === 0) {
+        newSouthStore += southSum;
+        newNorthStore += northSum;
+        newSouthPits.fill(0);
+        newNorthPits.fill(0);
+        gameOver = true;
+    }
+
+    // Return a new BoardPosition instance with the updated state
+    return {
+        pits: board.pits,
+        southPits: newSouthPits,
+        northPits: newNorthPits,
+        southStore: newSouthStore,
+        northStore: newNorthStore,
+        southTurn: board.southTurn,
+        gameOver: gameOver,
+        temporaryPosition: false,
+    };
 }

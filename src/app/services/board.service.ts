@@ -1,7 +1,8 @@
 import {inject, Injectable, signal, WritableSignal} from '@angular/core';
 
-import {checkLegalMove, performLegalMove} from "../models/board-position.helpers";
+import {checkLegalMove, performLegalMove, performSteal} from "../models/board-position.helpers";
 import {BoardPosition} from "../models/board-position.model";
+import {MoveType} from "../models/move-type.enum";
 import {PlayerType} from "../models/player-type.enum";
 import {StartParamsStore} from "../stores/start-params/start-params.store";
 import {AudioService} from "./audio.service";
@@ -43,7 +44,8 @@ export class BoardService {
             southStore: 0,
             northStore: 0,
             southTurn: true,
-            gameOver: false
+            gameOver: false,
+            temporaryPosition: false
         };
 
         if(!this.boardPosition){
@@ -109,8 +111,23 @@ export class BoardService {
         const boardPosition = this.boardPosition();
 
         const result = performLegalMove(boardPosition, move);
+        console.log(result.board);
         this.boardPosition.set(result.board);
-        this.audioService.audioForMove(result.moveType);
+        
+        if(result.moveType === MoveType.CaptureMove){
+            this.audioService.moveAudio(() => {
+                this.audioService.stealAudio();
+                const newBoard = performSteal(result.board, result.board.captureEndPosition!);
+                console.log("capt", newBoard);
+                this.boardPosition.set(newBoard);
+            });
+        } else if(result.moveType === MoveType.ExtraMove){
+            this.audioService.moveAudio(() => {
+                this.audioService.extraAudio();
+            });
+        } else {
+            this.audioService.moveAudio(() => false);
+        }
 
         this.checkAndPerformComMove();
     }

@@ -10,4 +10,6 @@ export interface BoardPosition {
     northStore: number;
     southTurn: boolean; // true if south has the turn
     gameOver: boolean;
+    temporaryPosition: boolean; // true if this is a temporary position for animation, moves arent possible in this state
+    captureEndPosition?: number; // the position where the capture ends
 }

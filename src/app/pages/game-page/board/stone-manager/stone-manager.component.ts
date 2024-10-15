@@ -107,21 +107,27 @@ export class StoneManagerComponent implements OnInit, AfterViewInit {
     }
 
     private moveStonesOnBoardChange(currentBoard: BoardPosition): void {
-        const checkSouth = this.previousBoard!.southTurn;
-        const prevPits = checkSouth ? this.previousBoard!.southPits : this.previousBoard!.northPits;
-        const currentPits = checkSouth ? currentBoard.southPits : currentBoard.northPits;
-
-        let removedStones: ElementRef[] = [];
+        // track where they were removed
+        let removedStones: {el: ElementRef, arr: ElementRef[]}[] = [];
         for (let i = 0; i < this.pits; i++) {
-            if (currentPits[i] < prevPits[i]) {
-                removedStones = checkSouth ? this.southPitStones[i] : this.northPitStones[i];
+            if (currentBoard.northPits[i] < this.previousBoard!.northPits[i]) {
+                const removed  = this.northPitStones[i].map((stone: ElementRef) => {
+                    return {el: stone, arr: this.northPitStones[i]};
+                });
+                removedStones = removedStones.concat(removed);
+            }
+            if(currentBoard.southPits[i] < this.previousBoard!.southPits[i]){
+                const removed = this.southPitStones[i].map((stone: ElementRef) => {
+                    return {el: stone, arr: this.southPitStones[i]};
+                });
+                removedStones = removedStones.concat(removed);
             }
         }
 
         this.moveStonesToNewPositions(currentBoard, removedStones);
     }
 
-    private moveStonesToNewPositions(board: BoardPosition, removedStones: ElementRef[]): void {
+    private moveStonesToNewPositions(board: BoardPosition, removedStones: {el: ElementRef, arr: ElementRef[]}[]): void {
         for (let i = 0; i < this.pits; i++) {
             this.movePitStones(board, removedStones, i);
         }
@@ -129,31 +135,41 @@ export class StoneManagerComponent implements OnInit, AfterViewInit {
         this.moveStoreStones(board, removedStones);
     }
 
-    private movePitStones(board: BoardPosition, removedStones: ElementRef[], pitIndex: number): void {
+    private movePitStones(board: BoardPosition, removedStones: {el: ElementRef, arr: ElementRef[]}[], pitIndex: number): void {
         if (board.northPits[pitIndex] > this.previousBoard!.northPits[pitIndex]) {
             const stone = removedStones.pop()!;
-            this.northPitStones[pitIndex].push(stone);
-            this.adjustStonePosition(stone, this.northPitPositions()[pitIndex]);
+            stone.arr.pop();
+            this.northPitStones[pitIndex].push(stone.el);
+            this.adjustStonePosition(stone.el, this.northPitPositions()[pitIndex]);
         }
 
         if (board.southPits[pitIndex] > this.previousBoard!.southPits[pitIndex]) {
             const stone = removedStones.pop()!;
-            this.southPitStones[pitIndex].push(stone);
-            this.adjustStonePosition(stone, this.southPitPositions()[pitIndex]);
+            stone.arr.pop();
+            this.southPitStones[pitIndex].push(stone.el);
+            this.adjustStonePosition(stone.el, this.southPitPositions()[pitIndex]);
         }
     }
 
-    private moveStoreStones(board: BoardPosition, removedStones: ElementRef[]): void {
+    private moveStoreStones(board: BoardPosition, removedStones: {el: ElementRef, arr: ElementRef[]}[]): void {
         if (board.northStore > this.previousBoard!.northStore) {
-            const stone = removedStones.pop()!;
-            this.northStoreStones.push(stone);
-            this.adjustStonePosition(stone, this.northStorePosition(), true);
+            const diff = board.northStore - this.previousBoard!.northStore;
+            for(let i = 0; i < diff; i++){
+                const stone = removedStones.pop()!;
+                stone.arr.pop();
+                this.northStoreStones.push(stone.el);
+                this.adjustStonePosition(stone.el, this.northStorePosition(), true);
+            }
         }
 
         if (board.southStore > this.previousBoard!.southStore) {
-            const stone = removedStones.pop()!;
-            this.southStoreStones.push(stone);
-            this.adjustStonePosition(stone, this.southStorePosition(), true);
+            const diff = board.southStore - this.previousBoard!.southStore;
+            for(let i = 0; i < diff; i++) {
+                const stone = removedStones.pop()!;
+                stone.arr.pop();
+                this.southStoreStones.push(stone.el);
+                this.adjustStonePosition(stone.el, this.southStorePosition(), true);
+            }
         }
     }
 

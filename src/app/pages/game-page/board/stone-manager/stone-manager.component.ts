@@ -79,6 +79,10 @@ export class StoneManagerComponent implements OnInit, AfterViewInit {
             if (isEqual(this.previousBoard, currentBoard)) return;
 
             this.moveStonesOnBoardChange(currentBoard);
+
+
+            // print out the amount of stones in each array/ store
+                                                
             this.previousBoard = currentBoard;
         });
     }
@@ -107,19 +111,26 @@ export class StoneManagerComponent implements OnInit, AfterViewInit {
     }
 
     private moveStonesOnBoardChange(currentBoard: BoardPosition): void {
+
         // track where they were removed
-        let removedStones: ElementRef[] = [];
+        const removedStones: ElementRef[] = [];
         for (let i = 0; i < this.pits; i++) {
             if (currentBoard.northPits[i] < this.previousBoard!.northPits[i]) {
-                removedStones = removedStones.concat(this.northPitStones[i]);
-                this.northPitStones[i] = [];
+                const diff = this.previousBoard!.northPits[i] - currentBoard.northPits[i];
+                for(let j = 0; j < diff; j++){
+                    removedStones.push(this.northPitStones[i].pop()!);
+                }
+
             }
             if(currentBoard.southPits[i] < this.previousBoard!.southPits[i]){
-                removedStones = removedStones.concat(this.southPitStones[i]);
-                this.southPitStones[i] = [];
+                const diff = this.previousBoard!.southPits[i] - currentBoard.southPits[i];
+                for(let j = 0; j < diff; j++) {
+                    removedStones.push(this.southPitStones[i].pop()!);
+                }
             }
         }
 
+        
         this.moveStonesToNewPositions(currentBoard, removedStones);
     }
 
@@ -132,13 +143,15 @@ export class StoneManagerComponent implements OnInit, AfterViewInit {
     }
 
     private movePitStones(board: BoardPosition, removedStones: ElementRef[], pitIndex: number): void {
-        if (board.northPits[pitIndex] > this.previousBoard!.northPits[pitIndex]) {
+        const nDiff = board.northPits[pitIndex] - this.previousBoard!.northPits[pitIndex];
+        for(let i = 0; i < nDiff; i++){
             const stone = removedStones.pop()!;
             this.northPitStones[pitIndex].push(stone);
             this.adjustStonePosition(stone, this.northPitPositions()[pitIndex]);
         }
 
-        if (board.southPits[pitIndex] > this.previousBoard!.southPits[pitIndex]) {
+        const sDiff = board.southPits[pitIndex] - this.previousBoard!.southPits[pitIndex];
+        for(let i = 0; i < sDiff; i++){
             const stone = removedStones.pop()!;
             this.southPitStones[pitIndex].push(stone);
             this.adjustStonePosition(stone, this.southPitPositions()[pitIndex]);
@@ -163,7 +176,8 @@ export class StoneManagerComponent implements OnInit, AfterViewInit {
                 this.adjustStonePosition(stone, this.southStorePosition(), true);
             }
         }
-    }
+
+                    }
 
     renderStones(): void {
         this.rendered = true;

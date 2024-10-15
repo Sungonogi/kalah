@@ -1,8 +1,7 @@
 import {NgStyle} from "@angular/common";
 import {
     AfterViewInit,
-    Component,
-    effect,
+    Component, effect,
     ElementRef,
     HostListener,
     Input,
@@ -46,10 +45,24 @@ export class StoneManagerComponent implements OnInit, AfterViewInit {
 
     ngOnInit(): void {
         this.updateSizeAndOffset();
+        this.previousBoard = this.board();
+        this.pits = this.previousBoard.pits;
     }
 
     ngAfterViewInit(): void {
-        this.initializeStones();
+        const stonesArray = this.stones.toArray();
+        const stonesPerPit = this.totalStones / (2 * this.pits);
+
+        let stoneIndex = 0;
+        for (let i = 0; i < this.pits; i++) {
+            this.northPitStones[i] = [];
+            this.southPitStones[i] = [];
+
+            for (let j = 0; j < stonesPerPit; j++) {
+                this.northPitStones[i].push(stonesArray[stoneIndex++]);
+                this.southPitStones[i].push(stonesArray[stoneIndex++]);
+            }
+        }
     }
 
     @HostListener("window:resize")
@@ -59,10 +72,7 @@ export class StoneManagerComponent implements OnInit, AfterViewInit {
     }
 
     constructor() {
-        this.initializeReactiveEffects();
-    }
 
-    private initializeReactiveEffects(): void {
         effect(() => {
             this.southPitPositions();
             this.northPitPositions();
@@ -78,134 +88,90 @@ export class StoneManagerComponent implements OnInit, AfterViewInit {
             const currentBoard = this.board();
             if (isEqual(this.previousBoard, currentBoard)) return;
 
-            this.moveStonesOnBoardChange(currentBoard);
-
-
-            // print out the amount of stones in each array/ store
-                                                
+            this.handleBoardChange(currentBoard);
             this.previousBoard = currentBoard;
         });
     }
 
-    private initializeStones(): void {
-        this.updateSizeAndOffset();
-        this.pits = this.board().pits;
-        const stonesArray = this.stones.toArray();
-        const stonesPerPit = this.totalStones / (2 * this.pits);
+    private handleBoardChange(currentBoard: BoardPosition): void {
 
-        this.populatePitStones(stonesArray, stonesPerPit);
-        this.previousBoard = this.board();
-    }
-
-    private populatePitStones(stonesArray: ElementRef[], stonesPerPit: number): void {
-        let stoneIndex = 0;
-        for (let i = 0; i < this.pits; i++) {
-            this.northPitStones[i] = [];
-            this.southPitStones[i] = [];
-
-            for (let j = 0; j < stonesPerPit; j++) {
-                this.northPitStones[i].push(stonesArray[stoneIndex++]);
-                this.southPitStones[i].push(stonesArray[stoneIndex++]);
-            }
-        }
-    }
-
-    private moveStonesOnBoardChange(currentBoard: BoardPosition): void {
-
-        // track where they were removed
+        // collect the stones
         const removedStones: ElementRef[] = [];
         for (let i = 0; i < this.pits; i++) {
-            if (currentBoard.northPits[i] < this.previousBoard!.northPits[i]) {
-                const diff = this.previousBoard!.northPits[i] - currentBoard.northPits[i];
-                for(let j = 0; j < diff; j++){
-                    removedStones.push(this.northPitStones[i].pop()!);
-                }
-
-            }
-            if(currentBoard.southPits[i] < this.previousBoard!.southPits[i]){
-                const diff = this.previousBoard!.southPits[i] - currentBoard.southPits[i];
-                for(let j = 0; j < diff; j++) {
-                    removedStones.push(this.southPitStones[i].pop()!);
-                }
-            }
+            this.removeStonesFromPit(currentBoard, removedStones, i, 'north');
+            this.removeStonesFromPit(currentBoard, removedStones, i, 'south');
         }
 
-        
-        this.moveStonesToNewPositions(currentBoard, removedStones);
-    }
-
-    private moveStonesToNewPositions(board: BoardPosition, removedStones: ElementRef[]): void {
+        // move the stones
         for (let i = 0; i < this.pits; i++) {
-            this.movePitStones(board, removedStones, i);
+            this.movePitStones(currentBoard, removedStones, i, 'north');
+            this.movePitStones(currentBoard, removedStones, i, 'south');
         }
 
-        this.moveStoreStones(board, removedStones);
+        this.moveStonesToStore(currentBoard, removedStones, 'north');
+        this.moveStonesToStore(currentBoard, removedStones, 'south');
     }
 
-    private movePitStones(board: BoardPosition, removedStones: ElementRef[], pitIndex: number): void {
-        const nDiff = board.northPits[pitIndex] - this.previousBoard!.northPits[pitIndex];
-        for(let i = 0; i < nDiff; i++){
-            const stone = removedStones.pop()!;
-            this.northPitStones[pitIndex].push(stone);
-            this.adjustStonePosition(stone, this.northPitPositions()[pitIndex]);
-        }
-
-        const sDiff = board.southPits[pitIndex] - this.previousBoard!.southPits[pitIndex];
-        for(let i = 0; i < sDiff; i++){
-            const stone = removedStones.pop()!;
-            this.southPitStones[pitIndex].push(stone);
-            this.adjustStonePosition(stone, this.southPitPositions()[pitIndex]);
+    private removeStonesFromPit(currentBoard: BoardPosition, removedStones: ElementRef[], pitIndex: number, side: 'north' | 'south'): void {
+        const previousPit = this.previousBoard![`${side}Pits`][pitIndex];
+        const currentPit = currentBoard[`${side}Pits`][pitIndex];
+        const diff = previousPit - currentPit;
+        for (let j = 0; j < diff; j++) {
+            removedStones.push(this[`${side}PitStones`][pitIndex].pop()!);
         }
     }
 
-    private moveStoreStones(board: BoardPosition, removedStones: ElementRef[]): void {
-        if (board.northStore > this.previousBoard!.northStore) {
-            const diff = board.northStore - this.previousBoard!.northStore;
-            for(let i = 0; i < diff; i++){
+
+    private movePitStones(currentBoard: BoardPosition, removedStones: ElementRef[], pitIndex: number, side: 'north' | 'south'): void {
+        const diff = currentBoard[`${side}Pits`][pitIndex] - this.previousBoard![`${side}Pits`][pitIndex];
+        for (let i = 0; i < diff; i++) {
+            const stone = removedStones.pop()!;
+            this[`${side}PitStones`][pitIndex].push(stone);
+            this.adjustStonePosition(stone, this[`${side}PitPositions`]()[pitIndex]);
+        }
+    }
+
+    private moveStonesToStore(currentBoard: BoardPosition, removedStones: ElementRef[], side: 'north' | 'south'): void {
+        const previousStore = this.previousBoard![`${side}Store`];
+        const currentStore = currentBoard[`${side}Store`];
+
+        if (currentStore > previousStore) {
+            const diff = currentStore - previousStore;
+            for (let i = 0; i < diff; i++) {
                 const stone = removedStones.pop()!;
-                this.northStoreStones.push(stone);
-                this.adjustStonePosition(stone, this.northStorePosition(), true);
+                this[`${side}StoreStones`].push(stone);
+                this.adjustStonePosition(stone, this[`${side}StorePosition`](), true);
             }
         }
-
-        if (board.southStore > this.previousBoard!.southStore) {
-            const diff = board.southStore - this.previousBoard!.southStore;
-            for(let i = 0; i < diff; i++) {
-                const stone = removedStones.pop()!;
-                this.southStoreStones.push(stone);
-                this.adjustStonePosition(stone, this.southStorePosition(), true);
-            }
-        }
-
-                    }
+    }
 
     renderStones(): void {
         this.rendered = true;
-        this.renderPitStones();
-        this.renderStoreStones();
-    }
 
-    private renderPitStones(): void {
         for (let i = 0; i < this.pits; i++) {
-            const northPosition = this.northPitPositions()[i];
-            const southPosition = this.southPitPositions()[i];
-
-            this.northPitStones[i].forEach(stone => this.adjustStonePosition(stone, northPosition));
-            this.southPitStones[i].forEach(stone => this.adjustStonePosition(stone, southPosition));
+            this.renderPitStoneSet(i, 'north');
+            this.renderPitStoneSet(i, 'south');
         }
+
+        this.renderStoreStoneSet('north');
+        this.renderStoreStoneSet('south');
     }
 
-    private renderStoreStones(): void {
-        const northStorePosition = this.northStorePosition();
-        const southStorePosition = this.southStorePosition();
 
-        this.northStoreStones.forEach(stone => this.adjustStonePosition(stone, northStorePosition, true));
-        this.southStoreStones.forEach(stone => this.adjustStonePosition(stone, southStorePosition, true));
+    private renderPitStoneSet(pitIndex: number, side: 'north' | 'south'): void {
+        const position = this[`${side}PitPositions`]()[pitIndex];
+        this[`${side}PitStones`][pitIndex].forEach(stone => this.adjustStonePosition(stone, position));
     }
 
-    adjustStonePosition(stone: ElementRef, position: { x: number; y: number }, store = false): void {
+
+    private renderStoreStoneSet(side: 'north' | 'south'): void {
+        const position = this[`${side}StorePosition`]();
+        this[`${side}StoreStones`].forEach(stone => this.adjustStonePosition(stone, position, true));
+    }
+
+    adjustStonePosition(stone: ElementRef, position: { x: number; y: number }, isStore = false): void {
         const x = position.x + (Math.random() * this.offset - this.offset / 2) - this.stoneSize / 2;
-        const yOffset = store ? 1.5 * this.offset : this.offset;
+        const yOffset = isStore ? 1.5 * this.offset : this.offset;
         const y = position.y + (Math.random() * yOffset - yOffset / 2) - this.stoneSize / 2;
 
         stone.nativeElement.style.left = `${x}px`;
@@ -215,16 +181,10 @@ export class StoneManagerComponent implements OnInit, AfterViewInit {
     private updateSizeAndOffset(): void {
         const pitSize = this.pitSize();
         this.stoneSize = pitSize / 3;
-        // allow it to get in 5px range of the pit border
         this.offset = pitSize - this.stoneSize - 5;
     }
 
-    /**
-     @for which we use for the stones needs unique identifiers
-      so I generate an array with numbers from 0 to stones - 1
-     */
     getIndexArray(stones: number): number[] {
         return Array.from({length: stones}, (_, i) => i);
     }
-
 }

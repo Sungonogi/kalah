@@ -113,6 +113,8 @@ export class StoneManagerComponent implements OnInit, AfterViewInit {
             this.removeStonesFromPit(currentBoard, removedStones, i, 'north');
             this.removeStonesFromPit(currentBoard, removedStones, i, 'south');
         }
+        this.removeStonesFromStore(currentBoard, removedStones, 'north');
+        this.removeStonesFromStore(currentBoard, removedStones, 'south');
 
         // move the stones
         for (let i = 0; i < this.pits; i++) {
@@ -133,6 +135,14 @@ export class StoneManagerComponent implements OnInit, AfterViewInit {
         }
     }
 
+    private removeStonesFromStore(currentBoard: BoardPosition, removedStones: ElementRef[], side: 'north' | 'south'): void {
+        const previousStore = this.previousBoard![`${side}Store`];
+        const currentStore = currentBoard[`${side}Store`];
+        const diff = previousStore - currentStore;
+        for (let i = 0; i < diff; i++) {
+            removedStones.push(this[`${side}StoreStones`].pop()!);
+        }
+    }
 
     private movePitStones(currentBoard: BoardPosition, removedStones: ElementRef[], pitIndex: number, side: 'north' | 'south'): void {
         const diff = currentBoard[`${side}Pits`][pitIndex] - this.previousBoard![`${side}Pits`][pitIndex];

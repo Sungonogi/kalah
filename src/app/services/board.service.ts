@@ -116,8 +116,6 @@ export class BoardService {
 
         const result = performLegalMove(boardPosition, move);
 
-        console.log(result.boards);
-
         // already set it to the last position
         this.boardPosition.set(result.boards[result.boards.length - 1]);
         this.animatedBoardPosition.set(result.boards[0]);

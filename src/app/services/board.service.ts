@@ -148,6 +148,7 @@ export class BoardService {
         const lastBoard = boards[boards.length - 1];
         if (lastBoard.gameOver) {
             setTimeout(() => {
+                this.audioService.endAudio();
                 this.animatedBoardPosition.set(lastBoard);
             }, 500);
         }

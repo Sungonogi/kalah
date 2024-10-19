@@ -24,7 +24,7 @@ export class AudioService {
         this.stealSound = new Audio('stealSound.ogg');
 
 
-        this.endSound = new Audio('startSound.flac');
+        this.endSound = new Audio('stealSound.ogg');
 
     }
 

@@ -69,8 +69,6 @@ export class BoardComponent implements OnInit, AfterViewInit, OnDestroy {
     @ViewChild('northStore') northStoreElement!: PitComponent;
     @ViewChild('southStore') southStoreElement!: PitComponent;
 
-    private intervalId : NodeJS.Timeout | undefined = undefined;
-
     constructor(
             private boardService: BoardService,
             private matDialog: MatDialog,
@@ -128,21 +126,12 @@ export class BoardComponent implements OnInit, AfterViewInit, OnDestroy {
     ngAfterViewInit() {
         /*
            sometimes there is a bug that the start-page component is not deleted before this component is rendered
-           (you can check this by adding "debugger;" in the updatePitPositions function)
+           (you can check this by adding "debugger;" in this function)
            because of this the y coordinate of the pit positions will be way too high
            after a very short time the start-page component is deleted
-           We have to detect that and periodically check if the y coordinate is too high until it is not anymore
-           (after testing I found that the delay of setInterval is enough to await the deletion of the start-page
-           so in theory we could just use setTimeout instead of setInterval, but I want to be sure)
+           we can just use setTimeout and then it will be deleted
          */
-        this.intervalId = setInterval(() => {
-            const position = this.southStorePosition();
-            if(position.y < 500){
-                this.updatePitPositions();
-                clearInterval(this.intervalId);
-            }
-        });
-
+        setTimeout(() => this.updatePitPositions());
     }
 
     // call updatePositions when view is resized

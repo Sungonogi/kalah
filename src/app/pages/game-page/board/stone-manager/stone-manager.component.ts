@@ -1,7 +1,8 @@
 import {NgStyle} from "@angular/common";
 import {
     AfterViewInit,
-    Component, effect,
+    Component,
+    effect,
     ElementRef,
     HostListener,
     Input,

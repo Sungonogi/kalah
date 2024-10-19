@@ -87,16 +87,17 @@ export class BoardService {
 
         this.moveRequested = true;
         this.comMoveService.requestMove(boardPosition, player).subscribe(move => {
+            this.moveRequested = false;
+
             if(this.ignore){
                 this.ignore = false;
-                this.moveRequested = false;
                 return;
             }
 
-            if (this.kill || move === null)
+            if (this.kill || move === null){
                 return;
+            }
 
-            this.moveRequested = false;
             this.doLegalMove(move);
             this.checkAndPerformComMove();
         });

@@ -1,6 +1,16 @@
 <div class="outer-board">
   <app-board></app-board>
 </div>
-<button mat-flat-button routerLink="/start">
-  Go Back
-</button>
+
+<div class="game-button-container">
+  <button mat-flat-button routerLink="/start">
+    Go Back
+  </button>
+  <button mat-flat-button (click)="restart()">
+    Restart
+  </button>
+  <!-- How to Play -->
+  <button mat-flat-button routerLink="/tutorial">
+    How to Play
+  </button>
+</div>

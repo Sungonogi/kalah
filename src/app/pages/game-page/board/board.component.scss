@@ -1,8 +1,10 @@
 .board {
     margin: 0 auto;
     display: grid;
+    min-width: 500px;
     max-height: 60vh;
     background: #2e0b05;
+    border-radius: 10px;
 }
 
 .store-container {

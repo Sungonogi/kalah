@@ -1,3 +1,12 @@
 .outer-board {
-    width: 100vw;
+    width: calc(100vw - 40px);
+    background: var(--gray);
+    padding: 20px;
+}
+
+.game-button-container {
+    // set it to have the same distance from the left as the board inside the outer-board
+    margin: 20px;
+    display: flex;
+    gap: 20px;
 }

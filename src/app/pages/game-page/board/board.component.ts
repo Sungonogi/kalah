@@ -107,13 +107,17 @@ export class BoardComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
     ngOnInit() {
-        this.boardService.resetBoard();
+        this.resetBoard();
 
         this.boardSignal = this.boardService.boardPosition;
         this.animatedBoardSignal = this.boardService.animatedBoardPosition;
         this.playerSouth = this.startParamsStore.playerSouth();
         this.playerNorth = this.startParamsStore.playerNorth();
         this.totalStones = 2 * this.startParamsStore.seeds() * this.startParamsStore.pits();
+    }
+
+    public resetBoard(){
+        this.boardService.resetBoard();
     }
 
     ngOnDestroy() {

@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
 import {MatButton} from "@angular/material/button";
 import {RouterLink} from "@angular/router";
 
@@ -17,4 +17,9 @@ import {BoardComponent} from "./board/board.component";
 })
 export class GamePageComponent {
 
+    @ViewChild(BoardComponent) board!: BoardComponent;
+
+    restart(){
+        this.board.resetBoard();
+    }
 }

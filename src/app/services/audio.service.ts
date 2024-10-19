@@ -41,7 +41,7 @@ export class AudioService {
         // Stop any currently playing sound by resetting the playback position
         this.interruptAndPlay(this.moveSound);
 
-        if(callback){
+        if (callback) {
             this.moveSound.onended = callback;
         }
     }
@@ -57,7 +57,7 @@ export class AudioService {
     private interruptAndPlay(audio: HTMLAudioElement) {
         audio.pause();
         audio.currentTime = 0;
-        audio.play();
+        audio.play().then(r => r).catch(e => console.error(e));
     }
 
 }

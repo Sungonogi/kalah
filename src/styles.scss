@@ -1,7 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
 
-// CSS reset because of inconsistencies between browsers and weird default margins/...
-
 // global variables
 :root {
     --purple: #810081; // Purple
@@ -10,8 +8,10 @@
     --gray: #2c2c2c;
     --black: #161215;
     --pink: #ffabdc;
-
 }
 
-html, body { height: 100%; }
+html, body {
+    height: 100%;
+    background: var(--black);
+}
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

@@ -75,7 +75,7 @@ export function performLegalMove(board: BoardPosition, position: number): { boar
     let moveType = MoveType.Move;
     const mirrored = board.pits - position - 1;
     if (currentlyMySide && myPits[position] === 1 && hisPits[mirrored] > 0) {
-        // don't perform the steal now instead return a temporary board position
+        // add a temporary board position for the capture move
         moveType = MoveType.CaptureMove;
         boards.push({
             pits: board.pits,

@@ -20,8 +20,12 @@ export class BoardService {
     playerNorth!: PlayerType;
     boardPosition!: WritableSignal<BoardPosition>;
     animatedBoardPosition!: WritableSignal<BoardPosition>;
+
     moveRequested!: boolean; // to avoid multiple calls at once
+    duringAnimation!: boolean; // to tell if we are currently animating something
+
     kill!: boolean; // to stop the game when the board component is destroyed
+    ignore!: boolean; // to ignore the requested move after a reset
 
     constructor(
             private comMoveService: ComMoveService,
@@ -47,7 +51,6 @@ export class BoardService {
             northStore: 0,
             southTurn: true,
             gameOver: false,
-            temporaryPosition: false
         };
 
         if (!this.boardPosition) {
@@ -58,6 +61,9 @@ export class BoardService {
             this.animatedBoardPosition.set(boardPosition);
         }
 
+        // ignore the requested move or animations after a reset
+        this.ignore = this.moveRequested;
+        this.duringAnimation = false;
         this.moveRequested = false;
         this.kill = false;
 
@@ -81,6 +87,12 @@ export class BoardService {
 
         this.moveRequested = true;
         this.comMoveService.requestMove(boardPosition, player).subscribe(move => {
+            if(this.ignore){
+                this.ignore = false;
+                this.moveRequested = false;
+                return;
+            }
+
             if (this.kill || move === null)
                 return;
 
@@ -121,13 +133,22 @@ export class BoardService {
         this.animatedBoardPosition.set(result.boards[0]);
 
         if (result.moveType === MoveType.CaptureMove) {
+            this.duringAnimation = true;
             this.audioService.moveAudio(() => {
+
+                if(!this.duringAnimation)
+                    return; // someone wants us to stop
+
                 this.audioService.stealAudio();
                 this.animatedBoardPosition.set(result.boards[1]);
                 this.checkGameOver(result.boards);
             });
         } else if (result.moveType === MoveType.ExtraMove) {
+            this.duringAnimation = true;
             this.audioService.moveAudio(() => {
+                if(!this.duringAnimation)
+                    return; // someone wants us to stop
+
                 // no sound if game ends
                 if(result.boards.length === 1) {
                     this.audioService.extraAudio();
@@ -137,7 +158,6 @@ export class BoardService {
         } else {
             this.audioService.moveAudio(() => false);
             this.checkGameOver(result.boards);
-
         }
 
 
@@ -147,10 +167,17 @@ export class BoardService {
     private checkGameOver(boards: BoardPosition[]) {
         const lastBoard = boards[boards.length - 1];
         if (lastBoard.gameOver) {
+            this.duringAnimation = true;
             setTimeout(() => {
+                if(!this.duringAnimation)
+                    return;
+
                 this.audioService.endAudio();
                 this.animatedBoardPosition.set(lastBoard);
+                this.duringAnimation = false;
             }, 500);
+        } else {
+            this.duringAnimation = false;
         }
     }
 

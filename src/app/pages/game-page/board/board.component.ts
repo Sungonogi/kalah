@@ -93,7 +93,7 @@ export class BoardComponent implements OnInit, AfterViewInit, OnDestroy {
 
                     dialogRef.afterClosed().subscribe(result => {
                         if (result) {
-                            this.boardService.resetBoard();
+                            this.resetBoard();
                         } else {
                             this.router.navigate(["start"]);
                         }

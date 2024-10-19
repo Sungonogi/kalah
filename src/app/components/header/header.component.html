@@ -1,3 +1,23 @@
 <header>
-    <h1>Kalah</h1>
+  <div></div>
+  <h1>Kalah</h1>
+  <div class="help-button">
+
+    <!-- Angular Material does not support:
+    - switching the text off when the screen is too big
+    - having a mini-fab button with text
+    so I did it manually
+    -->
+
+    <button *ngIf="showHelp && !extended" mat-mini-fab routerLink="/tutorial"
+            matTooltip="How to Play" aria-labelledby="How to Play">
+      <mat-icon fontIcon="help"></mat-icon>
+    </button>
+
+    <button *ngIf="showHelp && extended" mat-flat-button routerLink="/tutorial">
+      <mat-icon fontIcon="help"></mat-icon>
+      <span>How to Play</span>
+    </button>
+
+  </div>
 </header>

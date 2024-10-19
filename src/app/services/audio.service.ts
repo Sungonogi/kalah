@@ -12,13 +12,13 @@ export class AudioService {
     private endSound: HTMLAudioElement;
 
     constructor() {
-        this.startSound = new Audio('379865__cdrk__gong-cambodia.flac');
+        this.startSound = new Audio('startSound.ogg');
         // credit: "Gong-Cambodia by cdrk -- https://freesound.org/s/379865/ -- License: Attribution 4.0"
 
-        this.moveSound = new Audio('30341__junggle__waterdrop24.wav');
+        this.moveSound = new Audio('moveSound.ogg');
         // credit: Confirmation Upward by original_sound -- https://freesound.org/s/366102/ -- License: Attribution 3.0
 
-        this.extraSound = new Audio('371274__mafon2__water-click.wav');
+        this.extraSound = new Audio('extraSound.ogg');
         // credit: Bell, Counter, A.wav by InspectorJ -- https://freesound.org/s/415510/ -- License: Attribution 4.0
 
         this.stealSound = new Audio('stealSound.ogg');

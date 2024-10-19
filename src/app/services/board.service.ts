@@ -141,7 +141,7 @@ export class BoardService {
 
                 this.audioService.stealAudio();
                 this.animatedBoardPosition.set(result.boards[1]);
-                this.checkGameOver(result.boards);
+                this.checkGameOverAndComMove(result.boards);
             });
         } else if (result.moveType === MoveType.ExtraMove) {
             this.duringAnimation = true;
@@ -153,18 +153,15 @@ export class BoardService {
                 if(result.boards.length === 1) {
                     this.audioService.extraAudio();
                 }
-                this.checkGameOver(result.boards);
+                this.checkGameOverAndComMove(result.boards);
             });
         } else {
             this.audioService.moveAudio(() => false);
-            this.checkGameOver(result.boards);
+            this.checkGameOverAndComMove(result.boards);
         }
-
-
-        this.checkAndPerformComMove();
     }
 
-    private checkGameOver(boards: BoardPosition[]) {
+    private checkGameOverAndComMove(boards: BoardPosition[]) {
         const lastBoard = boards[boards.length - 1];
         if (lastBoard.gameOver) {
             this.duringAnimation = true;
@@ -178,6 +175,7 @@ export class BoardService {
             }, 500);
         } else {
             this.duringAnimation = false;
+            this.checkAndPerformComMove();
         }
     }
 

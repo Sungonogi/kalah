@@ -10,7 +10,7 @@ describe('StoneManagerComponent', () => {
         await TestBed.configureTestingModule({
             imports: [StoneManagerComponent]
         })
-        .compileComponents();
+            .compileComponents();
 
         fixture = TestBed.createComponent(StoneManagerComponent);
         component = fixture.componentInstance;

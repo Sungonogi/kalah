@@ -4,12 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ff32ea9a-e283-4b66-afcf-3b0581baeb3b" name="Changes" comment=":art: change favicon">
-      <change afterPath="$PROJECT_DIR$/public/favicon-32x32.png" afterDir="false" />
+    <list default="true" id="ff32ea9a-e283-4b66-afcf-3b0581baeb3b" name="Changes" comment=":loud_sound: endSound">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/favicon.ico" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/services/board.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/services/board.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/components/header/header.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/header/header.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/pages/game-page/board/board.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/pages/game-page/board/board.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/pages/game-page/board/stone-manager/stone-manager.component.spec.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/pages/game-page/board/stone-manager/stone-manager.component.spec.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/pages/tutorial-page/tutorial-page.component.spec.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/pages/tutorial-page/tutorial-page.component.spec.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/services/audio.service.spec.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/services/audio.service.spec.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -32,12 +33,12 @@
     &quot;assignee&quot;: &quot;IngoSternberg&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/IngoSternberg/fe-kalah.git",
-    "accountId": "c56ecc26-2d5c-4692-b7fb-1da85a669de3"
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/IngoSternberg/fe-kalah.git&quot;,
+    &quot;accountId&quot;: &quot;c56ecc26-2d5c-4692-b7fb-1da85a669de3&quot;
   }
-}]]></component>
+}</component>
   <component name="ProblemsViewState">
     <option name="selectedTabId" value="CurrentFile" />
   </component>
@@ -52,33 +53,33 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Karma.NumberInputComponent.executor": "Run",
-    "Karma.NumberInputComponent.should correctly calculate the max digits.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "ToolWindow.GitHub Copilot Chat.ShowToolbar": "false",
-    "git-widget-placeholder": "main",
-    "ignore.virus.scanning.warn.message": "true",
-    "js.linters.configure.manually.selectedeslint": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/stern/IdeaProjects/fe-kalah/public",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.standard": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.standard": "",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "npm.Angular CLI Server.executor": "Run",
-    "npm.lint.executor": "Run",
-    "npm.test.executor": "Run",
-    "npm.watch.executor": "Run",
-    "settings.editor.selected.configurable": "reference.idesettings.emmet",
-    "ts.external.directory.path": "C:\\Users\\stern\\IdeaProjects\\fe-kalah\\node_modules\\typescript\\lib",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Karma.NumberInputComponent.executor&quot;: &quot;Run&quot;,
+    &quot;Karma.NumberInputComponent.should correctly calculate the max digits.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;ToolWindow.GitHub Copilot Chat.ShowToolbar&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;js.linters.configure.manually.selectedeslint&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/stern/IdeaProjects/fe-kalah/public&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.standard&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.standard&quot;: &quot;&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;npm.Angular CLI Server.executor&quot;: &quot;Run&quot;,
+    &quot;npm.lint.executor&quot;: &quot;Run&quot;,
+    &quot;npm.test.executor&quot;: &quot;Run&quot;,
+    &quot;npm.watch.executor&quot;: &quot;Run&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.idesettings.emmet&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;C:\\Users\\stern\\IdeaProjects\\fe-kalah\\node_modules\\typescript\\lib&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\stern\IdeaProjects\fe-kalah\public" />
@@ -215,7 +216,8 @@
       <workItem from="1728594928764" duration="54000" />
       <workItem from="1728595084855" duration="401000" />
       <workItem from="1728638759220" duration="5242000" />
-      <workItem from="1729349595979" duration="1682000" />
+      <workItem from="1729349595979" duration="1948000" />
+      <workItem from="1729370715229" duration="703000" />
     </task>
     <task id="LOCAL-00001" summary=":recycle: move backend to separate repo">
       <option name="closed" value="true" />
@@ -513,7 +515,15 @@
       <option name="project" value="LOCAL" />
       <updated>1729351901950</updated>
     </task>
-    <option name="localTasksCounter" value="38" />
+    <task id="LOCAL-00038" summary=":loud_sound: endSound">
+      <option name="closed" value="true" />
+      <created>1729352014808</created>
+      <option name="number" value="00038" />
+      <option name="presentableId" value="LOCAL-00038" />
+      <option name="project" value="LOCAL" />
+      <updated>1729352014808</updated>
+    </task>
+    <option name="localTasksCounter" value="39" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -522,7 +532,6 @@
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CODE_SMELLS_PROFILE" value="Project Default" />
-    <MESSAGE value=":lipstick: add card outside" />
     <MESSAGE value=":lipstick: remove asterisk" />
     <MESSAGE value=":wrench: npm audit fix" />
     <MESSAGE value=":necktie: add and use SignalStore" />
@@ -547,7 +556,8 @@
     <MESSAGE value=":children_crossing: add tutorial page and fix reset button" />
     <MESSAGE value=":rewind: go back to old sounds, my ears hurt" />
     <MESSAGE value=":art: change favicon" />
-    <option name="LAST_COMMIT_MESSAGE" value=":art: change favicon" />
+    <MESSAGE value=":loud_sound: endSound" />
+    <option name="LAST_COMMIT_MESSAGE" value=":loud_sound: endSound" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

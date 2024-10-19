@@ -1,10 +1,9 @@
+import {NgIf} from "@angular/common";
 import {Component, HostListener} from '@angular/core';
 import {MatButton, MatFabButton, MatMiniFabButton} from "@angular/material/button";
 import {MatIcon} from "@angular/material/icon";
-import {Router, RouterLink} from "@angular/router";
-import {NgIf} from "@angular/common";
 import {MatTooltip} from "@angular/material/tooltip";
-import {window} from "rxjs";
+import {Router, RouterLink} from "@angular/router";
 
 @Component({
     selector: 'app-header',

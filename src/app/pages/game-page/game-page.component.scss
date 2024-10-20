@@ -1,7 +1,17 @@
+$padding : min(1.5vw, 20px);
 .outer-board {
-    width: calc(100vw - 40px);
+    width: calc(100vw - 2 * $padding);
     background: var(--gray);
-    padding: 20px;
+    padding: $padding;
+}
+
+@media (max-width: 600px) {
+    .outer-board {
+        width: 100vw;
+        background: none;
+        padding: 0;
+    }
+
 }
 
 .game-button-container {

@@ -1,7 +1,6 @@
 $radius : 10px;
 
 .outer-pit {
-    z-index: 0;
     justify-content: space-between;
 }
 
@@ -17,7 +16,7 @@ $radius : 10px;
 
 // we need this because padding on outer-pit or margin on inner-it breaks the aspect ratio
 .middle-pit {
-    padding: 15px;
+    padding: clamp(5px, 10%, 15px);
 }
 
 .inner-pit {

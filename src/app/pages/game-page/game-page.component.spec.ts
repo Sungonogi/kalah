@@ -4,9 +4,9 @@ import {CUSTOM_ELEMENTS_SCHEMA, signal} from "@angular/core";
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {ActivatedRoute} from "@angular/router";
 
-import {GamePageComponent} from './game-page.component';
 import {BoardService} from "../../services/board.service";
 import {BoardComponent} from "./board/board.component";
+import {GamePageComponent} from './game-page.component';
 
 describe('GamePageComponent', () => {
     let component: GamePageComponent;

@@ -4,10 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ff32ea9a-e283-4b66-afcf-3b0581baeb3b" name="Changes" comment=":bug: small adjustments and move number-input to other folder">
+    <list default="true" id="ff32ea9a-e283-4b66-afcf-3b0581baeb3b" name="Changes" comment=":white_check_mark: add more tests">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/components/header/header.component.spec.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/header/header.component.spec.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/pages/start-page/start-page.component.spec.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/pages/start-page/start-page.component.spec.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/pages/game-page/board/game-over-dialog/game-over-dialog.component.spec.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/pages/game-page/board/game-over-dialog/game-over-dialog.component.spec.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/services/audio.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/services/audio.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/services/board.service.spec.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/services/board.service.spec.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -50,46 +54,52 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Karma.AppComponent.executor": "Run",
-    "Karma.AudioService.should call the callback function.executor": "Run",
-    "Karma.BoardService.executor": "Run",
-    "Karma.ComMoveService.executor": "Run",
-    "Karma.ComMoveService.should request a move and return an observable with it.executor": "Run",
-    "Karma.ComMoveService.should request a move.executor": "Run",
-    "Karma.ComMoveService.should take at least 1 second.executor": "Run",
-    "Karma.GameOverDialogComponent.executor": "Run",
-    "Karma.HeaderComponent.executor": "Run",
-    "Karma.NumberInputComponent.executor": "Run",
-    "Karma.NumberInputComponent.should correctly calculate the max digits.executor": "Run",
-    "Karma.NumberInputComponent.should not increment the value if it is at the max.executor": "Run",
-    "Karma.StartPageComponent.executor": "Run",
-    "Karma.StartPageComponent.should submit the start params.executor": "Run",
-    "Karma.StoneManagerComponent.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "ToolWindow.GitHub Copilot Chat.ShowToolbar": "false",
-    "git-widget-placeholder": "main",
-    "ignore.virus.scanning.warn.message": "true",
-    "js.linters.configure.manually.selectedeslint": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/stern/IdeaProjects/fe-kalah/public",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.standard": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.standard": "",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "npm.Angular CLI Server.executor": "Run",
-    "npm.lint.executor": "Run",
-    "npm.test.executor": "Run",
-    "npm.watch.executor": "Run",
-    "settings.editor.selected.configurable": "reference.idesettings.emmet",
-    "ts.external.directory.path": "C:\\Users\\stern\\IdeaProjects\\fe-kalah\\node_modules\\typescript\\lib",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Karma.AppComponent.executor&quot;: &quot;Run&quot;,
+    &quot;Karma.AudioService.executor&quot;: &quot;Run&quot;,
+    &quot;Karma.AudioService.should call the callback function.executor&quot;: &quot;Run&quot;,
+    &quot;Karma.BoardComponent.executor&quot;: &quot;Run&quot;,
+    &quot;Karma.BoardService.executor&quot;: &quot;Run&quot;,
+    &quot;Karma.ComMoveService.executor&quot;: &quot;Run&quot;,
+    &quot;Karma.ComMoveService.should request a move and return an observable with it.executor&quot;: &quot;Run&quot;,
+    &quot;Karma.ComMoveService.should request a move.executor&quot;: &quot;Run&quot;,
+    &quot;Karma.ComMoveService.should take at least 1 second.executor&quot;: &quot;Run&quot;,
+    &quot;Karma.GameOverDialogComponent.executor&quot;: &quot;Run&quot;,
+    &quot;Karma.GameOverDialogComponent.should return draw message.executor&quot;: &quot;Run&quot;,
+    &quot;Karma.GameOverDialogComponent.should return local player win message.executor&quot;: &quot;Run&quot;,
+    &quot;Karma.HeaderComponent.executor&quot;: &quot;Run&quot;,
+    &quot;Karma.HeaderComponent.should have showHelp set to false.executor&quot;: &quot;Run&quot;,
+    &quot;Karma.HeaderComponent.should set showHelp to true when url changes.executor&quot;: &quot;Run&quot;,
+    &quot;Karma.NumberInputComponent.executor&quot;: &quot;Run&quot;,
+    &quot;Karma.NumberInputComponent.should correctly calculate the max digits.executor&quot;: &quot;Run&quot;,
+    &quot;Karma.NumberInputComponent.should not increment the value if it is at the max.executor&quot;: &quot;Run&quot;,
+    &quot;Karma.StartPageComponent.executor&quot;: &quot;Run&quot;,
+    &quot;Karma.StartPageComponent.should submit the start params.executor&quot;: &quot;Run&quot;,
+    &quot;Karma.StoneManagerComponent.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;ToolWindow.GitHub Copilot Chat.ShowToolbar&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;js.linters.configure.manually.selectedeslint&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/stern/IdeaProjects/fe-kalah/public&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.standard&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.standard&quot;: &quot;&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;npm.Angular CLI Server.executor&quot;: &quot;Run&quot;,
+    &quot;npm.lint.executor&quot;: &quot;Run&quot;,
+    &quot;npm.test.executor&quot;: &quot;Run&quot;,
+    &quot;npm.watch.executor&quot;: &quot;Run&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.idesettings.emmet&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;C:\\Users\\stern\\IdeaProjects\\fe-kalah\\node_modules\\typescript\\lib&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\stern\IdeaProjects\fe-kalah\public" />
@@ -102,57 +112,71 @@
       <recent name="C:\Users\stern\IdeaProjects\fe-kalah\src\app\services" />
     </key>
   </component>
-  <component name="RunManager" selected="Karma.StartPageComponent">
-    <configuration name="HeaderComponent" type="JavaScriptTestRunnerKarma" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="Karma.BoardComponent">
+    <configuration name="AudioService" type="JavaScriptTestRunnerKarma" temporary="true" nameIsGenerated="true">
       <config-file value="$PROJECT_DIR$/karma.conf.js" />
       <karma-package-dir value="$PROJECT_DIR$/node_modules/@angular/cli" />
       <working-directory value="$PROJECT_DIR$" />
       <node-interpreter value="project" />
       <envs />
       <scope-kind value="SUITE" />
-      <test-file-path value="$PROJECT_DIR$/src/app/components/header/header.component.spec.ts" />
+      <test-file-path value="$PROJECT_DIR$/src/app/services/audio.service.spec.ts" />
       <test-names>
-        <test-name value="HeaderComponent" />
+        <test-name value="AudioService" />
       </test-names>
       <method v="2" />
     </configuration>
-    <configuration name="NumberInputComponent" type="JavaScriptTestRunnerKarma" temporary="true" nameIsGenerated="true">
+    <configuration name="BoardComponent" type="JavaScriptTestRunnerKarma" temporary="true" nameIsGenerated="true">
       <config-file value="$PROJECT_DIR$/karma.conf.js" />
       <karma-package-dir value="$PROJECT_DIR$/node_modules/@angular/cli" />
       <working-directory value="$PROJECT_DIR$" />
       <node-interpreter value="project" />
       <envs />
       <scope-kind value="SUITE" />
-      <test-file-path value="$PROJECT_DIR$/src/app/shared/number-input/number-input.component.spec.ts" />
+      <test-file-path value="$PROJECT_DIR$/src/app/pages/game-page/board/board.component.spec.ts" />
       <test-names>
-        <test-name value="NumberInputComponent" />
+        <test-name value="BoardComponent" />
       </test-names>
       <method v="2" />
     </configuration>
-    <configuration name="StartPageComponent" type="JavaScriptTestRunnerKarma" temporary="true" nameIsGenerated="true">
+    <configuration name="BoardService" type="JavaScriptTestRunnerKarma" temporary="true" nameIsGenerated="true">
       <config-file value="$PROJECT_DIR$/karma.conf.js" />
       <karma-package-dir value="$PROJECT_DIR$/node_modules/@angular/cli" />
       <working-directory value="$PROJECT_DIR$" />
       <node-interpreter value="project" />
       <envs />
       <scope-kind value="SUITE" />
-      <test-file-path value="$PROJECT_DIR$/src/app/pages/start-page/start-page.component.spec.ts" />
+      <test-file-path value="$PROJECT_DIR$/src/app/services/board.service.spec.ts" />
       <test-names>
-        <test-name value="StartPageComponent" />
+        <test-name value="BoardService" />
       </test-names>
       <method v="2" />
     </configuration>
-    <configuration name="StartPageComponent.should submit the start params" type="JavaScriptTestRunnerKarma" temporary="true" nameIsGenerated="true">
+    <configuration name="HeaderComponent.should have showHelp set to false" type="JavaScriptTestRunnerKarma" temporary="true" nameIsGenerated="true">
       <config-file value="$PROJECT_DIR$/karma.conf.js" />
       <karma-package-dir value="$PROJECT_DIR$/node_modules/@angular/cli" />
       <working-directory value="$PROJECT_DIR$" />
       <node-interpreter value="project" />
       <envs />
       <scope-kind value="TEST" />
-      <test-file-path value="$PROJECT_DIR$/src/app/pages/start-page/start-page.component.spec.ts" />
+      <test-file-path value="$PROJECT_DIR$/src/app/components/header/header.component.spec.ts" />
       <test-names>
-        <test-name value="StartPageComponent" />
-        <test-name value="should submit the start params" />
+        <test-name value="HeaderComponent" />
+        <test-name value="should have showHelp set to false" />
+      </test-names>
+      <method v="2" />
+    </configuration>
+    <configuration name="HeaderComponent.should set showHelp to true when url changes" type="JavaScriptTestRunnerKarma" temporary="true" nameIsGenerated="true">
+      <config-file value="$PROJECT_DIR$/karma.conf.js" />
+      <karma-package-dir value="$PROJECT_DIR$/node_modules/@angular/cli" />
+      <working-directory value="$PROJECT_DIR$" />
+      <node-interpreter value="project" />
+      <envs />
+      <scope-kind value="TEST" />
+      <test-file-path value="$PROJECT_DIR$/src/app/components/header/header.component.spec.ts" />
+      <test-names>
+        <test-name value="HeaderComponent" />
+        <test-name value="should set showHelp to true when url changes" />
       </test-names>
       <method v="2" />
     </configuration>
@@ -177,23 +201,13 @@
       <envs />
       <method v="2" />
     </configuration>
-    <configuration name="test" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
-      <package-json value="$PROJECT_DIR$/package.json" />
-      <command value="run" />
-      <scripts>
-        <script value="test" />
-      </scripts>
-      <node-interpreter value="project" />
-      <envs />
-      <method v="2" />
-    </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Karma.StartPageComponent" />
-        <item itemvalue="Karma.HeaderComponent" />
-        <item itemvalue="npm.test" />
-        <item itemvalue="Karma.StartPageComponent.should submit the start params" />
-        <item itemvalue="Karma.NumberInputComponent" />
+        <item itemvalue="Karma.BoardComponent" />
+        <item itemvalue="Karma.AudioService" />
+        <item itemvalue="Karma.BoardService" />
+        <item itemvalue="Karma.HeaderComponent.should have showHelp set to false" />
+        <item itemvalue="Karma.HeaderComponent.should set showHelp to true when url changes" />
       </list>
     </recent_temporary>
   </component>
@@ -237,7 +251,11 @@
       <workItem from="1729373708791" duration="2524000" />
       <workItem from="1729412465293" duration="5811000" />
       <workItem from="1729418768564" duration="718000" />
-      <workItem from="1729419502054" duration="1090000" />
+      <workItem from="1729419502054" duration="2199000" />
+      <workItem from="1729421755266" duration="143000" />
+      <workItem from="1729421904978" duration="1489000" />
+      <workItem from="1729427942273" duration="497000" />
+      <workItem from="1729428454172" duration="296000" />
     </task>
     <task id="LOCAL-00001" summary=":recycle: move backend to separate repo">
       <option name="closed" value="true" />
@@ -615,7 +633,15 @@
       <option name="project" value="LOCAL" />
       <updated>1729417994178</updated>
     </task>
-    <option name="localTasksCounter" value="48" />
+    <task id="LOCAL-00048" summary=":white_check_mark: add more tests">
+      <option name="closed" value="true" />
+      <created>1729421409954</created>
+      <option name="number" value="00048" />
+      <option name="presentableId" value="LOCAL-00048" />
+      <option name="project" value="LOCAL" />
+      <updated>1729421409954</updated>
+    </task>
+    <option name="localTasksCounter" value="49" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -635,7 +661,6 @@
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CODE_SMELLS_PROFILE" value="Project Default" />
-    <MESSAGE value=":green_heart: fix tests and thus github actions?" />
     <MESSAGE value=":memo: show status of github action on main page" />
     <MESSAGE value=":memo: it already showed the status next to the commit" />
     <MESSAGE value=":construction: testing how player vs computer could be implemented" />
@@ -660,7 +685,8 @@
     <MESSAGE value=":iphone: work on responsive design" />
     <MESSAGE value=":white_check_mark: add some basic tests" />
     <MESSAGE value=":bug: small adjustments and move number-input to other folder" />
-    <option name="LAST_COMMIT_MESSAGE" value=":bug: small adjustments and move number-input to other folder" />
+    <MESSAGE value=":white_check_mark: add more tests" />
+    <option name="LAST_COMMIT_MESSAGE" value=":white_check_mark: add more tests" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

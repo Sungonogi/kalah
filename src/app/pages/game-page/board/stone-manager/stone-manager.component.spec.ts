@@ -10,7 +10,7 @@ describe('StoneManagerComponent', () => {
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            imports: [StoneManagerComponent]
+            imports: [StoneManagerComponent],
         }).compileComponents();
 
         fixture = TestBed.createComponent(StoneManagerComponent);
@@ -18,6 +18,10 @@ describe('StoneManagerComponent', () => {
 
         component.pitSize = signal(1);
         component.board = signal({pits: 1} as BoardPosition);
+        component.southPitPositions = signal([]);
+        component.northPitPositions = signal([]);
+        component.southStorePosition = signal({} as DOMRect);
+        component.northStorePosition = signal({} as DOMRect);
 
         fixture.detectChanges();
     });

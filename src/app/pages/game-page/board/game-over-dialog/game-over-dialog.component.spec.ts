@@ -36,6 +36,11 @@ describe('GameOverDialogComponent', () => {
     });
 
     it('should return draw message', () => {
+        component['board'].southStore = 24;
+        component['board'].northStore = 24;
+        component['playerSouth'] = PlayerType.Local;
+        component['playerNorth'] = PlayerType.Local;
+
         expect(component.gameOverMessage()).toBe('It is a draw');
     });
 

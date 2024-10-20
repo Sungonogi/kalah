@@ -32,11 +32,15 @@ describe('HeaderComponent', () => {
     });
 
     it('should have showHelp set to false', () => {
+        console.error(component.showHelp, mockRouter.url);
+
         expect(component.showHelp).toBeFalsy();
     });
 
 
     it('should set showHelp to true when url changes', () => {
+        console.error(component.showHelp, mockRouter.url);
+
         expect(component.showHelp).toBeFalsy();
 
         mockRouter.url = '/not-tutorial';

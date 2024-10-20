@@ -1,5 +1,6 @@
 import {TestBed} from '@angular/core/testing';
 
+import {AudioService} from "./audio.service";
 import {BoardService} from './board.service';
 import {ComMoveService} from "./com-move.service";
 
@@ -13,7 +14,8 @@ describe('BoardService', () => {
 
         TestBed.configureTestingModule({
             providers: [
-                {provide: ComMoveService, useValue: comMoveMock}
+                {provide: ComMoveService, useValue: comMoveMock},
+                {provide: AudioService, useValue: jasmine.createSpyObj('AudioService', ['startAudio'])}
             ]
         });
         service = TestBed.inject(BoardService);

@@ -29,11 +29,8 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 
 ## TODO
 - [ ] do sound design
-- [ ] adjust look of header
-- [ ] add licensing to site and github
+- [ ] add guard with warning while in game
 - [ ] adjust package.json with dev/normal dependencie
-- [ ] make sure lint/tests work
-- [ ] add some tests
+- [ ] add more tests
 - [ ] publish on github pages
 - [ ] add description of how to get everything running
-- [ ] add guide how to play

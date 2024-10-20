@@ -29,6 +29,7 @@ export class AudioService {
     }
 
     startAudio() {
+        console.log("HEERE");
         this.interruptAndPlay(this.startSound);
     }
 

@@ -4,19 +4,19 @@ import {MAT_DIALOG_DATA} from "@angular/material/dialog";
 import {PlayerType} from "../../../../models/player-type.enum";
 import {GameOverDialogComponent} from './game-over-dialog.component';
 
-const mockDialogData = {
-    board: {
-        southStore: 24,
-        northStore: 24
-    },
-    playerSouth: PlayerType.Local,
-    playerNorth: PlayerType.Local
-};
-
 
 describe('GameOverDialogComponent', () => {
     let component: GameOverDialogComponent;
     let fixture: ComponentFixture<GameOverDialogComponent>;
+    const mockDialogData = {
+        board: {
+            southStore: 24,
+            northStore: 24
+        },
+        playerSouth: PlayerType.Local,
+        playerNorth: PlayerType.Local
+    };
+
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({

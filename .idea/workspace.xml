@@ -4,21 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ff32ea9a-e283-4b66-afcf-3b0581baeb3b" name="Changes" comment=":rotating_light: fix lint">
+    <list default="true" id="ff32ea9a-e283-4b66-afcf-3b0581baeb3b" name="Changes" comment=":bug: small adjustments and move number-input to other folder">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/app.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/app.component.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/components/header/header.component.spec.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/header/header.component.spec.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/pages/game-page/board/board.component.spec.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/pages/game-page/board/board.component.spec.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/pages/game-page/board/game-over-dialog/game-over-dialog.component.spec.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/pages/game-page/board/game-over-dialog/game-over-dialog.component.spec.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/pages/game-page/board/game-over-dialog/game-over-dialog.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/pages/game-page/board/game-over-dialog/game-over-dialog.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/pages/game-page/board/pit/pit.component.spec.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/pages/game-page/board/pit/pit.component.spec.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/pages/game-page/board/stone-manager/stone-manager.component.spec.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/pages/game-page/board/stone-manager/stone-manager.component.spec.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/pages/game-page/board/stone-manager/stone-manager.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/pages/game-page/board/stone-manager/stone-manager.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/pages/game-page/game-page.component.spec.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/pages/game-page/game-page.component.spec.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/pages/start-page/start-page.component.spec.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/pages/start-page/start-page.component.spec.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/pages/tutorial-page/tutorial-page.component.spec.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/pages/tutorial-page/tutorial-page.component.spec.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/services/board.service.spec.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/services/board.service.spec.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/services/com-move.service.spec.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/services/com-move.service.spec.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -64,11 +53,19 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "Karma.AppComponent.executor": "Run",
+    "Karma.AudioService.should call the callback function.executor": "Run",
     "Karma.BoardService.executor": "Run",
     "Karma.ComMoveService.executor": "Run",
+    "Karma.ComMoveService.should request a move and return an observable with it.executor": "Run",
+    "Karma.ComMoveService.should request a move.executor": "Run",
+    "Karma.ComMoveService.should take at least 1 second.executor": "Run",
     "Karma.GameOverDialogComponent.executor": "Run",
+    "Karma.HeaderComponent.executor": "Run",
     "Karma.NumberInputComponent.executor": "Run",
     "Karma.NumberInputComponent.should correctly calculate the max digits.executor": "Run",
+    "Karma.NumberInputComponent.should not increment the value if it is at the max.executor": "Run",
+    "Karma.StartPageComponent.executor": "Run",
+    "Karma.StartPageComponent.should submit the start params.executor": "Run",
     "Karma.StoneManagerComponent.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "ToolWindow.GitHub Copilot Chat.ShowToolbar": "false",
@@ -98,50 +95,64 @@
       <recent name="C:\Users\stern\IdeaProjects\fe-kalah\public" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\stern\IdeaProjects\fe-kalah\src\app\pages\start-page" />
       <recent name="C:\Users\stern\IdeaProjects\fe-kalah\public" />
       <recent name="C:\Users\Uni\IdeaProjects\github\fe-kalah\public" />
       <recent name="C:\Users\stern\IdeaProjects\fe-kalah\src\app\pages\game-page\board" />
       <recent name="C:\Users\stern\IdeaProjects\fe-kalah\src\app\services" />
-      <recent name="C:\Users\stern\IdeaProjects\fe-kalah\src\app\models" />
     </key>
   </component>
-  <component name="RunManager" selected="Karma.BoardService">
-    <configuration name="BoardService" type="JavaScriptTestRunnerKarma" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="Karma.StartPageComponent">
+    <configuration name="HeaderComponent" type="JavaScriptTestRunnerKarma" temporary="true" nameIsGenerated="true">
       <config-file value="$PROJECT_DIR$/karma.conf.js" />
       <karma-package-dir value="$PROJECT_DIR$/node_modules/@angular/cli" />
       <working-directory value="$PROJECT_DIR$" />
       <node-interpreter value="project" />
       <envs />
       <scope-kind value="SUITE" />
-      <test-file-path value="$PROJECT_DIR$/src/app/services/board.service.spec.ts" />
+      <test-file-path value="$PROJECT_DIR$/src/app/components/header/header.component.spec.ts" />
       <test-names>
-        <test-name value="BoardService" />
+        <test-name value="HeaderComponent" />
       </test-names>
       <method v="2" />
     </configuration>
-    <configuration name="ComMoveService" type="JavaScriptTestRunnerKarma" temporary="true" nameIsGenerated="true">
+    <configuration name="NumberInputComponent" type="JavaScriptTestRunnerKarma" temporary="true" nameIsGenerated="true">
       <config-file value="$PROJECT_DIR$/karma.conf.js" />
       <karma-package-dir value="$PROJECT_DIR$/node_modules/@angular/cli" />
       <working-directory value="$PROJECT_DIR$" />
       <node-interpreter value="project" />
       <envs />
       <scope-kind value="SUITE" />
-      <test-file-path value="$PROJECT_DIR$/src/app/services/com-move.service.spec.ts" />
+      <test-file-path value="$PROJECT_DIR$/src/app/shared/number-input/number-input.component.spec.ts" />
       <test-names>
-        <test-name value="ComMoveService" />
+        <test-name value="NumberInputComponent" />
       </test-names>
       <method v="2" />
     </configuration>
-    <configuration name="StoneManagerComponent" type="JavaScriptTestRunnerKarma" temporary="true" nameIsGenerated="true">
+    <configuration name="StartPageComponent" type="JavaScriptTestRunnerKarma" temporary="true" nameIsGenerated="true">
       <config-file value="$PROJECT_DIR$/karma.conf.js" />
       <karma-package-dir value="$PROJECT_DIR$/node_modules/@angular/cli" />
       <working-directory value="$PROJECT_DIR$" />
       <node-interpreter value="project" />
       <envs />
       <scope-kind value="SUITE" />
-      <test-file-path value="$PROJECT_DIR$/src/app/pages/game-page/board/stone-manager/stone-manager.component.spec.ts" />
+      <test-file-path value="$PROJECT_DIR$/src/app/pages/start-page/start-page.component.spec.ts" />
       <test-names>
-        <test-name value="StoneManagerComponent" />
+        <test-name value="StartPageComponent" />
+      </test-names>
+      <method v="2" />
+    </configuration>
+    <configuration name="StartPageComponent.should submit the start params" type="JavaScriptTestRunnerKarma" temporary="true" nameIsGenerated="true">
+      <config-file value="$PROJECT_DIR$/karma.conf.js" />
+      <karma-package-dir value="$PROJECT_DIR$/node_modules/@angular/cli" />
+      <working-directory value="$PROJECT_DIR$" />
+      <node-interpreter value="project" />
+      <envs />
+      <scope-kind value="TEST" />
+      <test-file-path value="$PROJECT_DIR$/src/app/pages/start-page/start-page.component.spec.ts" />
+      <test-names>
+        <test-name value="StartPageComponent" />
+        <test-name value="should submit the start params" />
       </test-names>
       <method v="2" />
     </configuration>
@@ -176,23 +187,13 @@
       <envs />
       <method v="2" />
     </configuration>
-    <configuration name="watch" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
-      <package-json value="$PROJECT_DIR$/package.json" />
-      <command value="run" />
-      <scripts>
-        <script value="watch" />
-      </scripts>
-      <node-interpreter value="project" />
-      <envs />
-      <method v="2" />
-    </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Karma.BoardService" />
+        <item itemvalue="Karma.StartPageComponent" />
+        <item itemvalue="Karma.HeaderComponent" />
         <item itemvalue="npm.test" />
-        <item itemvalue="npm.watch" />
-        <item itemvalue="Karma.StoneManagerComponent" />
-        <item itemvalue="Karma.ComMoveService" />
+        <item itemvalue="Karma.StartPageComponent.should submit the start params" />
+        <item itemvalue="Karma.NumberInputComponent" />
       </list>
     </recent_temporary>
   </component>
@@ -233,7 +234,10 @@
       <workItem from="1728638759220" duration="5242000" />
       <workItem from="1729349595979" duration="1948000" />
       <workItem from="1729370715229" duration="2928000" />
-      <workItem from="1729373708791" duration="326000" />
+      <workItem from="1729373708791" duration="2524000" />
+      <workItem from="1729412465293" duration="5811000" />
+      <workItem from="1729418768564" duration="718000" />
+      <workItem from="1729419502054" duration="1090000" />
     </task>
     <task id="LOCAL-00001" summary=":recycle: move backend to separate repo">
       <option name="closed" value="true" />
@@ -563,21 +567,74 @@
       <option name="project" value="LOCAL" />
       <updated>1729371533463</updated>
     </task>
-    <option name="localTasksCounter" value="42" />
+    <task id="LOCAL-00042" summary=":art: small changes">
+      <option name="closed" value="true" />
+      <created>1729374215745</created>
+      <option name="number" value="00042" />
+      <option name="presentableId" value="LOCAL-00042" />
+      <option name="project" value="LOCAL" />
+      <updated>1729374215745</updated>
+    </task>
+    <task id="LOCAL-00043" summary=":test_tube: add providers/inputs so the tests can at least create the components">
+      <option name="closed" value="true" />
+      <created>1729374274899</created>
+      <option name="number" value="00043" />
+      <option name="presentableId" value="LOCAL-00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1729374274899</updated>
+    </task>
+    <task id="LOCAL-00044" summary=":safety_vest: ignore audio disabled error">
+      <option name="closed" value="true" />
+      <created>1729375355222</created>
+      <option name="number" value="00044" />
+      <option name="presentableId" value="LOCAL-00044" />
+      <option name="project" value="LOCAL" />
+      <updated>1729375355222</updated>
+    </task>
+    <task id="LOCAL-00045" summary=":iphone: work on responsive design">
+      <option name="closed" value="true" />
+      <created>1729415081274</created>
+      <option name="number" value="00045" />
+      <option name="presentableId" value="LOCAL-00045" />
+      <option name="project" value="LOCAL" />
+      <updated>1729415081274</updated>
+    </task>
+    <task id="LOCAL-00046" summary=":white_check_mark: add some basic tests">
+      <option name="closed" value="true" />
+      <created>1729417881183</created>
+      <option name="number" value="00046" />
+      <option name="presentableId" value="LOCAL-00046" />
+      <option name="project" value="LOCAL" />
+      <updated>1729417881183</updated>
+    </task>
+    <task id="LOCAL-00047" summary=":bug: small adjustments and move number-input to other folder">
+      <option name="closed" value="true" />
+      <created>1729417994178</created>
+      <option name="number" value="00047" />
+      <option name="presentableId" value="LOCAL-00047" />
+      <option name="project" value="LOCAL" />
+      <updated>1729417994178</updated>
+    </task>
+    <option name="localTasksCounter" value="48" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CODE_SMELLS_PROFILE" value="Project Default" />
-    <MESSAGE value=":rotating_light: setup linting" />
-    <MESSAGE value=":rotating_light: add simple Import Sort" />
-    <MESSAGE value=":rotating_light: more eslint rules" />
-    <MESSAGE value=":white_check_mark: fix tests" />
-    <MESSAGE value=":construction_worker: try GitHub actions" />
-    <MESSAGE value=":construction_worker: test Github actions" />
     <MESSAGE value=":green_heart: fix tests and thus github actions?" />
     <MESSAGE value=":memo: show status of github action on main page" />
     <MESSAGE value=":memo: it already showed the status next to the commit" />
@@ -597,7 +654,13 @@
     <MESSAGE value=":fire: delete footer" />
     <MESSAGE value=":fire: use setTimeout instead of setInterval" />
     <MESSAGE value=":rotating_light: fix lint" />
-    <option name="LAST_COMMIT_MESSAGE" value=":rotating_light: fix lint" />
+    <MESSAGE value=":art: small changes" />
+    <MESSAGE value=":test_tube: add providers/inputs so the tests can at least create the components" />
+    <MESSAGE value=":safety_vest: ignore audio disabled error" />
+    <MESSAGE value=":iphone: work on responsive design" />
+    <MESSAGE value=":white_check_mark: add some basic tests" />
+    <MESSAGE value=":bug: small adjustments and move number-input to other folder" />
+    <option name="LAST_COMMIT_MESSAGE" value=":bug: small adjustments and move number-input to other folder" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

@@ -11,7 +11,7 @@ import {
     Signal,
     ViewChildren
 } from "@angular/core";
-import {isEqual} from "lodash";
+import {isEqual} from "lodash-es";
 
 import {BoardPosition} from "../../../../models/board-position.model";
 

@@ -4,7 +4,7 @@ import {MatButtonModule} from "@angular/material/button";
 import {MatCard} from "@angular/material/card";
 import {MatSelectModule} from "@angular/material/select";
 import {RouterLink} from "@angular/router";
-import {values} from "lodash";
+import {values} from "lodash-es";
 
 import {PlayerType} from "../../models/player-type.enum";
 import {StartParams} from "../../models/start-params.model";

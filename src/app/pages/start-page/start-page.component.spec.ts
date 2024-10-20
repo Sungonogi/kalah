@@ -9,12 +9,9 @@ import {StartPageComponent} from './start-page.component';
 describe('StartPageComponent', () => {
     let component: StartPageComponent;
     let fixture: ComponentFixture<StartPageComponent>;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    let startParamsStore: any;
+    const startParamsStore = jasmine.createSpyObj('StartParamsStore', ['playerSouth', 'playerNorth', 'seeds', 'pits', 'setStartParams']);
 
     beforeEach(async () => {
-
-        startParamsStore = jasmine.createSpyObj('StartParamsStore', ['playerSouth', 'playerNorth', 'seeds', 'pits', 'setStartParams']);
 
         await TestBed.configureTestingModule({
             imports: [StartPageComponent, NoopAnimationsModule],

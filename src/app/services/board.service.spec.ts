@@ -7,6 +7,7 @@ import {ComMoveService} from "./com-move.service";
 describe('BoardService', () => {
     let service: BoardService;
     let comMoveMock: ComMoveService;
+    const audioServiceMock = jasmine.createSpyObj('AudioService', ['startAudio']);
 
     beforeEach(() => {
 
@@ -15,7 +16,7 @@ describe('BoardService', () => {
         TestBed.configureTestingModule({
             providers: [
                 {provide: ComMoveService, useValue: comMoveMock},
-                {provide: AudioService, useValue: jasmine.createSpyObj('AudioService', ['startAudio'])}
+                {provide: AudioService, useValue: audioServiceMock}
             ]
         });
         service = TestBed.inject(BoardService);
@@ -24,4 +25,8 @@ describe('BoardService', () => {
     it('should be created', () => {
         expect(service).toBeTruthy();
     });
+/*
+    it('should call startAudio', () => {
+        expect(audioServiceMock.startAudio).toHaveBeenCalled();
+    });*/
 });

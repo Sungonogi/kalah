@@ -21,7 +21,6 @@ export class ComMoveService {
             boardPosition: boardPosition
         };
 
-        // ensure that the backend call takes at least 1 second
         const backendCall$ = this.http.post<ComMoveResponse | null>("http://localhost:9090/api/computerMove", request).pipe(
             catchError((error) => {
                 console.error("Error when communicating with the backend. Make sure it is running. ", error);
@@ -29,6 +28,7 @@ export class ComMoveService {
             })
         );
 
+        // ensure that the backend call takes at least 1 second
         const minDelay$ = timer(1000);
 
         // wait for both, but only return the response

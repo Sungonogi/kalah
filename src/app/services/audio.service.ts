@@ -57,7 +57,9 @@ export class AudioService {
     private interruptAndPlay(audio: HTMLAudioElement) {
         audio.pause();
         audio.currentTime = 0;
-        audio.play().then(r => r).catch(e => console.error(e));
+        try {
+            audio.play().then(r => r).catch();
+        } catch { /* empty */ }
     }
 
 }

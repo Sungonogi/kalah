@@ -8,8 +8,8 @@ import {values} from "lodash";
 
 import {PlayerType} from "../../models/player-type.enum";
 import {StartParams} from "../../models/start-params.model";
-import {NumberInputComponent} from "../../shared/number-input/number-input.component";
 import {StartParamsStore} from "../../stores/start-params/start-params.store";
+import {NumberInputComponent} from "./number-input/number-input.component";
 
 @Component({
     selector: 'app-start-page',

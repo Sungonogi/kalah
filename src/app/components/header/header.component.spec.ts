@@ -35,7 +35,8 @@ describe('HeaderComponent', () => {
 
         // the order of execution is not guaranteed so maybe the second test already changed this value
         mockRouter.url = '/tutorial';
-        console.error("1", component.showHelp, mockRouter.url);
+        mockRouter.events.next(null);
+        fixture.detectChanges();
 
         expect(component.showHelp).toBeFalsy();
     });

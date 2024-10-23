@@ -1,7 +1,7 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {MAT_DIALOG_DATA} from "@angular/material/dialog";
 
-import {PlayerType} from "../../../../models/player-type.enum";
+import {PlayerType} from "../../../models/player-type.enum";
 import {GameOverDialogComponent} from './game-over-dialog.component';
 
 
@@ -41,7 +41,7 @@ describe('GameOverDialogComponent', () => {
         component['playerSouth'] = PlayerType.Local;
         component['playerNorth'] = PlayerType.Local;
 
-        expect(component.gameOverMessage()).toBe('It is a draw');
+        expect(component.gameOverMessage()).toBe('It is a draw!');
     });
 
     it('should return local player win message', () => {
@@ -51,7 +51,7 @@ describe('GameOverDialogComponent', () => {
         component['playerSouth'] = PlayerType.Local;
         component['playerNorth'] = PlayerType.EasyCom;
 
-        expect(component.gameOverMessage()).toBe('You won');
+        expect(component.gameOverMessage()).toBe('You won!');
     });
 
     it('should return local player loss message', () => {
@@ -61,7 +61,7 @@ describe('GameOverDialogComponent', () => {
         component['playerSouth'] = PlayerType.Local;
         component['playerNorth'] = PlayerType.EasyCom;
 
-        expect(component.gameOverMessage()).toBe('You lost');
+        expect(component.gameOverMessage()).toBe('You lost!');
     });
 
     it('should return north player win message', () => {
@@ -71,6 +71,6 @@ describe('GameOverDialogComponent', () => {
         component['playerSouth'] = PlayerType.EasyCom;
         component['playerNorth'] = PlayerType.Stickfish;
 
-        expect(component.gameOverMessage()).toBe('North (Stickfish) won');
+        expect(component.gameOverMessage()).toBe('North (Stickfish) won!');
     });
 });

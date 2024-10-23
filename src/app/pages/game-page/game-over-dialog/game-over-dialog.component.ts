@@ -7,8 +7,14 @@ import {
     MatDialogTitle
 } from "@angular/material/dialog";
 
-import {PlayerType} from "../../../../models/player-type.enum";
-import {DialogData} from "../board.component";
+import {BoardPosition} from "../../../models/board-position.model";
+import {PlayerType} from "../../../models/player-type.enum";
+
+export interface GameOverDialogData {
+    board: BoardPosition;
+    playerSouth: PlayerType;
+    playerNorth: PlayerType;
+}
 
 @Component({
     selector: 'app-game-over-dialog',
@@ -24,7 +30,7 @@ import {DialogData} from "../board.component";
     styleUrl: './game-over-dialog.component.scss'
 })
 export class GameOverDialogComponent {
-    private data = inject<DialogData>(MAT_DIALOG_DATA);
+    private data = inject<GameOverDialogData>(MAT_DIALOG_DATA);
     private board = this.data.board;
     private playerSouth = this.data.playerSouth;
     private playerNorth = this.data.playerNorth;
@@ -33,7 +39,7 @@ export class GameOverDialogComponent {
 
         // check for draw
         if(this.board.southStore === this.board.northStore){
-            return 'It is a draw';
+            return 'It is a draw!';
         }
 
         // check if exactly one of the players is Local
@@ -41,10 +47,10 @@ export class GameOverDialogComponent {
         if(playerVsCom){
             const winner = this.board.southStore > this.board.northStore ? this.playerSouth : this.playerNorth;
             const lossOrWin = winner === PlayerType.Local ? 'won' : 'lost';
-            return 'You ' +  lossOrWin;
+            return 'You ' +  lossOrWin + "!";
         }
 
         // print out the winner (north or south)
-        return this.board.southStore > this.board.northStore ? 'South ('  + this.playerSouth + ') won' : 'North (' + this.playerNorth + ') won';
+        return this.board.southStore > this.board.northStore ? 'South ('  + this.playerSouth + ') won!' : 'North (' + this.playerNorth + ') won!';
     }
 }

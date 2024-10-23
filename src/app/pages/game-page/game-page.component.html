@@ -1,12 +1,12 @@
 <div class="outer-board">
-  <app-board></app-board>
+  <app-board (gameOver)="showGameOverDialog($event)"/>
 </div>
 
 <div class="game-button-container">
   <button mat-flat-button routerLink="/start">
     Go Back
   </button>
-  <button mat-flat-button (click)="restart()">
+  <button mat-flat-button (click)="showRestartDialog()">
     Restart
   </button>
 </div>

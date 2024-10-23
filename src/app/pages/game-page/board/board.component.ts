@@ -2,11 +2,11 @@ import {NgStyle} from "@angular/common";
 import {
     AfterViewInit,
     Component,
-    effect,
+    effect, EventEmitter,
     HostListener,
     inject,
     OnDestroy,
-    OnInit,
+    OnInit, Output,
     QueryList,
     Signal,
     signal,
@@ -15,22 +15,14 @@ import {
     WritableSignal
 } from '@angular/core';
 import {MatButton} from "@angular/material/button";
-import {MatDialog} from "@angular/material/dialog";
-import {Router, RouterLink} from "@angular/router";
+import {RouterLink} from "@angular/router";
 
 import {BoardPosition} from "../../../models/board-position.model";
 import {PlayerType} from "../../../models/player-type.enum";
 import {BoardService} from "../../../services/board.service";
 import {StartParamsStore} from "../../../stores/start-params/start-params.store";
-import {GameOverDialogComponent} from "./game-over-dialog/game-over-dialog.component";
 import {PitComponent} from "./pit/pit.component";
 import {StoneManagerComponent} from "./stone-manager/stone-manager.component";
-
-export interface DialogData {
-    board: BoardPosition;
-    playerSouth: PlayerType;
-    playerNorth: PlayerType;
-}
 
 @Component({
     selector: 'app-board',
@@ -69,35 +61,14 @@ export class BoardComponent implements OnInit, AfterViewInit, OnDestroy {
     @ViewChild('northStore') northStoreElement!: PitComponent;
     @ViewChild('southStore') southStoreElement!: PitComponent;
 
-    constructor(
-            private boardService: BoardService,
-            private matDialog: MatDialog,
-            private router: Router
-    ) {
+    @Output() gameOver = new EventEmitter<BoardPosition>();
+
+    constructor(private boardService: BoardService) {
 
         effect(() => {
             const board = this.animatedBoardSignal();
             if(board.gameOver){
-
-                // wait 500ms before showing the dialog
-                setTimeout(() => {
-                    const dialogRef = this.matDialog.open(GameOverDialogComponent, {
-                        data: {
-                            board: board,
-                            playerSouth: this.playerSouth,
-                            playerNorth: this.playerNorth
-                        }
-                    });
-
-                    dialogRef.afterClosed().subscribe(result => {
-                        if (result) {
-                            this.resetBoard();
-                        } else {
-                            this.router.navigate(["start"]);
-                        }
-                    });
-                }, 500);
-
+                this.gameOver.emit(board);
             }
         });
 
@@ -116,6 +87,10 @@ export class BoardComponent implements OnInit, AfterViewInit, OnDestroy {
 
     public resetBoard(){
         this.boardService.resetBoard();
+    }
+
+    public getBoard(){
+        return this.boardSignal();
     }
 
     ngOnDestroy() {

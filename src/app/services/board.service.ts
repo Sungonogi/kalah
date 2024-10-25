@@ -100,10 +100,14 @@ export class BoardService {
         });
     }
 
-    moveLegal(move: number, onSouthSide: boolean): boolean {
+    movePossible(move: number, onSouthSide: boolean): boolean {
 
         const boardPosition = this.boardPosition();
 
+        // only allow moves after the animation is finished, comparison by reference works as it is actually the same
+        if(boardPosition !== this.animatedBoardPosition()){
+            return false;
+        }
 
         if (boardPosition.gameOver) {
             return false;

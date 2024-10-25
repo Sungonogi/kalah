@@ -132,7 +132,7 @@ export class BoardComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     movePossible(position: number, onSouthSide: boolean) {
-        return this.boardService.moveLegal(position, onSouthSide);
+        return this.boardService.movePossible(position, onSouthSide);
     }
 
     getIndexArray(size: number) {

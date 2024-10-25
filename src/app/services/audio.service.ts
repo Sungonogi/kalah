@@ -46,6 +46,10 @@ export class AudioService {
         }
     }
 
+    resetCallbacks(){
+        this.moveSound.onended = null;
+    }
+
     extraAudio() {
         this.interruptAndPlay(this.extraSound);
     }

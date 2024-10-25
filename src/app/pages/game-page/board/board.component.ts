@@ -94,7 +94,7 @@ export class BoardComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     ngOnDestroy() {
-        this.boardService.stopGame();
+        this.boardService.resetCallbacks();
     }
 
     // call updatePitPositions when view is rendered

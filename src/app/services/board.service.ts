@@ -1,4 +1,5 @@
 import {inject, Injectable, signal, WritableSignal} from '@angular/core';
+import {Subscription} from "rxjs";
 
 import {checkLegalMove, performLegalMove} from "../models/board-position.helpers";
 import {BoardPosition} from "../models/board-position.model";
@@ -21,11 +22,7 @@ export class BoardService {
     boardPosition!: WritableSignal<BoardPosition>;
     animatedBoardPosition!: WritableSignal<BoardPosition>;
 
-    moveRequested!: boolean; // to avoid multiple calls at once
-    duringAnimation!: boolean; // to tell if we are currently animating something
-
-    kill!: boolean; // to stop the game when the board component is destroyed
-    ignore!: boolean; // to ignore the requested move after a reset
+    moveRequestSubscription: Subscription | undefined = undefined;
 
     constructor(
             private comMoveService: ComMoveService,
@@ -35,6 +32,8 @@ export class BoardService {
 
     // has to be called before any other functions
     resetBoard(): void {
+        this.resetCallbacks();
+
         this.audioService.startAudio();
 
         this.playerSouth = this.startParams.playerSouth();
@@ -61,19 +60,21 @@ export class BoardService {
             this.animatedBoardPosition.set(boardPosition);
         }
 
-        // ignore the requested move or animations after a reset
-        this.ignore = this.moveRequested;
-        this.duringAnimation = false;
-        this.moveRequested = false;
-        this.kill = false;
-
         this.checkAndPerformComMove();
+    }
+
+    resetCallbacks(){
+        if(this.moveRequestSubscription !== undefined){
+            this.moveRequestSubscription.unsubscribe();
+            this.moveRequestSubscription = undefined;
+        }
+        this.audioService.resetCallbacks();
     }
 
     // checks if the computer has the next move and if yes does the move
     checkAndPerformComMove() {
 
-        if (this.kill || this.moveRequested)
+        if (this.moveRequestSubscription !== undefined)
             return;
 
         const boardPosition = this.boardPosition();
@@ -85,16 +86,12 @@ export class BoardService {
         if (player === PlayerType.Local)
             return;
 
-        this.moveRequested = true;
-        this.comMoveService.requestMove(boardPosition, player).subscribe(move => {
-            this.moveRequested = false;
 
-            if(this.ignore){
-                this.ignore = false;
-                return;
-            }
+        this.moveRequestSubscription = this.comMoveService.requestMove(boardPosition, player).subscribe(move => {
 
-            if (this.kill || move === null){
+            this.moveRequestSubscription = undefined;
+
+            if(move === null){
                 return;
             }
 
@@ -134,22 +131,13 @@ export class BoardService {
         this.animatedBoardPosition.set(result.boards[0]);
 
         if (result.moveType === MoveType.CaptureMove) {
-            this.duringAnimation = true;
             this.audioService.moveAudio(() => {
-
-                if(!this.duringAnimation)
-                    return; // someone wants us to stop
-
                 this.audioService.stealAudio();
                 this.animatedBoardPosition.set(result.boards[1]);
                 this.checkGameOverAndComMove(result.boards);
             });
         } else if (result.moveType === MoveType.ExtraMove) {
-            this.duringAnimation = true;
             this.audioService.moveAudio(() => {
-                if(!this.duringAnimation)
-                    return; // someone wants us to stop
-
                 // no sound if game ends
                 if(result.boards.length === 1) {
                     this.audioService.extraAudio();
@@ -165,25 +153,13 @@ export class BoardService {
     private checkGameOverAndComMove(boards: BoardPosition[]) {
         const lastBoard = boards[boards.length - 1];
         if (lastBoard.gameOver) {
-            this.duringAnimation = true;
             setTimeout(() => {
-                if(!this.duringAnimation)
-                    return;
-
                 this.audioService.endAudio();
                 this.animatedBoardPosition.set(lastBoard);
-                this.duringAnimation = false;
             }, 500);
         } else {
-            this.duringAnimation = false;
             this.checkAndPerformComMove();
         }
     }
-
-    stopGame(): void {
-        // don't request moves anymore (otherwise games between coms will keep going on)
-        this.kill = true;
-    }
-
 
 }

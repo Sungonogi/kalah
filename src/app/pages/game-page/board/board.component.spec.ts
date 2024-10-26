@@ -11,7 +11,7 @@ describe('BoardComponent', () => {
     let fixture: ComponentFixture<BoardComponent>;
     const boardServiceMock = jasmine.createSpyObj(
         'BoardService',
-        ['resetBoard', 'stopGame'],
+        ['resetBoard', 'stopGame', 'resetCallbacks'],
         {boardPosition : signal(null), animatedBoardPosition: signal({gameOver: false})}
     );
     

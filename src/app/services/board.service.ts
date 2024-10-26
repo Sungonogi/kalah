@@ -140,12 +140,9 @@ export class BoardService {
                 this.animatedBoardPosition.set(result.boards[1]);
                 this.checkGameOverAndComMove(result.boards);
             });
-        } else if (result.moveType === MoveType.ExtraMove) {
+        } else if (result.moveType === MoveType.ExtraMove && result.boards.length === 1) { // no sound when game over
             this.audioService.moveAudio(() => {
-                // no sound if game ends
-                if(result.boards.length === 1) {
-                    this.audioService.extraAudio();
-                }
+                this.audioService.extraAudio();
                 this.checkGameOverAndComMove(result.boards);
             });
         } else {

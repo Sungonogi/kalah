@@ -65,19 +65,10 @@ export class GamePageComponent {
         }, 500);
     }
 
-
+    // returns true if navigating is allowed
     showNaviWarningDialog(): Observable<boolean> | boolean {
 
-        if(this.skipNaviWarning){
-            return true;
-        }
-
-        const board = this.boardComponent.getBoard();
-        // determine if the board is untouched
-        const southUntouched = board.southPits.every((val, i, arr) => val === arr[0]);
-        const northUntouched = board.northPits.every((val, i, arr) => val === arr[0]);
-        const storesUntouched = board.southStore === 0 && board.northStore === 0;
-        if(southUntouched && northUntouched && storesUntouched){
+        if(this.skipNaviWarning || this.isBoardUntouched()){
             return true;
         }
 
@@ -89,7 +80,7 @@ export class GamePageComponent {
         return this.matDialog.open(WarningDialogComponent, {data}).afterClosed();
     }
 
-    showRestartDialog(): void {
+    showRestartDialog() {
         const data: WarningDialogData= {
             title: 'Warning',
             text: 'Do you really want to restart the game?'
@@ -101,6 +92,14 @@ export class GamePageComponent {
                 this.restart();
             }
         });
+    }
+
+    private isBoardUntouched(): boolean {
+        const board = this.boardComponent.getBoard();
+        const southUntouched = board.southPits.every((val, i, arr) => val === arr[0]);
+        const northUntouched = board.northPits.every((val, i, arr) => val === arr[0]);
+        const storesUntouched = board.southStore === 0 && board.northStore === 0;
+        return southUntouched && northUntouched && storesUntouched;
     }
 
 }

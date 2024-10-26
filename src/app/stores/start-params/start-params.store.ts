@@ -21,6 +21,6 @@ export const StartParamsStore = signalStore(
     })),
     withStorageSync({
         key: 'start-params',
-        storage: () => sessionStorage
+        storage: () => localStorage
     })
 );

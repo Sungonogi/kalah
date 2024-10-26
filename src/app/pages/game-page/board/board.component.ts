@@ -2,11 +2,10 @@ import {NgStyle} from "@angular/common";
 import {
     AfterViewInit,
     Component,
-    effect, EventEmitter,
     HostListener,
     inject,
     OnDestroy,
-    OnInit, Output,
+    OnInit,
     QueryList,
     Signal,
     signal,
@@ -39,6 +38,21 @@ import {StoneManagerComponent} from "./stone-manager/stone-manager.component";
 })
 export class BoardComponent implements OnInit, AfterViewInit, OnDestroy {
 
+    @ViewChildren('northPits') northPitElements!: QueryList<PitComponent>;
+    @ViewChildren('southPits') southPitElements!: QueryList<PitComponent>;
+    @ViewChild('northStore') northStoreElement!: PitComponent;
+    @ViewChild('southStore') southStoreElement!: PitComponent;
+
+    // store the pit positions and the store positions for the stone manager
+    protected southPitPositions: WritableSignal<{x:number, y: number}[]> = signal([]);
+    protected northPitPositions: WritableSignal<{x:number, y: number}[]> = signal([]);
+    protected northStorePosition: WritableSignal<{x:number, y: number}> = signal({x: 0, y: 0});
+    protected southStorePosition: WritableSignal<{x: number, y: number}>   = signal({x: 0, y: 0});
+    protected pitSize: WritableSignal<number> = signal(0);
+    protected rendered = false;
+
+    // other variables
+    protected readonly Array = Array;
     protected boardSignal!: Signal<BoardPosition>;
     protected animatedBoardSignal!: Signal<BoardPosition>;
 
@@ -48,30 +62,7 @@ export class BoardComponent implements OnInit, AfterViewInit, OnDestroy {
 
     private startParamsStore = inject(StartParamsStore);
 
-    // get the pit elements using ViewChildren
-    protected southPitPositions: WritableSignal<{x:number, y: number}[]> = signal([]);
-    protected northPitPositions: WritableSignal<{x:number, y: number}[]> = signal([]);
-    protected northStorePosition: WritableSignal<{x:number, y: number}> = signal({x: 0, y: 0});
-    protected southStorePosition: WritableSignal<{x: number, y: number}>   = signal({x: 0, y: 0});
-    protected pitSize: WritableSignal<number> = signal(0);
-    protected rendered = false;
-
-    @ViewChildren('northPits') northPitElements!: QueryList<PitComponent>;
-    @ViewChildren('southPits') southPitElements!: QueryList<PitComponent>;
-    @ViewChild('northStore') northStoreElement!: PitComponent;
-    @ViewChild('southStore') southStoreElement!: PitComponent;
-
-    @Output() gameOver = new EventEmitter<BoardPosition>();
-
-    constructor(private boardService: BoardService) {
-
-        effect(() => {
-            const board = this.animatedBoardSignal();
-            if(board.gameOver){
-                this.gameOver.emit(board);
-            }
-        });
-
+    constructor(protected boardService: BoardService) {
     }
 
 
@@ -87,10 +78,6 @@ export class BoardComponent implements OnInit, AfterViewInit, OnDestroy {
 
     public resetBoard(){
         this.boardService.resetBoard();
-    }
-
-    public getBoard(){
-        return this.boardSignal();
     }
 
     ngOnDestroy() {
@@ -133,10 +120,6 @@ export class BoardComponent implements OnInit, AfterViewInit, OnDestroy {
 
     movePossible(position: number, onSouthSide: boolean) {
         return this.boardService.movePossible(position, onSouthSide);
-    }
-
-    getIndexArray(size: number) {
-        return Array(size).fill(0).map((e, i) => i);
     }
 
 }

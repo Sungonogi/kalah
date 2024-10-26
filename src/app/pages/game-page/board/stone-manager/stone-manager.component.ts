@@ -33,6 +33,8 @@ export class StoneManagerComponent implements OnInit, AfterViewInit {
     @Input({required: true}) pitSize!: Signal<number>;
     @Input({required: true}) board!: Signal<BoardPosition>;
 
+    protected readonly Array = Array;
+
     protected stoneSize!: number;
     protected offset!: number;
     private previousBoard?: BoardPosition;
@@ -207,7 +209,4 @@ export class StoneManagerComponent implements OnInit, AfterViewInit {
         this.offset = pitSize - this.stoneSize - 5;
     }
 
-    getIndexArray(stones: number): number[] {
-        return Array.from({length: stones}, (_, i) => i);
-    }
 }

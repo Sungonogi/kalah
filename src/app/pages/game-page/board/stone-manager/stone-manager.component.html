@@ -1,4 +1,4 @@
-@for (stone of getIndexArray(totalStones); track stone) {
+@for (stone of Array(totalStones); track $index) {
   <div class="stone"
        [ngStyle]="{'height': stoneSize + 'px', 'width': stoneSize + 'px'}"
        #stoneElement>

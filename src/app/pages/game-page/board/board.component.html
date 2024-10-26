@@ -20,7 +20,7 @@
     </div>
 
 
-    @for (i of getIndexArray(board.pits); track i) {
+    @for (_ of Array(board.northPits.length); let i = $index; track i) {
       <app-pit [stones]="board.northPits[board.pits - i - 1]"
                [hoverEffect]="movePossible(board.pits - i - 1, false)"
                (click)="move(board.pits - i - 1, false)"
@@ -32,7 +32,7 @@
       <app-pit [stones]="board.southStore" [store]="true" [south]="true" [playerType]="playerSouth" #southStore/>
     </div>
 
-    @for (stones of board.southPits; track i; let i = $index) {
+    @for (stones of board.southPits; let i = $index; track i) {
       <app-pit [stones]="stones"
                [hoverEffect]="movePossible(i, true)"
                (click)="move(i, true)"

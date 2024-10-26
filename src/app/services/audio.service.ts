@@ -37,7 +37,7 @@ export class AudioService {
     }
 
     // provide an optional callback function that will be called onended
-    moveAudio(callback?: () => void) {
+    moveAudio(callback: () => void) {
         // Stop any currently playing sound by resetting the playback position
         this.interruptAndPlay(this.moveSound);
 

@@ -2,23 +2,6 @@ import {BoardPosition} from "./board-position.model";
 import {MoveType} from "./move-type.enum";
 
 /**
- * Creates an instance of BoardPosition.
- * @param {number} pits - The number of pits on each side.
- * @param {number} seeds - The initial number of seeds in each pit.
- */
-export function initBoardPosition(pits: number, seeds: number): BoardPosition {
-    return {
-        pits: pits,
-        southPits: Array(pits).fill(seeds),
-        northPits: Array(pits).fill(seeds),
-        southStore: 0,
-        northStore: 0,
-        southTurn: true,
-        gameOver: false,
-    };
-}
-
-/**
  * Checks if a move is legal, assumes it is in bounds
  * @param {BoardPosition} board the board position to check
  * @param {number} position - The position of the pit to move from.

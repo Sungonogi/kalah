@@ -140,13 +140,13 @@ export class BoardService {
                 this.animatedBoardPosition.set(result.boards[1]);
                 this.checkGameOverAndComMove(result.boards);
             });
-        } else if (result.moveType === MoveType.ExtraMove && result.boards.length === 1) { // no sound when game over
-            this.audioService.moveAudio(() => {
-                this.audioService.extraAudio();
-                this.checkGameOverAndComMove(result.boards);
-            });
         } else {
-            this.audioService.moveAudio(() => false);
+            // only play extra move sound if extra move and not game over
+            let callback = () => { /* empty */ };
+            if(result.moveType === MoveType.ExtraMove && result.boards.length === 1){
+                callback = () => this.audioService.extraAudio();
+            }
+            this.audioService.moveAudio(callback);
             this.checkGameOverAndComMove(result.boards);
         }
     }

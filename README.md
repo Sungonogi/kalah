@@ -1,36 +1,36 @@
-# Kalah
+# Kalah Game
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.2.2.
+Kalah is a traditional two-player strategy board game, also known as "Mancala." This project is a digital version of the game, created for fun, with both a computer opponent and a human player mode.
 
-## Development server
+## Project Overview
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+- **Frontend**: Angular
+- **Backend**: Java Spring (implements game logic and computer moves using Alpha-Beta Pruning)
+- **Inspiration**: This project was inspired by a Kalah Tournament at my university (FAU), where we were tasked with programming an AI to compete in the game.
 
-## Code scaffolding
+## Features
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+- Interactive user interface built with Angular.
+- Backend game logic handled by a Java Spring application.
+- Computer opponent that calculates optimal moves using the Alpha-Beta Pruning algorithm.
+- Play against a computer or another player locally.
 
-## Build
+## Rules of Kalah
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+## Rules of Kalah
 
-## Running unit tests
+The objective of Kalah is to capture as many seeds as possible. Players take turns picking seeds from one of their pits, distributing them counterclockwise, and aiming to capture the opponent’s seeds. If you're new to Kalah, don’t worry—jump right in and start playing to get the hang of it!
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+For more details on the rules, you can refer to the ["How to Play"](https://yourwebsite.com/tutorial) section on the website or read more on [Wikipedia](https://en.wikipedia.org/wiki/Kalah).
 
-## Running end-to-end tests
+## Attribution
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+This project uses sound effects from Freesound:
 
-## Further help
+- **Gong-Cambodia** by cdrk  
+  Source: [Freesound](https://freesound.org/s/379865/)  
+  License: [Attribution 4.0 International (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/)
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+## License
 
-
-## TODO
-- [ ] do sound design
-- [ ] add guard with warning while in game
-- [ ] adjust package.json with dev/normal dependencie
-- [ ] add more tests
-- [ ] publish on github pages
-- [ ] add description of how to get everything running
+The source code for this project is released under the MIT License. See the [LICENSE](LICENSE) file for more details.

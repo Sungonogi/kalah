@@ -12,11 +12,14 @@ export class AudioService {
     private readonly endSound: HTMLAudioElement;
 
     constructor() {
-        this.startSound = new Audio('startSound.ogg');
-        this.moveSound = new Audio('moveSound.ogg');
-        this.extraSound = new Audio('extraSound.ogg');
-        this.stealSound = new Audio('stealSound.ogg');
-        this.endSound = new Audio('stealSound.ogg');
+        // Credit: Gong-Cambodia by cdrk -- https://freesound.org/s/379865/ -- License: Attribution 4.0
+        this.startSound = new Audio('379865__cdrk__gong-cambodia.flac');
+        this.endSound = new Audio('379865__cdrk__gong-cambodia.flac');
+
+
+        this.moveSound = new Audio('moveSoundSilent.mp3');
+        this.extraSound = new Audio('extraSoundSilent.mp3');
+        this.stealSound = new Audio('stealSoundSilent.mp3');
     }
 
     startAudio() {

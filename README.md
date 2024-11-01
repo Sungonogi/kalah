@@ -1,6 +1,6 @@
 # Kalah Game
 
-Kalah is a traditional two-player strategy board game, also known as "Mancala." This project is a digital version of the game, created for fun, with both a computer opponent and a human player mode.
+Kalah is a traditional two-player strategy board game, also known as "Mancala." This project is a digital version of the game, created for fun, with both a computer opponent and a human player mode. Check it out [here](https://ingosternberg.github.io/fe-kalah/start).
 
 ## Project Overview
 
@@ -17,11 +17,9 @@ Kalah is a traditional two-player strategy board game, also known as "Mancala." 
 
 ## Rules of Kalah
 
-## Rules of Kalah
-
 The objective of Kalah is to capture as many seeds as possible. Players take turns picking seeds from one of their pits, distributing them counterclockwise, and aiming to capture the opponent’s seeds. If you're new to Kalah, don’t worry—jump right in and start playing to get the hang of it!
 
-For more details on the rules, you can refer to the ["How to Play"](https://yourwebsite.com/tutorial) section on the website or read more on [Wikipedia](https://en.wikipedia.org/wiki/Kalah).
+For more details on the rules, you can refer to the ["How to Play"](https://ingosternberg.github.io/fe-kalah/tutorial) section on the website or read more on [Wikipedia](https://en.wikipedia.org/wiki/Kalah).
 
 ## Attribution
 

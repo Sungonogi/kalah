@@ -35,7 +35,9 @@
               "@angular/material/prebuilt-themes/magenta-violet.css",
               "src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [
+              "public/cpp/hello.js"
+            ]
           },
           "configurations": {
             "production": {

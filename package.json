@@ -7,7 +7,8 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "lint": "ng lint"
+    "lint": "ng lint",
+    "wasm:build": "emcc src/cpp/hello.cpp -o public/cpp/hello.js -s EXPORTED_FUNCTIONS=_hello -s EXPORTED_RUNTIME_METHODS=ccall,cwrap"
   },
   "private": true,
   "dependencies": {

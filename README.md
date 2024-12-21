@@ -25,6 +25,36 @@ For more details on the rules, you can refer to the ["How to Play"](https://ingo
 
 This project uses sound effects from Freesound:
 
+## Setup Wasm
+
+Only necessary if you want to make changes to the cpp code, because the compiled files are already in the public/cpp folder.
+
+First you have to clone the emscripten repo
+```
+git clone https://github.com/emscripten-core/emsdk.git
+```
+
+Now you have to paste this into your (linux) shell:
+```
+cd emsdk
+
+git pull
+
+# Download and install the latest SDK tools.
+./emsdk install latest
+
+# Make the "latest" SDK "active" for the current user. (writes .emscripten file)
+./emsdk activate latest
+
+# Activate PATH and other environment variables in the current terminal
+source ./emsdk_env.sh
+```
+
+Now you will be able to use emcc to build the webassembly stuff. The command to do that is in the package.json so you can simply do
+```
+npm run wasm:build
+```
+
 - **Gong-Cambodia** by cdrk  
   Source: [Freesound](https://freesound.org/s/379865/)  
   License: [Attribution 4.0 International (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/)

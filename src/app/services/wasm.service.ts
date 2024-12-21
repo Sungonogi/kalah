@@ -9,13 +9,12 @@ declare let Module: any;
 })
 export class WasmService {
 
-    private hello = Module.cwrap('hello', 'number', ['string']);
+    private getBestMove = Module.cwrap('getBestMove', 'number', ['string']);
 
     runHello() {
         setTimeout(() => {
-            const encodedString = "Hello, World!";
-            console.log('encodedString', encodedString);
-            this.hello(encodedString);
+            const n: number = this.getBestMove('test');
+            console.log(n);
         }, 500);
     }
 

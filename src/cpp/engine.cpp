@@ -15,7 +15,9 @@ struct BoardPosition {
 };
 
 extern "C" {
-    int hello(const char* board) {
+
+    int getBestMove(const char* b) {
+        string board(b);
         cout << board << endl;
         return 3;
     }

@@ -8,7 +8,7 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "lint": "ng lint",
-    "wasm:build": "emcc src/cpp/hello.cpp -o public/cpp/hello.js -s EXPORTED_FUNCTIONS=_hello -s EXPORTED_RUNTIME_METHODS=ccall,cwrap"
+    "wasm:build": "emcc src/cpp/engine.cpp -o public/cpp/engine.js -s EXPORTED_FUNCTIONS=_getBestMove -s EXPORTED_RUNTIME_METHODS=cwrap"
   },
   "private": true,
   "dependencies": {

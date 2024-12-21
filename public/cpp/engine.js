@@ -589,7 +589,7 @@ function createExportWrapper(name, nargs) {
 // include: runtime_exceptions.js
 // end include: runtime_exceptions.js
 function findWasmBinary() {
-    var f = 'hello.wasm';
+    var f = 'engine.wasm';
     if (!isDataURI(f)) {
       return locateFile(f);
     }
@@ -3933,6 +3933,7 @@ function dbg(...args) {
       return func;
     };
   
+  
   var writeArrayToMemory = (array, buffer) => {
       assert(array.length >= 0, 'writeArrayToMemory array must have a length (should be an array or typed array)')
       HEAP8.set(array, buffer);
@@ -4007,8 +4008,6 @@ function dbg(...args) {
       ret = onDone(ret);
       return ret;
     };
-
-  
   
     /**
      * @param {string=} returnType
@@ -4053,7 +4052,7 @@ var wasmImports = {
 var wasmExports;
 createWasm();
 var ___wasm_call_ctors = createExportWrapper('__wasm_call_ctors', 0);
-var _hello = Module['_hello'] = createExportWrapper('hello', 1);
+var _getBestMove = Module['_getBestMove'] = createExportWrapper('getBestMove', 1);
 var _fflush = createExportWrapper('fflush', 1);
 var _strerror = createExportWrapper('strerror', 1);
 var _emscripten_stack_init = () => (_emscripten_stack_init = wasmExports['emscripten_stack_init'])();
@@ -4073,7 +4072,6 @@ var dynCall_iiiiiijj = Module['dynCall_iiiiiijj'] = createExportWrapper('dynCall
 // include: postamble.js
 // === Auto-generated postamble setup entry stuff ===
 
-Module['ccall'] = ccall;
 Module['cwrap'] = cwrap;
 var missingLibrarySymbols = [
   'writeI53ToI64',
@@ -4284,6 +4282,7 @@ var unexportedSymbols = [
   'wasmTable',
   'noExitRuntime',
   'getCFunc',
+  'ccall',
   'freeTableIndexes',
   'functionsInTableMap',
   'setValue',

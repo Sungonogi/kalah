@@ -48,6 +48,8 @@ git pull
 
 # Activate PATH and other environment variables in the current terminal
 source ./emsdk_env.sh
+
+cd ..
 ```
 
 Now you will be able to use emcc to build the webassembly stuff. The command to do that is in the package.json so you can simply do

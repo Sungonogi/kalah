@@ -9,12 +9,14 @@ declare let Module: any;
 })
 export class WasmService {
 
-    private wasmModule = Module.cwrap('hello', 'number', ['number']);
+    private hello = Module.cwrap('hello', 'number', ['string']);
 
     runHello() {
         setTimeout(() => {
-            this.wasmModule(0);
-        }, 2000);
+            const encodedString = "Hello, World!";
+            console.log('encodedString', encodedString);
+            this.hello(encodedString);
+        }, 500);
     }
 
 }

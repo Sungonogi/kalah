@@ -1,21 +1,21 @@
 
 import {Injectable} from "@angular/core";
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-declare let Module: any;
-
 @Injectable({
     providedIn: 'root'
 })
 export class WasmService {
 
-    private getBestMove = Module.cwrap('getBestMove', 'number', ['string']);
+    private worker = new Worker('worker.js');
+
+    constructor() {
+        this.worker.addEventListener('message', function(event) {
+            console.log('result', event.data.result);
+        });
+    }
 
     runHello() {
-        setTimeout(() => {
-            const n: number = this.getBestMove('test');
-            console.log(n);
-        }, 500);
+        this.worker.postMessage({message: "testMessage"});
     }
 
 }

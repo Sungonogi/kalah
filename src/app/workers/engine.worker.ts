@@ -1,34 +1,44 @@
+import {ComMoveRequest, ComMoveResponse} from '../models/COM.models';
+
 // can not find it in ide but it works
 importScripts('engine.js');
 
 // eslint-disable-next-line
 let Module: any; 
-
 let getBestMove: (arg0: string) => number;
-const unhandledMessages: string[] = [];
+
+let unhandledRequest: ComMoveRequest | undefined = undefined;
 
 Module.onRuntimeInitialized = () => {
     getBestMove = Module.cwrap('getBestMove', 'number', ['string']);
-    unhandledMessages.forEach(handleMessage);
+
+    if(unhandledRequest) {
+        handleRequest(unhandledRequest);
+    }
 };
 
 // Listen for messages from the main thread
 addEventListener('message', (event) =>  {
-    const message = event.data.message;
+    const request = event.data as ComMoveRequest;
 
     if(getBestMove === undefined) {
         console.log('Module not loaded yet. Pushing message to queue.');
-        unhandledMessages.push(message);
+        unhandledRequest = request;
         return;
     } else {
-        handleMessage(message);
+        handleRequest(request);
     }
 });
 
-function handleMessage(message: string) {
-    console.log('Message received in worker:', message);
+function handleRequest(request: ComMoveRequest) {
+    console.log('Request received by worker', request);
 
-    const result = getBestMove(message);
+    const result = getBestMove(JSON.stringify(request));
 
-    self.postMessage({result});
+    const response: ComMoveResponse = {
+        move: result,
+        comment: 'Move calculated by worker'
+    };
+
+    self.postMessage(response);
 }

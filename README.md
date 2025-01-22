@@ -25,6 +25,11 @@ For more details on the rules, you can refer to the ["How to Play"](https://ingo
 
 This project uses sound effects from Freesound:
 
+- **Gong-Cambodia** by cdrk  
+  Source: [Freesound](https://freesound.org/s/379865/)  
+  License: [Attribution 4.0 International (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/)
+
+
 ## Setup Wasm
 
 Only necessary if you want to make changes to the cpp code, because the compiled files are already in the public/cpp folder.
@@ -56,10 +61,6 @@ Now you will be able to use emcc to build the webassembly stuff. The command to 
 ```
 npm run wasm:build
 ```
-
-- **Gong-Cambodia** by cdrk  
-  Source: [Freesound](https://freesound.org/s/379865/)  
-  License: [Attribution 4.0 International (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/)
 
 ## License
 

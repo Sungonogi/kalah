@@ -1,18 +1,19 @@
+// can not find it in ide but it works
 importScripts('engine.js');
 
-let getBestMove;
+// eslint-disable-next-line
+let Module: any; 
 
-let unhandledMessages = [];
+let getBestMove: (arg0: string) => number;
+const unhandledMessages: string[] = [];
 
 Module.onRuntimeInitialized = () => {
     getBestMove = Module.cwrap('getBestMove', 'number', ['string']);
     unhandledMessages.forEach(handleMessage);
-}
-
+};
 
 // Listen for messages from the main thread
-self.addEventListener('message', (event) =>  {
-
+addEventListener('message', (event) =>  {
     const message = event.data.message;
 
     if(getBestMove === undefined) {
@@ -22,15 +23,12 @@ self.addEventListener('message', (event) =>  {
     } else {
         handleMessage(message);
     }
-
 });
 
-
-const handleMessage = (message) => {
+function handleMessage(message: string) {
     console.log('Message received in worker:', message);
 
     const result = getBestMove(message);
 
-    self.postMessage({ result });
+    self.postMessage({result});
 }
-

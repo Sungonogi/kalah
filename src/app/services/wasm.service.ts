@@ -6,7 +6,7 @@ import {Injectable} from "@angular/core";
 })
 export class WasmService {
 
-    private worker = new Worker('worker.js');
+    private worker = new Worker(new URL('../workers/engine.worker', import.meta.url), {type: 'classic'});
 
     constructor() {
         this.worker.addEventListener('message', function(event) {

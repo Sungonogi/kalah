@@ -13,13 +13,13 @@ export class AudioService {
 
     constructor() {
         // Credit: Gong-Cambodia by cdrk -- https://freesound.org/s/379865/ -- License: Attribution 4.0
-        this.startSound = new Audio('379865__cdrk__gong-cambodia.flac');
-        this.endSound = new Audio('379865__cdrk__gong-cambodia.flac');
+        this.startSound = new Audio('sounds/379865__cdrk__gong-cambodia.flac');
+        this.endSound = new Audio('sounds/379865__cdrk__gong-cambodia.flac');
 
 
-        this.moveSound = new Audio('moveSoundSilent.mp3');
-        this.extraSound = new Audio('extraSoundSilent.mp3');
-        this.stealSound = new Audio('stealSoundSilent.mp3');
+        this.moveSound = new Audio('sounds/moveSoundSilent.mp3');
+        this.extraSound = new Audio('sounds/extraSoundSilent.mp3');
+        this.stealSound = new Audio('sounds/stealSoundSilent.mp3');
     }
 
     startAudio() {

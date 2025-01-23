@@ -15,10 +15,10 @@ struct BoardPosition {
 };
 
 extern "C" {
+    
+    char* getBestMove(const char* b) {
+        cout << "Wasm received: " << b << endl;
 
-    int getBestMove(const char* b) {
-        string board(b);
-        cout << board << endl;
-        return 3;
+        return (char*) "{ \"move\": 1, \"comment\": \"This is a comment\" }";
     }
 }

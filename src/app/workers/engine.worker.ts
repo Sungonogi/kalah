@@ -5,12 +5,12 @@ importScripts('engine.js');
 
 // eslint-disable-next-line
 let Module: any; 
-let getBestMove: (arg0: string) => number;
+let getBestMove: (arg0: string) => string;
 
 let unhandledRequest: ComMoveRequest | undefined = undefined;
 
 Module.onRuntimeInitialized = () => {
-    getBestMove = Module.cwrap('getBestMove', 'number', ['string']);
+    getBestMove = Module.cwrap('getBestMove', 'string', ['string']);
 
     if(unhandledRequest) {
         handleRequest(unhandledRequest);
@@ -31,14 +31,9 @@ addEventListener('message', (event) =>  {
 });
 
 function handleRequest(request: ComMoveRequest) {
-    console.log('Request received by worker', request);
 
     const result = getBestMove(JSON.stringify(request));
-
-    const response: ComMoveResponse = {
-        move: result,
-        comment: 'Move calculated by worker'
-    };
+    const response = JSON.parse(result) as ComMoveResponse;
 
     self.postMessage(response);
 }

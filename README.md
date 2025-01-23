@@ -30,6 +30,9 @@ This project uses sound effects from Freesound:
   License: [Attribution 4.0 International (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/)
 
 
+It also uses cpp json parsing from Niels Lohmann see [here](https://github.com/nlohmann/json/tree/develop).
+
+
 ## Setup Wasm
 
 Only necessary if you want to make changes to the cpp code, because the compiled files are already in the public/cpp folder.

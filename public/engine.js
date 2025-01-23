@@ -929,6 +929,151 @@ async function createWasm() {
       }
     };
 
+  var UTF8Decoder = typeof TextDecoder != 'undefined' ? new TextDecoder() : undefined;
+  
+    /**
+     * Given a pointer 'idx' to a null-terminated UTF8-encoded string in the given
+     * array that contains uint8 values, returns a copy of that string as a
+     * Javascript String object.
+     * heapOrArray is either a regular array, or a JavaScript typed array view.
+     * @param {number=} idx
+     * @param {number=} maxBytesToRead
+     * @return {string}
+     */
+  var UTF8ArrayToString = (heapOrArray, idx = 0, maxBytesToRead = NaN) => {
+      var endIdx = idx + maxBytesToRead;
+      var endPtr = idx;
+      // TextDecoder needs to know the byte length in advance, it doesn't stop on
+      // null terminator by itself.  Also, use the length info to avoid running tiny
+      // strings through TextDecoder, since .subarray() allocates garbage.
+      // (As a tiny code save trick, compare endPtr against endIdx using a negation,
+      // so that undefined/NaN means Infinity)
+      while (heapOrArray[endPtr] && !(endPtr >= endIdx)) ++endPtr;
+  
+      if (endPtr - idx > 16 && heapOrArray.buffer && UTF8Decoder) {
+        return UTF8Decoder.decode(heapOrArray.subarray(idx, endPtr));
+      }
+      var str = '';
+      // If building with TextDecoder, we have already computed the string length
+      // above, so test loop end condition against that
+      while (idx < endPtr) {
+        // For UTF8 byte structure, see:
+        // http://en.wikipedia.org/wiki/UTF-8#Description
+        // https://www.ietf.org/rfc/rfc2279.txt
+        // https://tools.ietf.org/html/rfc3629
+        var u0 = heapOrArray[idx++];
+        if (!(u0 & 0x80)) { str += String.fromCharCode(u0); continue; }
+        var u1 = heapOrArray[idx++] & 63;
+        if ((u0 & 0xE0) == 0xC0) { str += String.fromCharCode(((u0 & 31) << 6) | u1); continue; }
+        var u2 = heapOrArray[idx++] & 63;
+        if ((u0 & 0xF0) == 0xE0) {
+          u0 = ((u0 & 15) << 12) | (u1 << 6) | u2;
+        } else {
+          if ((u0 & 0xF8) != 0xF0) warnOnce('Invalid UTF-8 leading byte ' + ptrToString(u0) + ' encountered when deserializing a UTF-8 string in wasm memory to a JS string!');
+          u0 = ((u0 & 7) << 18) | (u1 << 12) | (u2 << 6) | (heapOrArray[idx++] & 63);
+        }
+  
+        if (u0 < 0x10000) {
+          str += String.fromCharCode(u0);
+        } else {
+          var ch = u0 - 0x10000;
+          str += String.fromCharCode(0xD800 | (ch >> 10), 0xDC00 | (ch & 0x3FF));
+        }
+      }
+      return str;
+    };
+  
+    /**
+     * Given a pointer 'ptr' to a null-terminated UTF8-encoded string in the
+     * emscripten HEAP, returns a copy of that string as a Javascript String object.
+     *
+     * @param {number} ptr
+     * @param {number=} maxBytesToRead - An optional length that specifies the
+     *   maximum number of bytes to read. You can omit this parameter to scan the
+     *   string until the first 0 byte. If maxBytesToRead is passed, and the string
+     *   at [ptr, ptr+maxBytesToReadr[ contains a null byte in the middle, then the
+     *   string will cut short at that byte index (i.e. maxBytesToRead will not
+     *   produce a string of exact length [ptr, ptr+maxBytesToRead[) N.B. mixing
+     *   frequent uses of UTF8ToString() with and without maxBytesToRead may throw
+     *   JS JIT optimizations off, so it is worth to consider consistently using one
+     * @return {string}
+     */
+  var UTF8ToString = (ptr, maxBytesToRead) => {
+      assert(typeof ptr == 'number', `UTF8ToString expects a number (got ${typeof ptr})`);
+      return ptr ? UTF8ArrayToString(HEAPU8, ptr, maxBytesToRead) : '';
+    };
+  var ___assert_fail = (condition, filename, line, func) =>
+      abort(`Assertion failed: ${UTF8ToString(condition)}, at: ` + [filename ? UTF8ToString(filename) : 'unknown filename', line, func ? UTF8ToString(func) : 'unknown function']);
+
+  class ExceptionInfo {
+      // excPtr - Thrown object pointer to wrap. Metadata pointer is calculated from it.
+      constructor(excPtr) {
+        this.excPtr = excPtr;
+        this.ptr = excPtr - 24;
+      }
+  
+      set_type(type) {
+        HEAPU32[(((this.ptr)+(4))>>2)] = type;
+      }
+  
+      get_type() {
+        return HEAPU32[(((this.ptr)+(4))>>2)];
+      }
+  
+      set_destructor(destructor) {
+        HEAPU32[(((this.ptr)+(8))>>2)] = destructor;
+      }
+  
+      get_destructor() {
+        return HEAPU32[(((this.ptr)+(8))>>2)];
+      }
+  
+      set_caught(caught) {
+        caught = caught ? 1 : 0;
+        HEAP8[(this.ptr)+(12)] = caught;
+      }
+  
+      get_caught() {
+        return HEAP8[(this.ptr)+(12)] != 0;
+      }
+  
+      set_rethrown(rethrown) {
+        rethrown = rethrown ? 1 : 0;
+        HEAP8[(this.ptr)+(13)] = rethrown;
+      }
+  
+      get_rethrown() {
+        return HEAP8[(this.ptr)+(13)] != 0;
+      }
+  
+      // Initialize native structure fields. Should be called once after allocated.
+      init(type, destructor) {
+        this.set_adjusted_ptr(0);
+        this.set_type(type);
+        this.set_destructor(destructor);
+      }
+  
+      set_adjusted_ptr(adjustedPtr) {
+        HEAPU32[(((this.ptr)+(16))>>2)] = adjustedPtr;
+      }
+  
+      get_adjusted_ptr() {
+        return HEAPU32[(((this.ptr)+(16))>>2)];
+      }
+    }
+  
+  var exceptionLast = 0;
+  
+  var uncaughtExceptionCount = 0;
+  var ___cxa_throw = (ptr, type, destructor) => {
+      var info = new ExceptionInfo(ptr);
+      // Initialize ExceptionInfo content after it was allocated in __cxa_allocate_exception.
+      info.init(type, destructor);
+      exceptionLast = ptr;
+      uncaughtExceptionCount++;
+      assert(false, 'Exception thrown, but exception catching is not enabled. Compile with -sNO_DISABLE_EXCEPTION_CATCHING or -sEXCEPTION_CATCHING_ALLOWED=[..] to catch.');
+    };
+
   var __abort_js = () =>
       abort('native code called abort()');
 
@@ -1762,79 +1907,6 @@ async function createWasm() {
   
   
   
-  var UTF8Decoder = typeof TextDecoder != 'undefined' ? new TextDecoder() : undefined;
-  
-    /**
-     * Given a pointer 'idx' to a null-terminated UTF8-encoded string in the given
-     * array that contains uint8 values, returns a copy of that string as a
-     * Javascript String object.
-     * heapOrArray is either a regular array, or a JavaScript typed array view.
-     * @param {number=} idx
-     * @param {number=} maxBytesToRead
-     * @return {string}
-     */
-  var UTF8ArrayToString = (heapOrArray, idx = 0, maxBytesToRead = NaN) => {
-      var endIdx = idx + maxBytesToRead;
-      var endPtr = idx;
-      // TextDecoder needs to know the byte length in advance, it doesn't stop on
-      // null terminator by itself.  Also, use the length info to avoid running tiny
-      // strings through TextDecoder, since .subarray() allocates garbage.
-      // (As a tiny code save trick, compare endPtr against endIdx using a negation,
-      // so that undefined/NaN means Infinity)
-      while (heapOrArray[endPtr] && !(endPtr >= endIdx)) ++endPtr;
-  
-      if (endPtr - idx > 16 && heapOrArray.buffer && UTF8Decoder) {
-        return UTF8Decoder.decode(heapOrArray.subarray(idx, endPtr));
-      }
-      var str = '';
-      // If building with TextDecoder, we have already computed the string length
-      // above, so test loop end condition against that
-      while (idx < endPtr) {
-        // For UTF8 byte structure, see:
-        // http://en.wikipedia.org/wiki/UTF-8#Description
-        // https://www.ietf.org/rfc/rfc2279.txt
-        // https://tools.ietf.org/html/rfc3629
-        var u0 = heapOrArray[idx++];
-        if (!(u0 & 0x80)) { str += String.fromCharCode(u0); continue; }
-        var u1 = heapOrArray[idx++] & 63;
-        if ((u0 & 0xE0) == 0xC0) { str += String.fromCharCode(((u0 & 31) << 6) | u1); continue; }
-        var u2 = heapOrArray[idx++] & 63;
-        if ((u0 & 0xF0) == 0xE0) {
-          u0 = ((u0 & 15) << 12) | (u1 << 6) | u2;
-        } else {
-          if ((u0 & 0xF8) != 0xF0) warnOnce('Invalid UTF-8 leading byte ' + ptrToString(u0) + ' encountered when deserializing a UTF-8 string in wasm memory to a JS string!');
-          u0 = ((u0 & 7) << 18) | (u1 << 12) | (u2 << 6) | (heapOrArray[idx++] & 63);
-        }
-  
-        if (u0 < 0x10000) {
-          str += String.fromCharCode(u0);
-        } else {
-          var ch = u0 - 0x10000;
-          str += String.fromCharCode(0xD800 | (ch >> 10), 0xDC00 | (ch & 0x3FF));
-        }
-      }
-      return str;
-    };
-  
-    /**
-     * Given a pointer 'ptr' to a null-terminated UTF8-encoded string in the
-     * emscripten HEAP, returns a copy of that string as a Javascript String object.
-     *
-     * @param {number} ptr
-     * @param {number=} maxBytesToRead - An optional length that specifies the
-     *   maximum number of bytes to read. You can omit this parameter to scan the
-     *   string until the first 0 byte. If maxBytesToRead is passed, and the string
-     *   at [ptr, ptr+maxBytesToReadr[ contains a null byte in the middle, then the
-     *   string will cut short at that byte index (i.e. maxBytesToRead will not
-     *   produce a string of exact length [ptr, ptr+maxBytesToRead[) N.B. mixing
-     *   frequent uses of UTF8ToString() with and without maxBytesToRead may throw
-     *   JS JIT optimizations off, so it is worth to consider consistently using one
-     * @return {string}
-     */
-  var UTF8ToString = (ptr, maxBytesToRead) => {
-      assert(typeof ptr == 'number', `UTF8ToString expects a number (got ${typeof ptr})`);
-      return ptr ? UTF8ArrayToString(HEAPU8, ptr, maxBytesToRead) : '';
-    };
   var __embind_register_std_string = (rawType, name) => {
       name = readLatin1String(name);
       var stdStringIsUTF8
@@ -4982,6 +5054,10 @@ function checkIncomingModuleAPI() {
 }
 var wasmImports = {
   /** @export */
+  __assert_fail: ___assert_fail,
+  /** @export */
+  __cxa_throw: ___cxa_throw,
+  /** @export */
   _abort_js: __abort_js,
   /** @export */
   _embind_register_bigint: __embind_register_bigint,
@@ -5161,7 +5237,6 @@ var missingLibrarySymbols = [
   'makePromise',
   'idsToPromises',
   'makePromiseCallback',
-  'ExceptionInfo',
   'findMatchingCatch',
   'Browser_asyncPrepareDataCounter',
   'isLeapYear',
@@ -5327,6 +5402,7 @@ var unexportedSymbols = [
   'uncaughtExceptionCount',
   'exceptionLast',
   'exceptionCaught',
+  'ExceptionInfo',
   'Browser',
   'getPreloadedImageData__data',
   'wget',

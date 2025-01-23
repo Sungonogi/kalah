@@ -1,14 +1,30 @@
 #include <emscripten/bind.h>
 #include <iostream>
+#include "json.hpp"
 
-using namespace emscripten;
+using namespace std;
+using json = nlohmann::json;
 
-std::string getBestMove(std::string b) {
+struct BoardPosition {
+    int pits;
+    vector<int> southPits;
+    vector<int> northPits;
+    int southStore;
+    int northStore;
+    bool southTurn;
+    bool gameOver;
+};
 
-    std::cout << "received" << b;
+string getBestMove(string b) {
+
+    cout << "received " << b << "\n";
+
+    json jsonObj = json::parse(b);
+    cout << jsonObj["playerType"] << endl;
+
     return "{ \"move\": 1, \"comment\": \"This is a comment\" }";
 }
 
 EMSCRIPTEN_BINDINGS(my_module) {
-    function("getBestMove", &getBestMove);
+    emscripten::function("getBestMove", &getBestMove);
 }

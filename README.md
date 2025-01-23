@@ -24,14 +24,15 @@ For more details on the rules, you can refer to the ["How to Play"](https://ingo
 ## Attribution
 
 This project uses sound effects from Freesound:
-
 - **Gong-Cambodia** by cdrk  
   Source: [Freesound](https://freesound.org/s/379865/)  
   License: [Attribution 4.0 International (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/)
 
 
-It also uses cpp json parsing from Niels Lohmann see [here](https://github.com/nlohmann/json/tree/develop).
-
+It also uses the following libraries
+- **C++ JSON parsing library** by Niels Lohmann  
+  Source: [Github Repository](https://github.com/nlohmann/json/tree/develop)  
+  License: MIT
 
 ## Setup Wasm
 

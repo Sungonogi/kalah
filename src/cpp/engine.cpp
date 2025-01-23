@@ -1,24 +1,14 @@
+#include <emscripten/bind.h>
 #include <iostream>
-#include <vector>
-#include <string>
 
-using namespace std;
+using namespace emscripten;
 
-struct BoardPosition {
-    int pits;
-    vector<int> southPits;
-    vector<int> northPits;
-    int southStore;
-    int northStore;
-    bool southTurn;
-    bool gameOver;
-};
+std::string getBestMove(std::string b) {
 
-extern "C" {
-    
-    char* getBestMove(const char* b) {
-        cout << "Wasm received: " << b << endl;
+    std::cout << "received" << b;
+    return "{ \"move\": 1, \"comment\": \"This is a comment\" }";
+}
 
-        return (char*) "{ \"move\": 1, \"comment\": \"This is a comment\" }";
-    }
+EMSCRIPTEN_BINDINGS(my_module) {
+    function("getBestMove", &getBestMove);
 }

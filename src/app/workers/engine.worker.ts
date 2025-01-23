@@ -10,7 +10,7 @@ let getBestMove: (arg0: string) => string;
 let unhandledRequest: ComMoveRequest | undefined = undefined;
 
 Module.onRuntimeInitialized = () => {
-    getBestMove = Module.cwrap('getBestMove', 'string', ['string']);
+    getBestMove = Module.getBestMove;
 
     if(unhandledRequest) {
         handleRequest(unhandledRequest);

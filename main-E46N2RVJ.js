@@ -23385,8 +23385,19 @@ var PitComponent = class _PitComponent {
   getSize() {
     return this.getRect().width;
   }
+  // getBoundingRect changes for scrolling which is not what we want
   getRect() {
-    return this.innerPit.nativeElement.getBoundingClientRect();
+    const rect = this.innerPit.nativeElement.getBoundingClientRect();
+    const scrollLeft = window.scrollX;
+    const scrollTop = window.scrollY;
+    return {
+      top: rect.top + scrollTop,
+      left: rect.left + scrollLeft,
+      bottom: rect.bottom + scrollTop,
+      right: rect.right + scrollLeft,
+      width: rect.width,
+      height: rect.height
+    };
   }
   onResize() {
     this.updateFontSize();

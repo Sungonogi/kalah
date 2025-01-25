@@ -22,7 +22,7 @@ export class ComMoveService {
 
         const move = this.wasmService.askForMove(request).pipe(
             map((response: ComMoveResponse) => {
-                console.log('Comment by Engine ', response.comment);
+                console.log(`${request.playerType}: ${response.comment}`);
                 return response.move;
             })
         );

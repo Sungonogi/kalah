@@ -46,10 +46,18 @@ string getBestMove(string jsonString) {
 
     if(playerType == "Easy Com"){
         cr = EasyCom(bp);
-    } else {
+    } else if(playerType == "Medium Com"){
         cr = MediumCom(bp);
+    } else if(playerType == "Hard Com"){
+        // TODO add Hard Com
+        cr = EasyCom(bp);
+        cr.comment = "Hard Com not implemented yet, Submitting random move";
+    } else if(playerType == "Stickfish"){
+        cr = EasyCom(bp);
+        cr.comment = "Stickfish not implemented yet, Submitting random move";
+    } else {
+        cerr << "Unknown player type: " << playerType << endl;
     }
-    // TODO add Hard Com + Stickfish
 
     json responseJson = {
         {"move", cr.move},
@@ -165,7 +173,7 @@ ComResponse EasyCom(BoardPosition &bp) {
 
     ComResponse cr;
     cr.move = moves[getRandomNumber() % moves.size()];
-    cr.comment = "I'm a random bot";
+    cr.comment = "I do random moves";
     return cr;
 }
 
@@ -194,7 +202,7 @@ ComResponse MediumCom(BoardPosition &bp){
 
     ComResponse cr;
     cr.move = bestMoves[getRandomNumber() % bestMoves.size()];
-    cr.comment = "I'm a medium bot";
+    cr.comment = "I do greedy moves";
     return cr;
 }
 

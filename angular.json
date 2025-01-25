@@ -46,11 +46,6 @@
                   "maximumError": "2MB"
                 }
               ],
-              "optimization": {
-                "scripts": false,
-                "styles": true,
-                "fonts": true
-              },
               "outputHashing": "all"
             },
             "development": {

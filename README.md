@@ -29,9 +29,20 @@ This project uses sound effects from Freesound:
   License: [Attribution 4.0 International (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/)
 
 
-It also uses the following libraries
+It also uses this cpp libary for json parsing
 - **C++ JSON parsing library** by Niels Lohmann  
   Source: [Github Repository](https://github.com/nlohmann/json/tree/develop)  
+  License: MIT
+
+For the favicon
+- **favicon.io** made by John Sorrentino
+  Source: [favicon.io](https://favicon.io/favicon-generator/)
+  License: unlicensed (I found nothing in the terms of use)
+  Settings: (Rounded, Macondo, Regular 400 Normal, 50, #DAF, #84B)
+
+To compile Cpp to Wasm
+- **Emscripten** 
+  Source: [emscripten.org](https://emscripten.org)
   License: MIT
 
 ## Setup Wasm

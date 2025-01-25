@@ -70,8 +70,19 @@ export class PitComponent implements OnInit, AfterViewInit {
         return this.getRect().width;
     }
 
-    private getRect(): DOMRect {
-        return this.innerPit.nativeElement.getBoundingClientRect();
+    // getBoundingRect changes for scrolling which is not what we want
+    private getRect() {
+        const rect = this.innerPit.nativeElement.getBoundingClientRect();
+        const scrollLeft = window.scrollX;
+        const scrollTop = window.scrollY;
+        return {
+            top: rect.top + scrollTop,
+            left: rect.left + scrollLeft,
+            bottom: rect.bottom + scrollTop,
+            right: rect.right + scrollLeft,
+            width: rect.width,
+            height: rect.height
+        };
     }
 
     @HostListener('window:resize')

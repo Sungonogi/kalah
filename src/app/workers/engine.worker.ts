@@ -1,16 +1,21 @@
 import {ComMoveRequest, ComMoveResponse} from '../models/COM.models';
 
 // can not find it in ide but it works
+// eslint-disable-next-line
+// @ts-ignore
 importScripts('engine.js');
 
-// eslint-disable-next-line
-let Module: any; 
 let getBestMove: (arg0: string) => string;
-
 let unhandledRequest: ComMoveRequest | undefined = undefined;
 
-Module.onRuntimeInitialized = () => {
-    getBestMove = Module.getBestMove;
+// can not find it in the id because it gets Module from engine.js
+// eslint-disable-next-line
+// @ts-ignore
+self.Module.onRuntimeInitialized = () => {
+
+    // eslint-disable-next-line
+    // @ts-ignore
+    getBestMove = self.Module.getBestMove;
 
     if(unhandledRequest) {
         handleRequest(unhandledRequest);

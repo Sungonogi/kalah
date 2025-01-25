@@ -20,7 +20,7 @@ import {
   normalizeKeyframes,
   validateStyleProperty,
   validateWebAnimatableStyleProperty
-} from "./chunk-HLZCWDJC.js";
+} from "./chunk-4MXIXG7U.js";
 export {
   AnimationDriver,
   NoopAnimationDriver,

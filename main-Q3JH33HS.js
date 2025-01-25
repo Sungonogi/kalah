@@ -184,6 +184,7 @@ import {
   takeWhile,
   tap,
   throwError,
+  timer,
   transition,
   trigger,
   untracked,
@@ -249,7 +250,7 @@ import {
   ɵɵtwoWayListener,
   ɵɵtwoWayProperty,
   ɵɵviewQuery
-} from "./chunk-HLZCWDJC.js";
+} from "./chunk-4MXIXG7U.js";
 
 // node_modules/@angular/common/fesm2022/http.mjs
 var HttpHandler = class {
@@ -22861,7 +22862,7 @@ var _AsyncAnimationRendererFactory = class _AsyncAnimationRendererFactory {
    * @internal
    */
   loadImpl() {
-    const loadFn = () => this.moduleImpl ?? import("./chunk-3M2SWIWD.js").then((m) => m);
+    const loadFn = () => this.moduleImpl ?? import("./chunk-EPR5TGFU.js").then((m) => m);
     let moduleImplPromise;
     if (this.loadingSchedulerFn) {
       moduleImplPromise = this.loadingSchedulerFn(loadFn);
@@ -24814,10 +24815,11 @@ var ComMoveService = class _ComMoveService {
       playerType,
       boardPosition
     };
-    return this.wasmService.askForMove(request).pipe(map((response) => {
+    const move = this.wasmService.askForMove(request).pipe(map((response) => {
       console.log("Comment by Engine ", response.comment);
       return response.move;
     }));
+    return forkJoin([move, timer(800)]).pipe(map(([move2, _]) => move2));
   }
   static \u0275fac = function ComMoveService_Factory(__ngFactoryType__) {
     return new (__ngFactoryType__ || _ComMoveService)(\u0275\u0275inject(WasmService));

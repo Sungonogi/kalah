@@ -32339,6 +32339,7 @@ export {
   defer,
   forkJoin,
   fromEvent,
+  timer,
   merge,
   filter,
   auditTime,

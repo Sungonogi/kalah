@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {map, Observable} from "rxjs";
+import {forkJoin, map, Observable, timer} from "rxjs";
 
 import {BoardPosition} from "../models/board-position.model";
 import {ComMoveRequest, ComMoveResponse} from "../models/COM.models";
@@ -20,11 +20,16 @@ export class ComMoveService {
             boardPosition: boardPosition
         };
 
-        return this.wasmService.askForMove(request).pipe(
+        const move = this.wasmService.askForMove(request).pipe(
             map((response: ComMoveResponse) => {
                 console.log('Comment by Engine ', response.comment);
                 return response.move;
             })
+        );
+
+        // wait at least 800ms
+        return forkJoin([move, timer(800)]).pipe(
+            map(([move, _]) => move)
         );
     }
 

@@ -1,1 +1,0 @@
-importScripts("engine.js");var i,t,o;self.Module.onRuntimeInitialized=()=>{t=i.getBestMove,o&&n(o)};addEventListener("message",s=>{let e=s.data;if(t===void 0){console.log("Module not loaded yet. Pushing message to queue."),o=e;return}else n(e)});function n(s){let e=t(JSON.stringify(s)),u=JSON.parse(e);self.postMessage(u)}

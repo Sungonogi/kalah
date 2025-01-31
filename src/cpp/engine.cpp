@@ -25,6 +25,7 @@ struct ComResponse {
 int getRandomNumber();
 ComResponse EasyCom(BoardPosition &bp);
 ComResponse MediumCom(BoardPosition &bp);
+ComResponse HardCom(BoardPosition &bp);
 
 
 string getBestMove(string jsonString) {
@@ -49,9 +50,7 @@ string getBestMove(string jsonString) {
     } else if(playerType == "Medium Com"){
         cr = MediumCom(bp);
     } else if(playerType == "Hard Com"){
-        // TODO add Hard Com
-        cr = EasyCom(bp);
-        cr.comment = "Hard Com not implemented yet, Submitting random move";
+        cr = HardCom(bp);
     } else if(playerType == "Stickfish"){
         cr = EasyCom(bp);
         cr.comment = "Stickfish not implemented yet, Submitting random move";
@@ -207,3 +206,99 @@ ComResponse MediumCom(BoardPosition &bp){
 }
 
 
+// variables for minMax
+int maxDepth, seedsToWin, actualBestMove;
+
+// basic evaluation function
+int getScore(BoardPosition &bp){
+
+    int myStore = bp.southTurn ? bp.southStore : bp.northStore;
+
+    if(myStore >= seedsToWin){
+        return INT_MAX;
+    }
+
+    int theirStore = bp.southTurn ? bp.northStore : bp.southStore;
+
+    if(theirStore >= seedsToWin){
+        return INT_MIN;
+    }
+
+    return myStore - theirStore;
+}
+
+// recursive min max function
+int minMax(BoardPosition &bp, int depth) {
+
+    int score = getScore(bp);
+
+    if(depth == maxDepth || bp.gameOver || score == INT_MAX || score == INT_MIN){
+        return score;
+    }
+
+    int bestMove = -1;
+    int bestScore = INT_MIN;
+
+    // since the game is not over we can always make a move
+    for(int move : getMoves(bp)){
+        BoardPosition bpCopy = bp;
+        doMove(bpCopy, move);
+        int tmpScore = minMax(bpCopy, depth + 1);
+
+        if(bp.southTurn != bpCopy.southTurn) {
+            tmpScore = -tmpScore;
+        }
+
+        if(tmpScore > bestScore){
+            bestScore = tmpScore;
+            bestMove = move;
+        }
+
+    }
+
+    // if we are at the root node we want to know the best move
+    if(depth == 0){
+        actualBestMove = bestMove;
+    }
+
+    return bestScore;
+}
+
+int getCurrentMillis(){
+    auto now = std::chrono::system_clock::now().time_since_epoch();
+    return std::chrono::duration_cast<std::chrono::milliseconds>(now).count();
+}
+
+
+ComResponse HardCom(BoardPosition &bp){
+
+    int startTime = getCurrentMillis();
+
+    // count total seeds for seedsToWin
+    int totalSeeds = 0;
+    for(int i = 0; i < bp.pits; i++){
+        totalSeeds += bp.southPits[i];
+        totalSeeds += bp.northPits[i];
+    }
+    totalSeeds += bp.southStore;
+    totalSeeds += bp.northStore;
+
+    // initialize global variables
+    seedsToWin = totalSeeds / 2 + 1;
+    maxDepth = 1;
+    actualBestMove = getMoves(bp)[0];
+
+    // iterative deepening until 1 second is over
+    while(getCurrentMillis() - startTime < 1000){
+        int score = minMax(bp, 0);
+        maxDepth++;
+    }
+
+    ComResponse cr;
+    cr.move = actualBestMove;
+    cr.comment = "I did minmax and evaluate this position as " +
+        to_string(getScore(bp)) + " with a depth of " + to_string(maxDepth);
+
+
+    return cr;
+}

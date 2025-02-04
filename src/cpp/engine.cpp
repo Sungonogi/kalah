@@ -45,6 +45,17 @@ string getBestMove(string jsonString) {
     bp.southTurn = boardJson["southTurn"];
     bp.gameOver = boardJson["gameOver"];
 
+    // don't do anything if the game is over
+    if(bp.gameOver){
+        cr.move = -1;
+        cr.comment = "Game is over";
+        json responseJson = {
+            {"move", cr.move},
+            {"comment", cr.comment}
+        };
+        return responseJson.dump();
+    }
+
     if(playerType == "Easy Com"){
         cr = EasyCom(bp);
     } else if(playerType == "Medium Com"){
@@ -145,10 +156,11 @@ void doMove(BoardPosition &bp, int move) {
     }
 
     if(southEmpty || northEmpty){
+        int &hisStore = bp.southTurn ? bp.northStore: bp.southStore;
         for(int i = 0; i < bp.pits; i++){
             myStore += myPits[i];
             myPits[i] = 0;
-            myStore += hisPits[i];
+            hisStore += hisPits[i];
             hisPits[i] = 0;
         }
         bp.gameOver = true;
@@ -197,7 +209,6 @@ ComResponse MediumCom(BoardPosition &bp){
             bestMoves.push_back(move);
         } 
     }
-    cout << bestMoves.size() << endl;
 
     ComResponse cr;
     cr.move = bestMoves[getRandomNumber() % bestMoves.size()];
@@ -208,6 +219,11 @@ ComResponse MediumCom(BoardPosition &bp){
 
 // variables for minMax
 int maxDepth, seedsToWin, actualBestMove;
+bool maxDepthReached;
+
+// using INT_MAX/MIN was bad because MIN can't be negated
+#define MAX_SCORE 1000000
+#define MIN_SCORE -1000000
 
 // basic evaluation function
 int getScore(BoardPosition &bp){
@@ -215,13 +231,13 @@ int getScore(BoardPosition &bp){
     int myStore = bp.southTurn ? bp.southStore : bp.northStore;
 
     if(myStore >= seedsToWin){
-        return INT_MAX;
+        return MAX_SCORE;
     }
 
     int theirStore = bp.southTurn ? bp.northStore : bp.southStore;
 
     if(theirStore >= seedsToWin){
-        return INT_MIN;
+        return MIN_SCORE;
     }
 
     return myStore - theirStore;
@@ -232,12 +248,17 @@ int minMax(BoardPosition &bp, int depth) {
 
     int score = getScore(bp);
 
-    if(depth == maxDepth || bp.gameOver || score == INT_MAX || score == INT_MIN){
+    if(bp.gameOver || score == MAX_SCORE || score == MIN_SCORE){
+        return score;
+    }
+
+    if(depth == maxDepth){
+        maxDepthReached = true;
         return score;
     }
 
     int bestMove = -1;
-    int bestScore = INT_MIN;
+    int bestScore = MIN_SCORE;
 
     // since the game is not over we can always make a move
     for(int move : getMoves(bp)){
@@ -249,14 +270,14 @@ int minMax(BoardPosition &bp, int depth) {
             tmpScore = -tmpScore;
         }
 
-        if(tmpScore > bestScore){
+        if(tmpScore >= bestScore){
             bestScore = tmpScore;
             bestMove = move;
         }
 
     }
 
-    // if we are at the root node we want to know the best move
+    // if we are at the root node we need to remember the best move
     if(depth == 0){
         actualBestMove = bestMove;
     }
@@ -286,18 +307,23 @@ ComResponse HardCom(BoardPosition &bp){
     // initialize global variables
     seedsToWin = totalSeeds / 2 + 1;
     maxDepth = 1;
-    actualBestMove = getMoves(bp)[0];
+    actualBestMove = getMoves(bp)[0]; // fallback to first move
+    maxDepthReached = true;
 
-    // iterative deepening until 1 second is over
-    while(getCurrentMillis() - startTime < 1000){
-        int score = minMax(bp, 0);
+    int score = minMax(bp, 0);
+
+    // iterative deepening until 1 second is over or until all nodes are explored
+    while(maxDepthReached && getCurrentMillis() - startTime < 1000){
+        maxDepthReached = false;
+        score = minMax(bp, 0);
         maxDepth++;
     }
 
     ComResponse cr;
     cr.move = actualBestMove;
     cr.comment = "I did minmax and evaluate this position as " +
-        to_string(getScore(bp)) + " with a depth of " + to_string(maxDepth);
+        to_string(score) + " with a depth of " + to_string(maxDepth) + 
+        " and suggest move " + to_string(actualBestMove);
 
 
     return cr;

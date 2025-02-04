@@ -1,5 +1,7 @@
 import {Injectable} from '@angular/core';
 
+import {environment} from '../../environments/environment';
+
 @Injectable({
     providedIn: 'root'
 })
@@ -12,14 +14,17 @@ export class AudioService {
     private readonly endSound: HTMLAudioElement;
 
     constructor() {
-        // Credit: Gong-Cambodia by cdrk -- https://freesound.org/s/379865/ -- License: Attribution 4.0
-        this.startSound = new Audio('sounds/379865__cdrk__gong-cambodia.flac');
-        this.endSound = new Audio('sounds/379865__cdrk__gong-cambodia.flac');
+        const basePath = environment.production ? 'sounds/mit' : 'sounds/licensed';
 
+        const ending = environment.production ? 'mp3' : 'ogg';
+        const specialEnding = environment.production ? 'flac' : 'ogg';
 
-        this.moveSound = new Audio('sounds/moveSoundSilent.mp3');
-        this.extraSound = new Audio('sounds/extraSoundSilent.mp3');
-        this.stealSound = new Audio('sounds/stealSoundSilent.mp3');
+        this.startSound = new Audio(`${basePath}/start.${specialEnding}`);
+        this.endSound = new Audio(`${basePath}/start.${specialEnding}`);
+
+        this.stealSound = new Audio(`${basePath}/steal.${ending}`);
+        this.extraSound = new Audio(`${basePath}/extra.${ending}`);
+        this.moveSound = new Audio(`${basePath}/move.${ending}`);
     }
 
     startAudio() {

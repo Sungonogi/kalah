@@ -55,7 +55,14 @@ export class AudioService {
     private interruptAndPlay(audio: HTMLAudioElement) {
         audio.pause();
         audio.currentTime = 0;
-        audio.play().then(r => r).catch();
+        audio.play().catch(e => {
+            console.error('Audio play error:', e);
+            const callback = audio.onended as undefined | (() => void);
+            if(callback){
+                console.log('calling callback');
+                callback();
+            }
+        });
     }
 
 }

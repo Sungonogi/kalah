@@ -15,6 +15,29 @@ struct BoardPosition {
     int northStore;
     bool southTurn;
     bool gameOver;
+
+    string toString() const {
+        string result;
+
+        // Print north store and north pits
+        result += to_string(northStore) + " | ";
+        for (int i = pits - 1; i >= 0; --i) {
+            result += to_string(northPits[i]) + " ";
+        }
+        result += "\n";
+
+        // Print south pits and south store
+        result += "  | ";
+        for (int i = 0; i < pits; ++i) {
+            result += to_string(southPits[i]) + " ";
+        }
+        result += "| " + to_string(southStore) + "\n";
+
+        // Print metadata
+        // result += "southTurn: " + string(southTurn ? "true" : "false") + ", gameOver: " + string(gameOver ? "true" : "false") + ", pits: " + to_string(pits) + "\n";
+
+        return result;
+    }
 };
 
 struct ComResponse {
@@ -103,24 +126,22 @@ void doMove(BoardPosition &bp, int move) {
     myPits[move] = 0;
 
     while(hand > 0){
-        move++;
+        move = (move + 1) % (bp.pits + 1);
 
         // reached a store, skip opponent store
-        if(move == bp.pits){
+        if(move < bp.pits){
+            hand--;
+            if(currentlyMySide){
+                myPits[move]++;
+            } else {
+                hisPits[move]++;
+            }
+        } else {
             if(currentlyMySide){
                 hand--;
                 myStore++;
             }
-            move = 0;
             currentlyMySide = !currentlyMySide;
-            continue;
-        }
-
-        hand--;
-        if(currentlyMySide){
-            myPits[move]++;
-        } else {
-            hisPits[move]++;
         }
     }
 
@@ -163,7 +184,8 @@ void doMove(BoardPosition &bp, int move) {
 
     // switch side if no bonus move (do this after gameOver otherwise hisStore could be incorrect)
     // if there was a bonus move then we stopped at move=0 and currentlyMySide=false
-    if(move != 0 || currentlyMySide){
+    bp.southTurn = !bp.southTurn;
+    if(!currentlyMySide && move == bp.pits){
         bp.southTurn = !bp.southTurn;
     }
 }
@@ -247,7 +269,6 @@ int getScore(BoardPosition &bp){
 int minMax(BoardPosition &bp, int depth) {
 
     int score = getScore(bp);
-    cout << "Score: " << score << "maxDepth" << maxDepth << "gameOver" << bp.gameOver << "southTurn" << bp.southTurn << endl;
 
     if(bp.gameOver || score == MAX_SCORE || score == MIN_SCORE){
         return score;

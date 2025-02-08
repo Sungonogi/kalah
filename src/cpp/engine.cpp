@@ -158,11 +158,10 @@ void doMove(BoardPosition &bp, int move) {
             hisPits[i] = 0;
         }
         bp.gameOver = true;
-        // 
         return;
     }
 
-    // switch side if no bonus move
+    // switch side if no bonus move (do this after gameOver otherwise hisStore could be incorrect)
     // if there was a bonus move then we stopped at move=0 and currentlyMySide=false
     if(move != 0 || currentlyMySide){
         bp.southTurn = !bp.southTurn;

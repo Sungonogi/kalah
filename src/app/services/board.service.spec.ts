@@ -3,6 +3,8 @@ import {TestBed} from '@angular/core/testing';
 import {AudioService} from "./audio.service";
 import {BoardService} from './board.service';
 import {ComMoveService} from "./com-move.service";
+import { StartParamsStore } from '../stores/start-params/start-params.store';
+import { startParamsStoreMock } from '../mocks/mocks';
 
 describe('BoardService', () => {
     let service: BoardService;
@@ -16,7 +18,8 @@ describe('BoardService', () => {
         TestBed.configureTestingModule({
             providers: [
                 {provide: ComMoveService, useValue: comMoveMock},
-                {provide: AudioService, useValue: audioServiceMock}
+                {provide: AudioService, useValue: audioServiceMock},
+                {provide: StartParamsStore, useValue: startParamsStoreMock}
             ]
         });
         service = TestBed.inject(BoardService);

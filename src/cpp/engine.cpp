@@ -132,12 +132,6 @@ void doMove(BoardPosition &bp, int move) {
         hisPits[oppositePit] = 0;
     }
 
-    // switch side if no bonus move
-    // if there was a bonus move then we stopped at move=0 and currentlyMySide=false
-    if(move != 0 || currentlyMySide){
-        bp.southTurn = !bp.southTurn;
-    }
-
     // check for game over
     bool southEmpty = true;
     for(int i = 0; i < bp.pits; i++){
@@ -164,8 +158,15 @@ void doMove(BoardPosition &bp, int move) {
             hisPits[i] = 0;
         }
         bp.gameOver = true;
+        // 
+        return;
     }
 
+    // switch side if no bonus move
+    // if there was a bonus move then we stopped at move=0 and currentlyMySide=false
+    if(move != 0 || currentlyMySide){
+        bp.southTurn = !bp.southTurn;
+    }
 }
 
 int getRandomNumber(){
@@ -219,7 +220,7 @@ ComResponse MediumCom(BoardPosition &bp){
 
 // variables for minMax
 int maxDepth, seedsToWin, actualBestMove;
-bool maxDepthReached;
+bool maxDepthReached; // tells us if all nodes were explored
 
 // using INT_MAX/MIN was bad because MIN can't be negated
 #define MAX_SCORE 1000000
@@ -247,13 +248,14 @@ int getScore(BoardPosition &bp){
 int minMax(BoardPosition &bp, int depth) {
 
     int score = getScore(bp);
+    cout << "Score: " << score << "maxDepth" << maxDepth << "gameOver" << bp.gameOver << "southTurn" << bp.southTurn << endl;
 
     if(bp.gameOver || score == MAX_SCORE || score == MIN_SCORE){
         return score;
     }
 
     if(depth == maxDepth){
-        maxDepthReached = true;
+        maxDepthReached = false;
         return score;
     }
 
@@ -308,16 +310,18 @@ ComResponse HardCom(BoardPosition &bp){
     seedsToWin = totalSeeds / 2 + 1;
     maxDepth = 1;
     actualBestMove = getMoves(bp)[0]; // fallback to first move
-    maxDepthReached = true;
+    maxDepthReached = false;
 
     int score = minMax(bp, 0);
 
     // iterative deepening until 1 second is over or until all nodes are explored
-    while(maxDepthReached && getCurrentMillis() - startTime < 1000){
-        maxDepthReached = false;
+    while(!maxDepthReached && getCurrentMillis() - startTime < 1000){
+        maxDepthReached = true;
+        cout << "Increasing maxDepth to " << maxDepth << endl;
         score = minMax(bp, 0);
         maxDepth++;
     }
+
 
     ComResponse cr;
     cr.move = actualBestMove;

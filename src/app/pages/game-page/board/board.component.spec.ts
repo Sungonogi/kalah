@@ -1,30 +1,23 @@
-import {signal} from "@angular/core";
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {BoardService} from "../../../services/board.service";
 import {BoardComponent} from './board.component';
+import { StartParamsStore } from '../../../stores/start-params/start-params.store';
+import { boardServiceMock, startParamsStoreMock } from '../../../mocks/mocks';
 
 describe('BoardComponent', () => {
     let component: BoardComponent;
     let fixture: ComponentFixture<BoardComponent>;
-    const boardServiceMock = jasmine.createSpyObj(
-        'BoardService',
-        ['resetBoard', 'stopGame', 'resetCallbacks'],
-        {boardPosition : signal(null), animatedBoardPosition: signal({gameOver: false})}
-    );
     
     beforeEach(async () => {
-
-        boardServiceMock.boardPosition = signal(null);
-        boardServiceMock.animatedBoardPosition = signal(null);
 
         await TestBed.configureTestingModule({
             imports: [BoardComponent],
             providers: [
-                {provide: BoardService, useValue: boardServiceMock}
+                {provide: BoardService, useValue: boardServiceMock},
+                {provide: StartParamsStore, useValue: startParamsStoreMock}
             ]
         }).compileComponents();
-
 
         fixture = TestBed.createComponent(BoardComponent);
         component = fixture.componentInstance;

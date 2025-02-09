@@ -2,8 +2,8 @@ import { TestBed } from "@angular/core/testing";
 import { WasmService } from "./wasm.service";
 import { ComMoveRequest, ComMoveResponse } from "../models/COM.models";
 import { PlayerType } from "../models/player-type.enum";
-import { mockBoardPosition } from '../mocks/mocks';
-import { testCases } from '../mocks/minMax';
+import { mockBoardPosition } from "../mocks/mocks";
+import { testCases } from "../mocks/minMax";
 
 describe("WasmService", () => {
   let service: WasmService;
@@ -20,7 +20,7 @@ describe("WasmService", () => {
   it("should return a legal move", (done) => {
     const request: ComMoveRequest = {
       playerType: PlayerType.HardCom,
-      boardPosition: mockBoardPosition
+      boardPosition: mockBoardPosition,
     };
 
     service.askForMove(request).subscribe((response: ComMoveResponse) => {
@@ -29,24 +29,31 @@ describe("WasmService", () => {
     });
   });
 
-  it('should return the correct move for the testcases sequentially', async () => {
-    
+  it("should return the correct move for the testcases sequentially", async () => {
     for (const testCase of testCases) {
       const request: ComMoveRequest = {
         playerType: PlayerType.HardCom,
-        boardPosition: testCase.boardPosition
+        boardPosition: testCase.boardPosition,
       };
+
+      const startTime = new Date().getTime();
 
       await new Promise<void>((resolve) => {
         service.askForMove(request).subscribe((response: ComMoveResponse) => {
-          console.log(request.boardPosition, response.move, testCase.correctMove);
+          const time = new Date().getTime() - startTime;
+          if (time > 100) {
+            console.log(
+              request.boardPosition,
+              response.move,
+              testCase.correctMove,
+              time
+            );
+          }
+
           expect(response.move).toBe(testCase.correctMove);
           resolve();
         });
       });
     }
-
   });
-
-
 });

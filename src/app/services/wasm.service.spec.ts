@@ -29,19 +29,22 @@ describe("WasmService", () => {
     });
   });
 
-  it('should return the correct move for the testcases', (done) => {
-
-    testCases.forEach(testCase => {
+  it('should return the correct move for the testcases sequentially', async () => {
+    
+    for (const testCase of testCases) {
       const request: ComMoveRequest = {
         playerType: PlayerType.HardCom,
         boardPosition: testCase.boardPosition
       };
 
-      service.askForMove(request).subscribe((response: ComMoveResponse) => {
-        expect(response.move).toBe(testCase.correctMove);
-        done();
+      await new Promise<void>((resolve) => {
+        service.askForMove(request).subscribe((response: ComMoveResponse) => {
+          console.log(request.boardPosition);
+          expect(response.move).toBe(testCase.correctMove);
+          resolve();
+        });
       });
-    });
+    }
 
   });
 

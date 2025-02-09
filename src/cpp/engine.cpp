@@ -315,6 +315,8 @@ int getCurrentMillis(){
 
 ComResponse HardCom(BoardPosition &bp){
 
+    cout << bp.toString() << endl;
+
     int startTime = getCurrentMillis();
 
     // count total seeds for seedsToWin

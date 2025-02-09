@@ -39,7 +39,7 @@ describe("WasmService", () => {
 
       await new Promise<void>((resolve) => {
         service.askForMove(request).subscribe((response: ComMoveResponse) => {
-          console.log(request.boardPosition);
+          console.log(request.boardPosition, response.move, testCase.correctMove);
           expect(response.move).toBe(testCase.correctMove);
           resolve();
         });

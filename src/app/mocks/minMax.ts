@@ -59,5 +59,28 @@ export const testCases = [
         },
         correctMove: 1, // move pieces away so they arent captured
     },
-    
-]
+    {
+        boardPosition: {
+            pits: 3,
+            southPits: [0, 1, 1],
+            northPits: [2, 1, 0],
+            southStore: 4,
+            northStore: 2,
+            southTurn: true,
+            gameOver: false
+        },
+        correctMove: 2,
+    },
+    {
+        boardPosition: {
+            pits: 3,
+            southPits: [0, 1, 1],
+            northPits: [3, 4, 0],
+            southStore: 0,
+            northStore: 1,
+            southTurn: true,
+            gameOver: false
+        },
+        correctMove: 2,
+    }
+];

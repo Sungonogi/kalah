@@ -315,8 +315,6 @@ int getCurrentMillis(){
 
 ComResponse HardCom(BoardPosition &bp){
 
-    cout << bp.toString() << endl;
-
     int startTime = getCurrentMillis();
 
     // count total seeds for seedsToWin
@@ -339,7 +337,6 @@ ComResponse HardCom(BoardPosition &bp){
     // iterative deepening until 1 second is over or until all nodes are explored
     while(!maxDepthReached && getCurrentMillis() - startTime < 1000){
         maxDepthReached = true;
-        cout << "Increasing maxDepth to " << maxDepth << endl;
         score = minMax(bp, 0);
         maxDepth++;
     }

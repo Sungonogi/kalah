@@ -108,7 +108,7 @@ EMSCRIPTEN_BINDINGS(my_module) {
 vector<int> getMoves(BoardPosition &bp){
     vector<int> moves;
     const vector<int>& pits = bp.southTurn ? bp.southPits : bp.northPits;
-    for (int i = 0; i < bp.pits; i++) {
+    for (int i = bp.pits - 1; i >= 0; i--) {
         if (pits[i] > 0) {
             moves.push_back(i);
         }

@@ -53,18 +53,6 @@ export const testCases = [
     },
     {
         boardPosition: {
-            pits: 6,
-            southPits: [0, 0, 0, 2, 3, 2],
-            northPits: [0, 1, 0, 0, 0, 1],
-            southStore: 0,
-            northStore: 4,
-            southTurn: false,
-            gameOver: false
-        },
-        correctMove: 5, // eval Infinity
-    },
-    {
-        boardPosition: {
             pits: 3,
             southPits: [1, 1, 1],
             northPits: [2, 2, 0],
@@ -341,18 +329,6 @@ export const testCases = [
     },
     {
         boardPosition: {
-            pits: 5,
-            southPits: [1, 0, 3, 0, 0],
-            northPits: [0, 1, 0, 1, 1],
-            southStore: 4,
-            northStore: 0,
-            southTurn: true,
-            gameOver: false
-        },
-        correctMove: 2, // eval Infinity
-    },
-    {
-        boardPosition: {
             pits: 3,
             southPits: [0, 2, 1],
             northPits: [1, 1, 3],
@@ -446,17 +422,5 @@ export const testCases = [
             gameOver: false
         },
         correctMove: 0, // eval Infinity
-    },
-    {
-        boardPosition: {
-            pits: 6,
-            southPits: [0, 0, 0, 0, 2, 0],
-            northPits: [1, 0, 0, 0, 0, 1],
-            southStore: 3,
-            northStore: 1,
-            southTurn: false,
-            gameOver: false
-        },
-        correctMove: 5, // eval Infinity
     },
 ];

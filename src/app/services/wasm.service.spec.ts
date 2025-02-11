@@ -51,7 +51,9 @@ describe("WasmService", () => {
                         );
                     }
 
-                    expect(response.move).toBe(testCase.correctMove);
+                    expect(response.move)
+                        .withContext(JSON.stringify(request.boardPosition))
+                        .toBe(testCase.correctMove);
                     resolve();
                 });
             });

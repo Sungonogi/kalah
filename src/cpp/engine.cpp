@@ -266,7 +266,7 @@ int getScore(BoardPosition &bp){
 }
 
 // recursive min max function
-int minMax(BoardPosition &bp, int depth) {
+int minMax(BoardPosition &bp, int depth, int alpha, int beta) {
 
     int score = getScore(bp);
 
@@ -286,15 +286,30 @@ int minMax(BoardPosition &bp, int depth) {
     for(int move : getMoves(bp)){
         BoardPosition bpCopy = bp;
         doMove(bpCopy, move);
-        int tmpScore = minMax(bpCopy, depth + 1);
 
-        if(bp.southTurn != bpCopy.southTurn) {
+        bool sideChanged = bp.southTurn != bpCopy.southTurn;
+
+        int nAlpha = sideChanged ? -beta : alpha;
+        int nBeta = sideChanged ? -alpha : beta;
+
+        int tmpScore = minMax(bpCopy, depth + 1, nAlpha, nBeta);
+
+        if(sideChanged) {
             tmpScore = -tmpScore;
         }
 
         if(tmpScore >= bestScore){
             bestScore = tmpScore;
             bestMove = move;
+        }
+
+        
+        if(bestScore > beta){
+            break;
+        }
+
+        if(bestScore > alpha){
+            alpha = bestScore;
         }
 
     }
@@ -332,12 +347,12 @@ ComResponse HardCom(BoardPosition &bp){
     actualBestMove = getMoves(bp)[0]; // fallback to first move
     maxDepthReached = false;
 
-    int score = minMax(bp, 0);
+    int score = getScore(bp);
 
     // iterative deepening until 1 second is over or until all nodes are explored
     while(!maxDepthReached && getCurrentMillis() - startTime < 1000){
         maxDepthReached = true;
-        score = minMax(bp, 0);
+        score = minMax(bp, 0, MIN_SCORE, MAX_SCORE);
         maxDepth++;
     }
 

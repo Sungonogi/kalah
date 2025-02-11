@@ -1,9 +1,9 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
+import {boardServiceMock, startParamsStoreMock} from '../../../mocks/mocks';
 import {BoardService} from "../../../services/board.service";
+import {StartParamsStore} from '../../../stores/start-params/start-params.store';
 import {BoardComponent} from './board.component';
-import { StartParamsStore } from '../../../stores/start-params/start-params.store';
-import { boardServiceMock, startParamsStoreMock } from '../../../mocks/mocks';
 
 describe('BoardComponent', () => {
     let component: BoardComponent;

@@ -1,4 +1,6 @@
 
+import {provideHttpClient} from '@angular/common/http';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
 import {TestBed} from '@angular/core/testing';
 
 import {ComMoveService} from './com-move.service';
@@ -12,6 +14,8 @@ describe('ComMoveService', () => {
         TestBed.configureTestingModule({
             providers: [
                 {provide: WasmService, useValue: wasmServiceMock},
+                provideHttpClient(),
+                provideHttpClientTesting()
             ]
         });
 

@@ -13,25 +13,38 @@ int main() {
     mockBoard.northStore = 0;
     mockBoard.southTurn = true;
     mockBoard.gameOver = false;
+    int seeds = 12;
     for(int i = 0; i < mockBoard.pits; i++){
-        mockBoard.southPits[i] = 3;
-        mockBoard.northPits[i] = 3;
+        mockBoard.southPits[i] = seeds;
+        mockBoard.northPits[i] = seeds;
     }
-    mockBoard.seedsToWin = (mockBoard.pits * 3) / 2 + 1;
+    mockBoard.seedsToWin = (mockBoard.pits * seeds) / 2 + 1;
 
     // Measure the time taken by copy
-    int move = 2; // Example move
     auto start = high_resolution_clock::now();
     for(int i = 0; i < 1000 * 1000; i++){
         BoardPosition cpy = mockBoard;
     }
     auto end = high_resolution_clock::now();
-
-    // Calculate the duration
     auto duration = duration_cast<milliseconds>(end - start).count();
 
     // Print the result
     cout << "Time taken by copy: " << duration << " milliseconds" << endl;
+
+
+    // Measure the time taken by doMove
+    int move = 2; 
+
+    start = high_resolution_clock::now();
+    for(int i = 0; i < 1000 * 1000; i++){
+        BoardPosition cpy = mockBoard;
+        cpy.doMove(move);
+    }
+    end = high_resolution_clock::now();
+    duration = duration_cast<milliseconds>(end - start).count();
+
+    // Print the result
+    cout << "Time taken by doMove: " << duration << " milliseconds" << endl;
 
     return 0;
 }

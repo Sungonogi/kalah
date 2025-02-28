@@ -16,6 +16,7 @@ struct ComResponse {
     string comment;
 };
 
+string quitWithMessage(const char* msg);
 int getRandomNumber();
 ComResponse EasyCom(BoardPosition &bp);
 ComResponse MediumCom(BoardPosition &bp);
@@ -25,14 +26,20 @@ string getBestMove(string jsonString) {
 
     json ComRequest = json::parse(jsonString);
 
-    ComResponse cr;
-
     string playerType = ComRequest["playerType"];
     json boardJson = ComRequest["boardPosition"];
     BoardPosition bp;
     bp.pits = boardJson["pits"];
-    bp.southPits = boardJson["southPits"].get<vector<int>>();
-    bp.northPits = boardJson["northPits"].get<vector<int>>();
+    if(bp.pits > MAX_PIT_SIZE){
+        return quitWithMessage("Max pit size exceeded");
+    }
+
+    // Copy values from JSON to fixed-size arrays
+    for (int i = 0; i < bp.pits; ++i) {
+        bp.southPits[i] = boardJson["southPits"][i];
+        bp.northPits[i] = boardJson["northPits"][i];
+    }
+
     bp.southStore = boardJson["southStore"];
     bp.northStore = boardJson["northStore"];
     bp.southTurn = boardJson["southTurn"];
@@ -51,15 +58,10 @@ string getBestMove(string jsonString) {
 
     // don't do anything if the game is over
     if(bp.gameOver){
-        cr.move = -1;
-        cr.comment = "Game is over";
-        json responseJson = {
-            {"move", cr.move},
-            {"comment", cr.comment}
-        };
-        return responseJson.dump();
+        return quitWithMessage("Game is over");
     }
 
+    ComResponse cr;
     if(playerType == "Easy Com"){
         cr = EasyCom(bp);
     } else if(playerType == "Medium Com"){
@@ -84,6 +86,14 @@ string getBestMove(string jsonString) {
 
 EMSCRIPTEN_BINDINGS(my_module) {
     emscripten::function("getBestMove", &getBestMove);
+}
+
+string quitWithMessage(const char* msg){
+    json responseJson = {
+        {"move", -1},
+        {"comment", msg}
+    };
+    return responseJson.dump();
 }
 
 int getRandomNumber(){
@@ -134,9 +144,7 @@ ComResponse MediumCom(BoardPosition &bp){
     return cr;
 }
 
-
-
-
+// HardCom is a bot that uses minmax to find the best move
 ComResponse HardCom(BoardPosition &bp){
 
     // do minmax with a time limit of 1000ms

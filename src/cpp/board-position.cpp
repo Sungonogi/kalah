@@ -36,7 +36,7 @@ void BoardPosition::doMove(int move) {
     myPits[move] = 0;
 
     while(hand > 0){
-        move = (move + 1) % (pits + 1);
+        move++;
 
         // reached a store, skip opponent store
         if(move < pits){
@@ -51,6 +51,7 @@ void BoardPosition::doMove(int move) {
                 hand--;
                 myStore++;
             }
+            move = -1; // reset move to -1 so it will be incremented to 0
             currentlyMySide = !currentlyMySide;
         }
     }
@@ -99,7 +100,7 @@ void BoardPosition::doMove(int move) {
     // switch side if no bonus move (do this after gameOver otherwise hisStore could be incorrect)
     // if there was a bonus move then we stopped at move=0 and currentlyMySide=false
     southTurn = !southTurn;
-    if(!currentlyMySide && move == pits){
+    if(!currentlyMySide && move == -1){
         southTurn = !southTurn;
     }
 }

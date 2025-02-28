@@ -27,14 +27,14 @@ int main() {
 
     // Measure the time taken by doMinMaxWithTimeLimit
     auto start = high_resolution_clock::now();
+    
     int score = minMax(mockBoard, 0, MIN_SCORE, MAX_SCORE);
-    auto end = high_resolution_clock::now();
 
-    // Calculate the duration
+    auto end = high_resolution_clock::now();
     auto duration = duration_cast<milliseconds>(end - start).count();
 
     // Print the result
-    cout << "Time taken by doMinMaxWithTimeLimit: " << duration << " milliseconds" << endl;
+    cout << "Time taken by minMax " << duration << " milliseconds" << endl;
 
     return 0;
 }

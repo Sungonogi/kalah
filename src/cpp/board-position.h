@@ -13,6 +13,8 @@
 /* 
     To document some of the speed improvements I made:
     - 252ms to 5ms for creating board copies: use int[20] instead of vector<int>, maxSize is annoying but worth it
+    - 65ms to 45ms for doMove: instead of move = (move + 1) % (pits + 1); use move++ with if(move == pits) move = -1;
+
 */
 
 struct BoardPosition {

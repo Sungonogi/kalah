@@ -2,7 +2,13 @@ import {withStorageSync} from "@angular-architects/ngrx-toolkit";
 import {patchState, signalStore, withMethods, withState} from '@ngrx/signals';
 
 import {PlayerType} from "../../models/player-type.enum";
-import {StartParams} from '../../models/start-params.model';
+
+export interface StartParams {
+    playerSouth: PlayerType
+    playerNorth: PlayerType;
+    seeds: number;
+    pits: number;
+}
 
 const initialState: StartParams = {
     playerSouth: PlayerType.Local,

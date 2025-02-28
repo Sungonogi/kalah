@@ -7,8 +7,7 @@ import {RouterLink} from "@angular/router";
 import {values} from "lodash-es";
 
 import {PlayerType} from "../../models/player-type.enum";
-import {StartParams} from "../../models/start-params.model";
-import {StartParamsStore} from "../../stores/start-params/start-params.store";
+import {StartParams, StartParamsStore} from "../../stores/start-params/start-params.store";
 import {NumberInputComponent} from "./number-input/number-input.component";
 
 @Component({

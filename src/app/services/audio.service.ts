@@ -27,45 +27,35 @@ export class AudioService {
 
     startAudio() {
         this.interruptAndPlay(this.startAndEndSound);
+        return this.startAndEndSound.duration;
     }
 
     endAudio() {
         this.interruptAndPlay(this.startAndEndSound);
+        return this.startAndEndSound.duration;
     }
 
-    // provide a callback function that will be called onended
-    moveAudio(callback: () => void) {
+    // return the duration so the caller can wait for the sound to finish
+    moveAudio() {
         this.interruptAndPlay(this.moveSound);
-
-        if (callback) {
-            this.moveSound.onended = callback;
-        }
-    }
-
-    resetCallbacks(){
-        this.moveSound.onended = null;
+        return this.moveSound.duration;
     }
 
     extraAudio() {
         this.interruptAndPlay(this.extraSound);
+        return this.extraSound.duration;
     }
 
     stealAudio() {
         this.interruptAndPlay(this.stealSound);
+        return this.stealSound.duration;
     }
 
     // Stop sound if it is already playing
     private interruptAndPlay(audio: HTMLAudioElement) {
         audio.pause();
         audio.currentTime = 0;
-        audio.play().catch(e => {
-            console.error('Audio play error:', e);
-            const callback = audio.onended as undefined | (() => void);
-            if(callback){
-                console.log('calling callback');
-                callback();
-            }
-        });
+        audio.play();
     }
 
 }

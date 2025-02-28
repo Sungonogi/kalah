@@ -14,7 +14,7 @@ import {ComMoveService} from "./com-move.service";
 })
 export class BoardService {
 
-    startParams = inject(StartParamsStore);
+    startParamsStore = inject(StartParamsStore);
 
     // will be assigned in the resetBoard method
     playerSouth!: PlayerType;
@@ -36,11 +36,11 @@ export class BoardService {
 
         this.audioService.startAudio();
 
-        this.playerSouth = this.startParams.playerSouth();
-        this.playerNorth = this.startParams.playerNorth();
+        this.playerSouth = this.startParamsStore.playerSouth();
+        this.playerNorth = this.startParamsStore.playerNorth();
 
-        const pits = this.startParams.pits();
-        const seeds = this.startParams.seeds();
+        const pits = this.startParamsStore.pits();
+        const seeds = this.startParamsStore.seeds();
 
         const boardPosition = {
             pits: pits,
@@ -68,7 +68,6 @@ export class BoardService {
             this.moveRequestSubscription.unsubscribe();
             this.moveRequestSubscription = undefined;
         }
-        this.audioService.resetCallbacks();
     }
 
     // checks if the computer has the next move and if yes does the move
@@ -135,18 +134,20 @@ export class BoardService {
         this.animatedBoardPosition.set(result.boards[0]);
 
         if (result.moveType === MoveType.CaptureMove) {
-            this.audioService.moveAudio(() => {
+            const waitTime = 1000 * this.audioService.moveAudio();
+            setTimeout(() => {
                 this.audioService.stealAudio();
                 this.animatedBoardPosition.set(result.boards[1]);
                 this.checkGameOverAndComMove(result.boards);
-            });
+            }, waitTime);
         } else {
             // only play extra move sound if extra move and not game over
-            let callback = () => { /* empty */ };
+            const waitTime = 1000 * this.audioService.moveAudio();
             if(result.moveType === MoveType.ExtraMove && result.boards.length === 1){
-                callback = () => this.audioService.extraAudio();
-            }
-            this.audioService.moveAudio(callback);
+                setTimeout(() => {
+                    this.audioService.extraAudio();
+                }, waitTime);
+            }   
             this.checkGameOverAndComMove(result.boards);
         }
     }

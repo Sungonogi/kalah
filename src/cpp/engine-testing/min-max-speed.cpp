@@ -1,4 +1,5 @@
 #include "../board-position.cpp"
+#include "../min-max.cpp"
 #include <iostream>
 #include <chrono>
 
@@ -21,19 +22,21 @@ int main() {
     }
     mockBoard.seedsToWin = (mockBoard.pits * 3) / 2 + 1;
 
-    // Measure the time taken by copy
-    int move = 2; // Example move
+    // Initialize variables for minMax
+    maxDepth = 11;
+    actualBestMove = -1;
+    maxDepthReached = true;
+
+    // Measure the time taken by doMinMaxWithTimeLimit
     auto start = high_resolution_clock::now();
-    for(int i = 0; i < 1000 * 1000; i++){
-        BoardPosition cpy = mockBoard;
-    }
+    int score = minMax(mockBoard, 0, MIN_SCORE, MAX_SCORE);
     auto end = high_resolution_clock::now();
 
     // Calculate the duration
     auto duration = duration_cast<milliseconds>(end - start).count();
 
     // Print the result
-    cout << "Time taken by copy: " << duration << " milliseconds" << endl;
+    cout << "Time taken by doMinMaxWithTimeLimit: " << duration << " milliseconds" << endl;
 
     return 0;
 }

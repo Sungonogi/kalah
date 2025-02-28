@@ -7,11 +7,10 @@ import {environment} from '../../environments/environment';
 })
 export class AudioService {
 
-    private readonly startSound: HTMLAudioElement;
+    private readonly startAndEndSound: HTMLAudioElement;
     private readonly stealSound: HTMLAudioElement;
     private readonly extraSound: HTMLAudioElement;
     private readonly moveSound: HTMLAudioElement;
-    private readonly endSound: HTMLAudioElement;
 
     constructor() {
         const basePath = environment.production ? 'sounds/mit' : 'sounds/licensed';
@@ -19,8 +18,7 @@ export class AudioService {
         const ending = environment.production ? 'mp3' : 'ogg';
         const specialEnding = environment.production ? 'flac' : 'ogg';
 
-        this.startSound = new Audio(`${basePath}/start.${specialEnding}`);
-        this.endSound = new Audio(`${basePath}/start.${specialEnding}`);
+        this.startAndEndSound = new Audio(`${basePath}/start.${specialEnding}`);
 
         this.stealSound = new Audio(`${basePath}/steal.${ending}`);
         this.extraSound = new Audio(`${basePath}/extra.${ending}`);
@@ -28,11 +26,11 @@ export class AudioService {
     }
 
     startAudio() {
-        this.interruptAndPlay(this.startSound);
+        this.interruptAndPlay(this.startAndEndSound);
     }
 
     endAudio() {
-        this.interruptAndPlay(this.endSound);
+        this.interruptAndPlay(this.startAndEndSound);
     }
 
     // provide a callback function that will be called onended

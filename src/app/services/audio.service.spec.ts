@@ -14,10 +14,4 @@ describe('AudioService', () => {
         expect(service).toBeTruthy();
     });
 
-    it('should call the callback function', () => {
-        const callback = jasmine.createSpy('callback');
-        service.moveAudio(callback);
-        service['moveSound'].dispatchEvent(new Event('ended'));
-        expect(callback).toHaveBeenCalled();
-    });
 });

@@ -13,8 +13,6 @@ int main() {
     mockBoard.northStore = 0;
     mockBoard.southTurn = true;
     mockBoard.gameOver = false;
-    mockBoard.southPits = vector<int>(mockBoard.pits);
-    mockBoard.northPits = vector<int>(mockBoard.pits);
     for(int i = 0; i < mockBoard.pits; i++){
         mockBoard.southPits[i] = 3;
         mockBoard.northPits[i] = 3;

@@ -27,8 +27,8 @@ string BoardPosition::toString() const {
 }
 
 void BoardPosition::doMove(int move) {
-    vector<int> &myPits = southTurn ? southPits : northPits;
-    vector<int> &hisPits = southTurn ? northPits : southPits;
+    int* myPits = southTurn ? southPits : northPits;
+    int* hisPits = southTurn ? northPits : southPits;
     int &myStore = southTurn ? southStore : northStore;
 
     bool currentlyMySide = true;
@@ -81,12 +81,16 @@ void BoardPosition::doMove(int move) {
     }
 
     if(southEmpty || northEmpty){
-        int &hisStore = southTurn ? northStore: southStore;
-        for(int i = 0; i < pits; i++){
-            myStore += myPits[i];
-            myPits[i] = 0;
-            hisStore += hisPits[i];
-            hisPits[i] = 0;
+        if(southEmpty){
+            for(int i = 0; i < pits; i++){
+                northStore += northPits[i];
+                northPits[i] = 0;
+            }
+        } else {
+            for(int i = 0; i < pits; i++){
+                southStore += southPits[i];
+                southPits[i] = 0;
+            }
         }
         gameOver = true;
         return;
@@ -101,9 +105,9 @@ void BoardPosition::doMove(int move) {
 }
 
 // returns valid moves starting from the rightmost pit
-vector<int> BoardPosition::getMoves() const {
+vector<int> BoardPosition::getMoves() {
     vector<int> moves;
-    const vector<int>& myPits = southTurn ? southPits : northPits;
+    const int* myPits = southTurn ? southPits : northPits;
     for (int i = pits - 1; i >= 0; i--) {
         if (myPits[i] > 0) {
             moves.push_back(i);

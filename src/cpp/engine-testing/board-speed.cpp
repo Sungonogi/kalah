@@ -46,5 +46,17 @@ int main() {
     // Print the result
     cout << "Time taken by doMove: " << duration << " milliseconds" << endl;
 
+    // Measure the time taken by getMoves
+    mockBoard.southPits[mockBoard.pits - 2] = 0; // add a steal
+
+    start = high_resolution_clock::now();
+    for(int i = 0; i < 1000 * 1000; i++){
+        mockBoard.getMoves();
+    }
+    end = high_resolution_clock::now();
+    duration = duration_cast<milliseconds>(end - start).count();
+
+    cout << "Time taken by getMoves: " << duration << " milliseconds" << endl;
+
     return 0;
 }

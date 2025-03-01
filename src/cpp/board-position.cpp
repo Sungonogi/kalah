@@ -105,18 +105,37 @@ void BoardPosition::doMove(int move) {
     }
 }
 
-// returns valid moves starting from the rightmost pit
-vector<int> BoardPosition::getMoves() {
+// returns valid moves in a good order for alpha beta pruning
+array<int, MAX_PIT_SIZE + 1> BoardPosition::getMoves() {
+
+    array<int, MAX_PIT_SIZE + 1> moves = {};
+    const int* myPits = southTurn ? southPits : northPits;
+
+    int moveCount = 0;
+
+    // add extra moves first
+    for (int i = pits - 1; i >= 0; i--) {
+        if (myPits[i] > 0) {
+            moves[moveCount++] = i;
+        }
+    }
+
+    moves[moveCount] = -1; // terminator
+
+    return moves;
+}
+
+// returns valid moves as a vector from left to right
+vector<int> BoardPosition::getMovesVector() {
     vector<int> moves;
     const int* myPits = southTurn ? southPits : northPits;
-    for (int i = pits - 1; i >= 0; i--) {
+    for (int i = 0; i < pits; i++) {
         if (myPits[i] > 0) {
             moves.push_back(i);
         }
     }
     return moves;
 }
-
 
 // basic evaluation function
 int BoardPosition::getScore(){

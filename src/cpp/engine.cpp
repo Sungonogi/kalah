@@ -108,7 +108,7 @@ int getRandomNumber(){
 
 // EasyCom is a simple bot that just picks a random move
 ComResponse EasyCom(BoardPosition &bp) {
-    vector<int> moves = bp.getMoves();
+    vector<int> moves = bp.getMovesVector();
 
     ComResponse cr;
     cr.move = moves[getRandomNumber() % moves.size()];
@@ -120,7 +120,7 @@ ComResponse EasyCom(BoardPosition &bp) {
 ComResponse MediumCom(BoardPosition &bp){
     vector<int> bestMoves;
     int bestScore = -1;
-    for(int move : bp.getMoves()){
+    for(int move : bp.getMovesVector()){
         // this does a deep copy
         BoardPosition bpCopy = bp;
 
@@ -147,12 +147,12 @@ ComResponse MediumCom(BoardPosition &bp){
 // HardCom is a bot that uses minmax to find the best move
 ComResponse HardCom(BoardPosition &bp){
 
-    // do minmax with a time limit of 1000ms
-    MinMaxResult mmr = doMinMaxWithTimeLimit(bp, 1000);
+    // do minmax with a time limit in milliseconds
+    MinMaxResult mmr = doMinMaxWithTimeLimit(bp, 100);
 
     ComResponse cr;
     cr.move = mmr.move;
-    cr.comment = "I did minmax and evaluated this position as " +
+    cr.comment = "I did minmax and evaluate this position as " +
         to_string(mmr.score) + " with a depth of " + to_string(mmr.maxDepth) + 
         " and suggest move " + to_string(mmr.move);
 

@@ -32,6 +32,10 @@ int minMax(BoardPosition &bp, int depth, int alpha, int beta) {
 
     // since the game is not over we can always make a move
     for(int move : bp.getMoves()){
+        if(move == -1){ // array is terminated with -1
+            break;
+        }
+
         BoardPosition bpCopy = bp;
         bpCopy.doMove(move);
 

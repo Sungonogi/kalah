@@ -1,22 +1,25 @@
 import {Injectable} from '@angular/core';
 
-import {environment} from '../../environments/environment';
+import {environment as env} from '../../environments/environment';
 
 @Injectable({
     providedIn: 'root'
 })
 export class AudioService {
 
-    private readonly startAndEndSound: HTMLAudioElement;
-    private readonly stealSound: HTMLAudioElement;
-    private readonly extraSound: HTMLAudioElement;
-    private readonly moveSound: HTMLAudioElement;
+    private readonly startAndEndSound!: HTMLAudioElement;
+    private readonly stealSound!: HTMLAudioElement;
+    private readonly extraSound!: HTMLAudioElement;
+    private readonly moveSound!: HTMLAudioElement;
 
     constructor() {
-        const basePath = environment.production ? 'sounds/mit' : 'sounds/licensed';
 
-        const ending = environment.production ? 'mp3' : 'ogg';
-        const specialEnding = environment.production ? 'flac' : 'ogg';
+        if(env.disableAudio) return;
+
+        const basePath = env.production ? 'sounds/mit' : 'sounds/licensed';
+
+        const ending = env.production ? 'mp3' : 'ogg';
+        const specialEnding = env.production ? 'flac' : 'ogg';
 
         this.startAndEndSound = new Audio(`${basePath}/start.${specialEnding}`);
 
@@ -26,27 +29,37 @@ export class AudioService {
     }
 
     startAudio() {
+        if(env.disableAudio) return 0;
+
         this.interruptAndPlay(this.startAndEndSound);
         return this.startAndEndSound.duration;
     }
 
     endAudio() {
+        if(env.disableAudio) return 0;
+        
         this.interruptAndPlay(this.startAndEndSound);
         return this.startAndEndSound.duration;
     }
 
     // return the duration so the caller can wait for the sound to finish
     moveAudio() {
+        if(env.disableAudio) return 0;
+
         this.interruptAndPlay(this.moveSound);
         return this.moveSound.duration;
     }
 
     extraAudio() {
+        if(env.disableAudio) return 0;
+
         this.interruptAndPlay(this.extraSound);
         return this.extraSound.duration;
     }
 
     stealAudio() {
+        if(env.disableAudio) return 0;
+
         this.interruptAndPlay(this.stealSound);
         return this.stealSound.duration;
     }
@@ -57,5 +70,6 @@ export class AudioService {
         audio.currentTime = 0;
         audio.play();
     }
+
 
 }

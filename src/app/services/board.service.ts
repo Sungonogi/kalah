@@ -1,6 +1,7 @@
 import {inject, Injectable, signal, WritableSignal} from '@angular/core';
 import {Subscription} from "rxjs";
 
+import {environment as env} from '../../environments/environment';
 import {checkLegalMove, performLegalMove} from "../models/board-position.helpers";
 import {BoardPosition} from "../models/board-position.model";
 import {MoveType} from "../models/move-type.enum";
@@ -159,8 +160,8 @@ export class BoardService {
                 this.animatedBoardPosition.set(lastBoard);
                 setTimeout(() => {
                     this.audioService.endAudio();
-                }, 200);
-            }, 800);
+                }, env.gameOverModalTime);
+            }, env.gameOverAnimationTime);
         } else {
             this.checkAndPerformComMove();
         }

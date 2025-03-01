@@ -44,6 +44,7 @@ describe("WasmService", () => {
                     const time = new Date().getTime() - startTime;
                     if (time > 100) {
                         console.log(
+                            'It took too long for the following request: ',
                             request.boardPosition,
                             response.move,
                             testCase.correctMove,
@@ -59,4 +60,25 @@ describe("WasmService", () => {
             });
         }
     });
+
+    // mainly for measuring performance
+    it("should be somewhat fast", async () => {
+        const request: ComMoveRequest = {
+            playerType: PlayerType.HardCom,
+            boardPosition: mockBoardPosition,
+            maxDepth: 12,
+        };
+
+        const startTime = new Date().getTime();
+
+        await new Promise<void>((resolve) => {
+            service.askForMove(request).subscribe(() => {
+                const time = new Date().getTime() - startTime;
+                console.log(`Time taken by minMax: ${time}ms`);
+                expect(time).toBeLessThan(1000);
+                resolve();
+            });
+        });
+    });
+
 });

@@ -20,7 +20,7 @@ string quitWithMessage(const char* msg);
 int getRandomNumber();
 ComResponse EasyCom(BoardPosition &bp);
 ComResponse MediumCom(BoardPosition &bp);
-ComResponse HardCom(BoardPosition &bp);
+ComResponse HardCom(BoardPosition &bp, int maxDepth);
 
 string getBestMove(string jsonString) {
 
@@ -61,13 +61,26 @@ string getBestMove(string jsonString) {
         return quitWithMessage("Game is over");
     }
 
+    int maxDepth = -1;
+    if(ComRequest.contains("maxDepth")){
+        maxDepth = ComRequest["maxDepth"];
+
+        if(playerType != "Hard Com" && playerType != "Stickfish"){
+            return quitWithMessage("maxDepth is only allowed for Coms that do MinMax");
+        }
+
+        if(maxDepth <= 0){
+            return quitWithMessage("maxDepth must be positive");
+        }
+    }
+
     ComResponse cr;
     if(playerType == "Easy Com"){
         cr = EasyCom(bp);
     } else if(playerType == "Medium Com"){
         cr = MediumCom(bp);
     } else if(playerType == "Hard Com"){
-        cr = HardCom(bp);
+        cr = HardCom(bp, maxDepth);
     } else if(playerType == "Stickfish"){
         cr = EasyCom(bp);
         cr.comment = "Stickfish not implemented yet, Submitting random move";
@@ -145,11 +158,16 @@ ComResponse MediumCom(BoardPosition &bp){
 }
 
 // HardCom is a bot that uses minmax to find the best move
-ComResponse HardCom(BoardPosition &bp){
+ComResponse HardCom(BoardPosition &bp, int maxDepth){
 
     // do minmax with a time limit in milliseconds
-    MinMaxResult mmr = doMinMaxWithTimeLimit(bp, 100);
-
+    MinMaxResult mmr;
+    if(maxDepth == -1){
+        mmr = doMinMaxWithTimeLimit(bp, 1000);
+    } else {
+        mmr = doMinMaxWithMaxDepth(bp, maxDepth);
+    }
+        
     ComResponse cr;
     cr.move = mmr.move;
     cr.comment = "I did minmax and evaluate this position as " +

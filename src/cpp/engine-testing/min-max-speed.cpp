@@ -20,15 +20,10 @@ int main() {
     }
     mockBoard.seedsToWin = (mockBoard.pits * 3) / 2 + 1;
 
-    // Initialize variables for minMax
-    maxDepth = 12;
-    actualBestMove = -1;
-    maxDepthReached = true;
-
-    // Measure the time taken by doMinMaxWithTimeLimit
+    // Measure the time taken by doMinMaxWithMaxDepth
     auto start = high_resolution_clock::now();
     
-    int score = minMax(mockBoard, 0, MIN_SCORE, MAX_SCORE);
+    doMinMaxWithMaxDepth(mockBoard, 12);
 
     auto end = high_resolution_clock::now();
     auto duration = duration_cast<milliseconds>(end - start).count();

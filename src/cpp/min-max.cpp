@@ -10,8 +10,8 @@ int getCurrentMillis(){
 }
 
 // variables for minMax
-int maxDepth, actualBestMove;
-bool maxDepthReached; // tells us if all nodes were explored
+static int maxDepth, actualBestMove;
+static bool maxDepthReached; // tells us if all nodes were explored
 
 // recursive min max function
 int minMax(BoardPosition &bp, int depth, int alpha, int beta) {
@@ -91,6 +91,21 @@ MinMaxResult doMinMaxWithTimeLimit(BoardPosition &bp, int milliseconds){
         score = minMax(bp, 0, MIN_SCORE, MAX_SCORE);
         maxDepth++;
     }
+
+    MinMaxResult result;
+    result.score = score;
+    result.move = actualBestMove;
+    result.maxDepth = maxDepth;
+
+    return result;
+}
+
+MinMaxResult doMinMaxWithMaxDepth(BoardPosition &bp, int maxDepth){
+
+    ::maxDepth = maxDepth;
+    maxDepthReached = false;
+
+    int score = minMax(bp, 0, MIN_SCORE, MAX_SCORE);
 
     MinMaxResult result;
     result.score = score;

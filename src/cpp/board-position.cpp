@@ -115,7 +115,14 @@ array<int, MAX_PIT_SIZE + 1> BoardPosition::getMoves() {
 
     // add extra moves first
     for (int i = pits - 1; i >= 0; i--) {
-        if (myPits[i] > 0) {
+        if (myPits[i] > 0 && i + myPits[i] == pits) {
+            moves[moveCount++] = i;
+        }
+    }
+
+    // add normal moves
+    for (int i = pits - 1; i >= 0; i--) {
+        if (myPits[i] > 0 && i + myPits[i] != pits) {
             moves[moveCount++] = i;
         }
     }

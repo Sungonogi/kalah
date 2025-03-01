@@ -21,7 +21,7 @@ int main() {
     mockBoard.seedsToWin = (mockBoard.pits * 3) / 2 + 1;
 
     // Initialize variables for minMax
-    maxDepth = 11;
+    maxDepth = 12;
     actualBestMove = -1;
     maxDepthReached = true;
 

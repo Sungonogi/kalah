@@ -3,10 +3,12 @@ import {Injectable} from '@angular/core';
 import {forkJoin, Observable, of, timer} from 'rxjs';
 import {catchError,map} from 'rxjs/operators';
 
+import {environment as env} from '../../environments/environment';
 import {BoardPosition} from '../models/board-position.model';
 import {ComMoveRequest, ComMoveResponse} from '../models/COM.models';
 import {PlayerType} from '../models/player-type.enum';
 import {WasmService} from './wasm.service';
+
 
 @Injectable({
     providedIn: 'root'
@@ -17,7 +19,8 @@ export class ComMoveService {
     requestMove(boardPosition: BoardPosition, playerType: PlayerType): Observable<number | null> {
         const request: ComMoveRequest = {
             playerType: playerType,
-            boardPosition: boardPosition
+            boardPosition: boardPosition,
+            timeLimit: env.engineTimeLimit
         };
 
         // adjust these as wanted
@@ -47,8 +50,8 @@ export class ComMoveService {
         };
 
         if (maxTime) {
-            // wait at least 800ms
-            return forkJoin([move$, timer(800)]).pipe(
+            // wait at least env.minimumWaitTime milliseconds if the computer is too fast
+            return forkJoin([move$, timer(env.minimumWaitTime)]).pipe(
                 map(([response, _]) => handleResponse(response))
             );
         } else {

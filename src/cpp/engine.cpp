@@ -20,7 +20,7 @@ string quitWithMessage(const char* msg);
 int getRandomNumber();
 ComResponse EasyCom(BoardPosition &bp);
 ComResponse MediumCom(BoardPosition &bp);
-ComResponse HardCom(BoardPosition &bp, int maxDepth);
+ComResponse HardCom(BoardPosition &bp, int maxDepth, int timeLimit);
 
 string getBestMove(string jsonString) {
 
@@ -62,15 +62,23 @@ string getBestMove(string jsonString) {
     }
 
     int maxDepth = -1;
-    if(ComRequest.contains("maxDepth")){
-        maxDepth = ComRequest["maxDepth"];
+    int timeLimit = -1;
 
-        if(playerType != "Hard Com" && playerType != "Stickfish"){
-            return quitWithMessage("maxDepth is only allowed for Coms that do MinMax");
-        }
+    if(playerType == "Hard Com" || playerType == "Stickfish"){
+        if(ComRequest.contains("timeLimit")){
+            timeLimit = ComRequest["timeLimit"];
 
-        if(maxDepth <= 0){
-            return quitWithMessage("maxDepth must be positive");
+            if(timeLimit <= 0){
+                return quitWithMessage("timeLimit(ms) must be positive");
+            }
+        } else if (ComRequest.contains("maxDepth")){
+            maxDepth = ComRequest["maxDepth"];
+
+            if(maxDepth <= 0){
+                return quitWithMessage("maxDepth must be positive");
+            }
+        } else {
+            return quitWithMessage("Either timeLimit(ms) or maxDepth must be set for Hard Com");
         }
     }
 
@@ -80,7 +88,7 @@ string getBestMove(string jsonString) {
     } else if(playerType == "Medium Com"){
         cr = MediumCom(bp);
     } else if(playerType == "Hard Com"){
-        cr = HardCom(bp, maxDepth);
+        cr = HardCom(bp, maxDepth, timeLimit);
     } else if(playerType == "Stickfish"){
         cr = EasyCom(bp);
         cr.comment = "Stickfish not implemented yet, Submitting random move";
@@ -158,12 +166,11 @@ ComResponse MediumCom(BoardPosition &bp){
 }
 
 // HardCom is a bot that uses minmax to find the best move
-ComResponse HardCom(BoardPosition &bp, int maxDepth){
+ComResponse HardCom(BoardPosition &bp, int maxDepth, int timeLimit){
 
-    // do minmax with a time limit in milliseconds
     MinMaxResult mmr;
     if(maxDepth == -1){
-        mmr = doMinMaxWithTimeLimit(bp, 1000);
+        mmr = doMinMaxWithTimeLimit(bp, timeLimit);
     } else {
         mmr = doMinMaxWithMaxDepth(bp, maxDepth);
     }

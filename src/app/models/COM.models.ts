@@ -4,7 +4,9 @@ import {PlayerType} from "./player-type.enum";
 export interface ComMoveRequest {
     playerType: PlayerType;
     boardPosition: BoardPosition
-    maxDepth?: number; // Optional parameter for some COMs, only really used for speed testing
+    // One of the following two fields has to be set for hard COMs
+    maxDepth?: number; 
+    timeLimit?: number; // in milliseconds
 }
 
 export interface ComMoveResponse {

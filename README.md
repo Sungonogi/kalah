@@ -23,11 +23,9 @@ For more details on the rules, you can refer to the ["How to Play"](https://ingo
 
 ## Attribution
 
-This project uses sound effects from Freesound:
-- **Gong-Cambodia** by cdrk  
-  Source: [Freesound](https://freesound.org/s/379865/)  
-  License: [Attribution 4.0 International (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/)
-
+I was allowed to use JM Gustafsons Sound Effects for the Game
+- **World Tree Software** by JM Gustafson
+  Source: [Website](https://www.worldtreesoftware.com/)
 
 It also uses this cpp libary for json parsing
 - **C++ JSON parsing library** by Niels Lohmann  

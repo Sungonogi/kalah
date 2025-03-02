@@ -16,59 +16,45 @@ export class AudioService {
 
         if(env.disableAudio) return;
 
-        const basePath = env.production ? 'sounds/mit' : 'sounds/licensed';
+        const basePath = 'sounds';
 
-        const ending = env.production ? 'mp3' : 'ogg';
-        const specialEnding = env.production ? 'flac' : 'ogg';
+        this.startAndEndSound = new Audio(`${basePath}/start.ogg`);
 
-        this.startAndEndSound = new Audio(`${basePath}/start.${specialEnding}`);
-
-        this.stealSound = new Audio(`${basePath}/steal.${ending}`);
-        this.extraSound = new Audio(`${basePath}/extra.${ending}`);
-        this.moveSound = new Audio(`${basePath}/move.${ending}`);
+        this.stealSound = new Audio(`${basePath}/steal.ogg`);
+        this.extraSound = new Audio(`${basePath}/extra.ogg`);
+        this.moveSound = new Audio(`${basePath}/move.ogg`);
     }
 
     startAudio() {
-        if(env.disableAudio) return 0;
-
-        this.interruptAndPlay(this.startAndEndSound);
-        return this.startAndEndSound.duration;
+        return this.interruptAndPlay(this.startAndEndSound);
     }
 
     endAudio() {
-        if(env.disableAudio) return 0;
-        
-        this.interruptAndPlay(this.startAndEndSound);
-        return this.startAndEndSound.duration;
+        return this.interruptAndPlay(this.startAndEndSound);
     }
 
     // return the duration so the caller can wait for the sound to finish
     moveAudio() {
-        if(env.disableAudio) return 0;
-
-        this.interruptAndPlay(this.moveSound);
-        return this.moveSound.duration;
+        return this.interruptAndPlay(this.moveSound);
     }
 
     extraAudio() {
-        if(env.disableAudio) return 0;
-
-        this.interruptAndPlay(this.extraSound);
-        return this.extraSound.duration;
+        return this.interruptAndPlay(this.extraSound);
     }
 
     stealAudio() {
-        if(env.disableAudio) return 0;
-
-        this.interruptAndPlay(this.stealSound);
-        return this.stealSound.duration;
+        return this.interruptAndPlay(this.stealSound);
     }
 
     // Stop sound if it is already playing
-    private interruptAndPlay(audio: HTMLAudioElement) {
+    private interruptAndPlay(audio: HTMLAudioElement): number {
+        if(env.disableAudio) return 0;
+
         audio.pause();
         audio.currentTime = 0;
         audio.play();
+
+        return 1000 * audio.duration;
     }
 
 

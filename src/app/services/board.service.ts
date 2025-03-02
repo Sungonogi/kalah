@@ -35,8 +35,6 @@ export class BoardService {
     resetBoard(): void {
         this.resetCallbacks();
 
-        this.audioService.startAudio();
-
         this.playerSouth = this.startParamsStore.playerSouth();
         this.playerNorth = this.startParamsStore.playerNorth();
 
@@ -61,7 +59,11 @@ export class BoardService {
             this.animatedBoardPosition.set(boardPosition);
         }
 
-        this.checkAndPerformComMove();
+        const waitTime = this.audioService.startAudio();
+        console.log(waitTime);
+        setTimeout(() => {
+            this.checkAndPerformComMove();
+        }, waitTime);
     }
 
     resetCallbacks(){
@@ -135,7 +137,7 @@ export class BoardService {
         this.animatedBoardPosition.set(result.boards[0]);
 
         if (result.moveType === MoveType.CaptureMove) {
-            const waitTime = 1000 * this.audioService.moveAudio();
+            const waitTime = this.audioService.moveAudio();
             setTimeout(() => {
                 this.audioService.stealAudio();
                 this.animatedBoardPosition.set(result.boards[1]);
@@ -143,7 +145,7 @@ export class BoardService {
             }, waitTime);
         } else {
             // only play extra move sound if extra move and not game over
-            const waitTime = 1000 * this.audioService.moveAudio();
+            const waitTime = this.audioService.moveAudio();
             if(result.moveType === MoveType.ExtraMove && result.boards.length === 1){
                 setTimeout(() => {
                     this.audioService.extraAudio();

@@ -25,7 +25,6 @@ export class ComMoveService {
 
         // adjust these as wanted
         const wasm = playerType !== PlayerType.Stickfish;
-        const maxTime = false;
 
         let move$: Observable<ComMoveResponse | null>;
 
@@ -40,25 +39,17 @@ export class ComMoveService {
             );
         }
 
-        const handleResponse = (response: ComMoveResponse | null) => {
-            if (!response) {
-                return null;
-            }
-    
-            console.log(response.comment);
-            return response.move;
-        };
-
-        if (maxTime) {
-            // wait at least env.minimumWaitTime milliseconds if the computer is too fast
-            return forkJoin([move$, timer(env.minimumWaitTime)]).pipe(
-                map(([response, _]) => handleResponse(response))
-            );
-        } else {
-            return move$.pipe(
-                map((response) => handleResponse(response))
-            );
-        }
+        // wait at least env.minimumWaitTime milliseconds if the computer is too fast
+        return forkJoin([move$, timer(env.minimumWaitTime)]).pipe(
+            map(([response, _]) => {
+                if (!response) {
+                    return null;
+                }
+        
+                console.log(response.comment);
+                return response.move;
+            })
+        );
     
     }
 }

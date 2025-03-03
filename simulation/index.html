@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="./simulate.js" type="module"></script>
+    <link rel="stylesheet" href="styles.css">
+    <title>Simulation</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Simulation</h1>
+        
+        <p>This simulation generates a specified number of board positions and lets them play each on both sides. You can set the time limits for Stickfish and Engine players. The results will be displayed below.</p>
+        
+        <div class="input-group">
+            <label for="simulationAmount">Number of Simulations:</label>
+            <input type="number" id="simulationAmount" placeholder="Enter the number of simulations">
+        </div>
+
+        <button id="startButton">Simulate</button>
+
+        <div class="results">
+            <div class="result-item">
+                <h3>Stickfish Wins</h3>
+                <p id="stickfishWins">0</p>
+            </div>
+            <div class="result-item">
+                <h3>Engine Wins</h3>
+                <p id="engineWins">0</p>
+            </div>
+            <div class="result-item">
+                <h3>Ties</h3>
+                <p id="ties">0</p>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>

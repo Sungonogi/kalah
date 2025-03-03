@@ -25,6 +25,9 @@ export class BoardService {
 
     moveRequestSubscription: Subscription | undefined = undefined;
 
+    // use ReturnType of SetTimeout for platform independence
+    animationTimeout: ReturnType<typeof setTimeout> | undefined = undefined;
+
     constructor(
             private comMoveService: ComMoveService,
             private audioService: AudioService
@@ -59,17 +62,18 @@ export class BoardService {
             this.animatedBoardPosition.set(boardPosition);
         }
 
-        const waitTime = this.audioService.startAudio();
-        console.log(waitTime);
-        setTimeout(() => {
-            this.checkAndPerformComMove();
-        }, waitTime);
+        this.audioService.startAudio();
+        this.checkAndPerformComMove();
     }
 
     resetCallbacks(){
         if(this.moveRequestSubscription !== undefined){
             this.moveRequestSubscription.unsubscribe();
             this.moveRequestSubscription = undefined;
+        }
+
+        if(this.animationTimeout !== undefined){
+            this.animationTimeout = undefined;
         }
     }
 
@@ -138,7 +142,7 @@ export class BoardService {
 
         if (result.moveType === MoveType.CaptureMove) {
             const waitTime = this.audioService.moveAudio();
-            setTimeout(() => {
+            this.animationTimeout = setTimeout(() => {
                 this.audioService.stealAudio();
                 this.animatedBoardPosition.set(result.boards[1]);
                 this.checkGameOverAndComMove(result.boards);
@@ -147,7 +151,7 @@ export class BoardService {
             // only play extra move sound if extra move and not game over
             const waitTime = this.audioService.moveAudio();
             if(result.moveType === MoveType.ExtraMove && result.boards.length === 1){
-                setTimeout(() => {
+                this.animationTimeout = setTimeout(() => {
                     this.audioService.extraAudio();
                 }, waitTime);
             }   
@@ -158,9 +162,9 @@ export class BoardService {
     private checkGameOverAndComMove(boards: BoardPosition[]) {
         const lastBoard = boards[boards.length - 1];
         if (lastBoard.gameOver) {
-            setTimeout(() => {
+            this.animationTimeout = setTimeout(() => {
                 this.animatedBoardPosition.set(lastBoard);
-                setTimeout(() => {
+                this.animationTimeout = setTimeout(() => {
                     this.audioService.endAudio();
                 }, env.gameOverModalTime);
             }, env.gameOverAnimationTime);

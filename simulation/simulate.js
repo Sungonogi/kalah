@@ -1,5 +1,5 @@
 import { performLegalMove, generateBoards } from './src/board.js';
-import { getStickfishMove, getEngineMove } from './src/players.js';
+import { getStickfishMove, getEngineMove, getStickfishAvgResponseTime, getEngineAvgResponseTime } from './src/players.js';
 
 document.getElementById("startButton").addEventListener("click", () => {
     const amount = parseInt(document.getElementById("simulationAmount").value);
@@ -55,5 +55,8 @@ async function simulateGame(amount) {
     }
 
     console.log(`Simulation complete. Stickfish wins: ${stickfishWins}, Engine wins: ${engineWins}, Ties: ${ties}`);
+
+    console.log(`Average response time for Stickfish: ${getStickfishAvgResponseTime()} ms`);
+    console.log(`Average response time for Engine: ${getEngineAvgResponseTime()} ms`);
 }
 

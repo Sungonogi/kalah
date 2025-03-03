@@ -1,8 +1,14 @@
 // Global variables for time limits
-const STICKFISH_TIME_LIMIT = 10; // Example time limit for Stickfish
-const ENGINE_TIME_LIMIT = 10; // Example time limit for Engine
+let STICKFISH_TIME_LIMIT = 1000; // Example time limit for Stickfish
+let ENGINE_TIME_LIMIT = 1000; // Example time limit for Engine
 
 const worker = new Worker("worker.js");
+
+let stickfishResponseTime = 0;
+let stickfishRequestCount = 0;
+
+let engineResponseTime = 0;
+let engineRequestCount = 0;
 
 // Function to get a move from the backend (Stickfish)
 async function getStickfishMove(boardPosition) {
@@ -11,6 +17,8 @@ async function getStickfishMove(boardPosition) {
         boardPosition: boardPosition,
         timeLimit: STICKFISH_TIME_LIMIT
     };
+
+    const startTime = performance.now();
 
     try {
         const response = await fetch("http://localhost:9090/api/computerMove", {
@@ -26,6 +34,11 @@ async function getStickfishMove(boardPosition) {
         }
 
         const data = await response.json();
+        const endTime = performance.now();
+
+        stickfishResponseTime += (endTime - startTime);
+        stickfishRequestCount++;
+
         return data.move;
     } catch (error) {
         console.error("Error when communicating with the backend:", error);
@@ -42,8 +55,15 @@ function getEngineMove(boardPosition) {
             timeLimit: ENGINE_TIME_LIMIT
         };
 
+        const startTime = performance.now();
+
         worker.onmessage = (event) => {
             const response = event.data;
+            const endTime = performance.now();
+
+            engineResponseTime += (endTime - startTime);
+            engineRequestCount++;
+
             resolve(response.move);
         };
 
@@ -56,5 +76,15 @@ function getEngineMove(boardPosition) {
     });
 }
 
+// Function to get the average response time for Stickfish
+function getStickfishAvgResponseTime() {
+    return stickfishRequestCount === 0 ? 0 : stickfishResponseTime / stickfishRequestCount;
+}
+
+// Function to get the average response time for Engine
+function getEngineAvgResponseTime() {
+    return engineRequestCount === 0 ? 0 : engineResponseTime / engineRequestCount;
+}
+
 // Export the functions for use in other files
-export { getStickfishMove, getEngineMove };
+export { getStickfishMove, getEngineMove, getStickfishAvgResponseTime, getEngineAvgResponseTime };

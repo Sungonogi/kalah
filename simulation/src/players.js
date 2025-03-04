@@ -1,6 +1,6 @@
 // Global variables for time limits
-let STICKFISH_TIME_LIMIT = 1000; // Example time limit for Stickfish
-let ENGINE_TIME_LIMIT = 1000; // Example time limit for Engine
+let STICKFISH_TIME_LIMIT = 10; // Example time limit for Stickfish
+let ENGINE_TIME_LIMIT = 10; // Example time limit for Engine
 
 const worker = new Worker("worker.js");
 
@@ -11,7 +11,7 @@ let engineResponseTime = 0;
 let engineRequestCount = 0;
 
 // Function to get a move from the backend (Stickfish)
-async function getStickfishMove(boardPosition) {
+async function getStickfishBackendMove(boardPosition) {
     const request = {
         playerType: "Stickfish",
         boardPosition: boardPosition,
@@ -46,13 +46,21 @@ async function getStickfishMove(boardPosition) {
     }
 }
 
+function getHardComMove(boardPosition) {
+    return getEngineMove(boardPosition, "Hard Com");
+}
+
+function getStickfishEngineMove(boardPosition) {
+    return getEngineMove(boardPosition, "Stickfish");
+}
+
 // Function to get a move from the web worker (Engine)
-function getEngineMove(boardPosition) {
+function getEngineMove(boardPosition, playerType) {
     return new Promise((resolve, reject) => {
         const request = {
-            playerType: "Hard Com",
+            playerType: playerType,
             boardPosition: boardPosition,
-            timeLimit: ENGINE_TIME_LIMIT
+            maxDepth: 8
         };
 
         const startTime = performance.now();
@@ -61,8 +69,13 @@ function getEngineMove(boardPosition) {
             const response = event.data;
             const endTime = performance.now();
 
-            engineResponseTime += (endTime - startTime);
-            engineRequestCount++;
+            if(playerType === "Stickfish") {
+                stickfishResponseTime += (endTime - startTime);
+                stickfishRequestCount++;
+            } else {
+                engineResponseTime += (endTime - startTime);
+                engineRequestCount++;
+            }
 
             resolve(response.move);
         };
@@ -87,4 +100,4 @@ function getEngineAvgResponseTime() {
 }
 
 // Export the functions for use in other files
-export { getStickfishMove, getEngineMove, getStickfishAvgResponseTime, getEngineAvgResponseTime };
+export { getStickfishBackendMove, getHardComMove, getStickfishEngineMove, getStickfishAvgResponseTime, getEngineAvgResponseTime };

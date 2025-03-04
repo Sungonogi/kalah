@@ -21,6 +21,7 @@ int getRandomNumber();
 ComResponse EasyCom(BoardPosition &bp);
 ComResponse MediumCom(BoardPosition &bp);
 ComResponse HardCom(BoardPosition &bp, int maxDepth, int timeLimit);
+ComResponse Stickfish(BoardPosition &bp, int maxDepth, int timeLimit);
 
 string getBestMove(string jsonString) {
 
@@ -90,10 +91,9 @@ string getBestMove(string jsonString) {
     } else if(playerType == "Hard Com"){
         cr = HardCom(bp, maxDepth, timeLimit);
     } else if(playerType == "Stickfish"){
-        cr = EasyCom(bp);
-        cr.comment = "Stickfish not implemented yet, Submitting random move";
+        cr = Stickfish(bp, maxDepth, timeLimit);
     } else {
-        cerr << "Unknown player type: " << playerType << endl;
+        return quitWithMessage("Unknown player type");
     }
 
     json responseJson = {
@@ -178,6 +178,24 @@ ComResponse HardCom(BoardPosition &bp, int maxDepth, int timeLimit){
     ComResponse cr;
     cr.move = mmr.move;
     cr.comment = "I did minmax and evaluate this position as " +
+        to_string(mmr.score) + " with a depth of " + to_string(mmr.maxDepth) + 
+        " and suggest move " + to_string(mmr.move);
+
+    return cr;
+}
+
+ComResponse Stickfish(BoardPosition &bp, int maxDepth, int timeLimit){
+    
+    MinMaxResult mmr;
+    if(maxDepth == -1){
+        mmr = doMinMaxWithTimeLimit2(bp, timeLimit);
+    } else {
+        mmr = doMinMaxWithMaxDepth2(bp, maxDepth);
+    }
+
+    ComResponse cr;
+    cr.move = mmr.move;
+    cr.comment = "I am a fish and evaluate this position as " +
         to_string(mmr.score) + " with a depth of " + to_string(mmr.maxDepth) + 
         " and suggest move " + to_string(mmr.move);
 

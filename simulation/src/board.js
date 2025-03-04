@@ -82,18 +82,37 @@ function performLegalMove(board, position) {
     return newBoard;
 }
 
+// random number generator that allows for seeding, I want to seed with the amount of boards
+// https://stackoverflow.com/questions/521295/seeding-the-random-number-generator-in-javascript
+function sfc32(a, b, c, d) {
+    return function() {
+      a |= 0; b |= 0; c |= 0; d |= 0;
+      let t = (a + b | 0) + d | 0;
+      d = d + 1 | 0;
+      a = b ^ b >>> 9;
+      b = c + (c << 3) | 0;
+      c = (c << 21 | c >>> 11);
+      c = c + t | 0;
+      return (t >>> 0) / 4294967296;
+    }
+  }
+  
+const getRand = (n) => sfc32(3569758038, 1525327611, 2985216974, n);
+
 /**
  * Generates 2n random board positions with 2 <= pits <= 14 and 1 <= 12 seeds.
  * @param {number} n - The number of pairs of boards to generate.
  * @returns {Array} - An array of randomly generated board positions.
  */
 function generateBoards(n) {
+    const rand = getRand(n);
+
     const boards = [];
     for (let i = 0; i < n; i++) {
-        const pits = Math.floor(Math.random() * 13) + 2; // Random number between 2 and 14
-        const southPits = Array.from({ length: pits }, () => Math.floor(Math.random() * 5)); // Random seeds between 0 and 4
+        const pits = Math.floor(rand() * 13) + 2; // Random number between 2 and 14
+        const southPits = Array.from({ length: pits }, () => Math.floor(rand() * 5)); // Random seeds between 0 and 4
         if(southPits.reduce((a, b) => a + b, 0) === 0) {
-            southPits[Math.floor(Math.random() * pits)] = 1; // Ensure at least one seed
+            southPits[Math.floor(rand() * pits)] = 1; // Ensure at least one seed
         }
 
         const board1 = {

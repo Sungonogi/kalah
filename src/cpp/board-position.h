@@ -33,6 +33,7 @@ struct BoardPosition {
     std::vector<int> getMovesVector();
     void doMove(int move);
     int getScore();
+    int getScore2();
 };
 
 #endif

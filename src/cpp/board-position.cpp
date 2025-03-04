@@ -161,3 +161,29 @@ int BoardPosition::getScore(){
 
     return myStore - theirStore;
 }
+
+int BoardPosition::getScore2(){
+
+    int myStore = southTurn ? southStore : northStore;
+
+    if(myStore >= seedsToWin){
+        return MAX_SCORE;
+    }
+
+    int theirStore = southTurn ? northStore : southStore;
+
+    if(theirStore >= seedsToWin){
+        return MIN_SCORE;
+    }
+
+    // count all extra moves from right to left
+    int extraMoves = 0;
+    const int* myPits = southTurn ? southPits : northPits;
+    for(int i = 0; i < pits; i++){
+        if(i + myPits[i] == pits){
+            extraMoves++;
+        }
+    }
+
+    return extraMoves + myStore - theirStore;
+}

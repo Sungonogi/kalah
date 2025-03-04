@@ -22,6 +22,7 @@ describe("WasmService", () => {
         const request: ComMoveRequest = {
             playerType: PlayerType.HardCom,
             boardPosition: mockBoardPosition,
+            timeLimit: 1000,
         };
 
         service.askForMove(request).subscribe((response: ComMoveResponse) => {
@@ -35,6 +36,7 @@ describe("WasmService", () => {
             const request: ComMoveRequest = {
                 playerType: PlayerType.HardCom,
                 boardPosition: testCase.boardPosition,
+                timeLimit: 1000,
             };
 
             const startTime = new Date().getTime();
@@ -53,7 +55,7 @@ describe("WasmService", () => {
                     }
 
                     expect(response.move)
-                        .withContext(JSON.stringify(request.boardPosition))
+                        .withContext(JSON.stringify({board: request.boardPosition, comment: response.comment}))
                         .toBe(testCase.correctMove);
                     resolve();
                 });

@@ -49,12 +49,12 @@ async function getStickfishMove(boardPosition) {
 }
 
 // Function to get a move from the web worker (Engine)
-function getEngineMove(boardPosition) {
+function getEngineMove(boardPosition, timeLimit = ENGINE_TIME_LIMIT) {
     return new Promise((resolve, reject) => {
         const request = {
             playerType: 'Hard Com',
             boardPosition: boardPosition,
-            timeLimit: ENGINE_TIME_LIMIT
+            timeLimit
         };
 
         const startTime = performance.now();

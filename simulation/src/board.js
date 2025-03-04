@@ -1,3 +1,4 @@
+import { getEngineMove } from './players.js';
 
 /**
  * Assumes the move is legal (and thus on the side that has the turn)
@@ -104,7 +105,7 @@ const getRand = (n) => sfc32(3569758038, 1525327611, 2985216974, n);
  * @param {number} n - The number of pairs of boards to generate.
  * @returns {Array} - An array of randomly generated board positions.
  */
-async function generateBoards(n) {
+async function generateBoards(n, getMoveFn) {
     const rand = getRand(n);
 
     const boards = [];
@@ -125,6 +126,15 @@ async function generateBoards(n) {
             gameOver: false
         };
 
+    
+        const result = await getEngineMove(board1, 5);
+        const evaluation = parseEvaluation(result.comment);
+        if(Math.abs(evaluation) > 4){
+            console.log("evaluation too high, skipping");
+            i--;
+            continue
+        }
+
         const board2 = {
             pits,
             southPits: [...southPits],
@@ -138,6 +148,15 @@ async function generateBoards(n) {
         boards.push(board1, board2);
     }
     return boards;
+}
+
+function parseEvaluation(comment) {
+    const regex = /evaluate this position as (-?\d+)/;
+    const match = comment.match(regex);
+    if (match && match[1]) {
+        return parseInt(match[1], 10);
+    }
+    return null;
 }
 
 // Export the function for use in other files

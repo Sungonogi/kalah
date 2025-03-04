@@ -3,6 +3,7 @@
 #include "../min-max-ab.cpp"
 #include "../min-max-ab-s2.cpp"
 #include "../min-max-ab-s2-do.cpp"
+#include "../min-max-ab-s2-ge.cpp"
 
 #include <iostream>
 #include <chrono>
@@ -92,8 +93,12 @@ int main(int argc, char** argv) {
     int p2TotalTime = 0;
     int p2ReqCount = 0;
 
-    MinMaxAB mma1 = MinMaxAB();
-    MinMaxABS2 mma2 = MinMaxABS2();
+    MinMaxABS2 mma1 = MinMaxABS2();
+    MinMaxABS2GE mma2 = MinMaxABS2GE();
+
+    // normal vs do -> p1 15% better
+    // do vs ge -> p2 is 2% better
+    // normal vs ge -> p2 is 10% better, for depth
 
     for(auto board : generateRandomBoards(numBoards)){
 
@@ -102,10 +107,10 @@ int main(int argc, char** argv) {
             auto start = high_resolution_clock::now();
             BoardPosition cpy = board;
             MinMaxResult m;
-            if(board.southTurn){
-                m = mma1.doMinMaxWithMaxDepth(cpy, timeOrDepthLimit);
+            if(board.southTurn) {
+                m = mma1.doMinMaxWithTimeLimit(cpy, timeOrDepthLimit);
             } else {
-                m = mma2.doMinMaxWithMaxDepth(cpy, timeOrDepthLimit);
+                m = mma2.doMinMaxWithTimeLimit(cpy, timeOrDepthLimit);
             }
 
             auto end = high_resolution_clock::now();

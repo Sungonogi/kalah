@@ -5,6 +5,7 @@
 #include "../min-max-ab-s2-do.cpp"
 #include "../min-max-ab-s2-ge.cpp"
 #include "../min-max-ab-s2-ec.cpp"
+#include "../min-max-ab-s3-ec.cpp"
 
 
 #include <iostream>
@@ -98,8 +99,8 @@ int main(int argc, char** argv) {
     int p2TotalTime = 0;
     int p2ReqCount = 0;
 
-    MinMaxABS2 mma1 = MinMaxABS2();
-    MinMaxABS2EC mma2 = MinMaxABS2EC();
+    MinMaxABS2EC mma1 = MinMaxABS2EC();
+    MinMaxABS3EC mma2 = MinMaxABS3EC();
 
     for(auto board : generateRandomBoards(numBoards)){
 
@@ -154,4 +155,7 @@ normal: ab-s2
     normal vs ge -> depth: p2 is 10% better, time: p1 10% better
 
     normal vs ec -> depth: equal, time: p2 is 7% better and reached further depths
+
+normal: ab-s2-ec
+    normal vs s3: depth: s3 is 6% better, time: s3 is slightly worse
 */

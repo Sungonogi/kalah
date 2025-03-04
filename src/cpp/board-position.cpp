@@ -132,6 +132,41 @@ array<int, MAX_PIT_SIZE + 1> BoardPosition::getMoves() {
     return moves;
 }
 
+array<int, MAX_PIT_SIZE + 1> BoardPosition::getMoves2() {
+
+    array<int, MAX_PIT_SIZE + 1> moves = {};
+    const int* myPits = southTurn ? southPits : northPits;
+
+    int moveCount = 0;
+
+    // add extra moves first
+    for (int i = pits - 1; i >= 0; i--) {
+        if (i + myPits[i] == pits) {
+            moves[moveCount++] = i;
+        }
+    }
+
+    // add steals
+    for (int i = pits - 1; i >= 0; i--) {
+        int val = myPits[i];
+        if (i + val < pits && myPits[i + val] == 0) {
+            moves[moveCount++] = i;
+        }
+    }
+
+    // add normal moves
+    for (int i = pits - 1; i >= 0; i--) {
+        int val = myPits[i];
+        if (myPits[i] > 0 && i + val != pits && !(i + val < pits && myPits[i + val] == 0)) {
+            moves[moveCount++] = i;
+        }
+    }
+
+    moves[moveCount] = -1; // terminator
+
+    return moves;
+}
+
 // returns valid moves as a vector from left to right
 vector<int> BoardPosition::getMovesVector() {
     vector<int> moves;
@@ -190,4 +225,48 @@ int BoardPosition::getScore2(){
     }
 
     return extraMoves + myStore - theirStore;
+}
+
+float BoardPosition::getScore3(){
+
+    int myStore = southTurn ? southStore : northStore;
+
+    if(myStore >= seedsToWin){
+        return MAX_SCOREF;
+    }
+
+    int theirStore = southTurn ? northStore : southStore;
+
+    if(theirStore >= seedsToWin){
+        return MIN_SCOREF;
+    }
+
+    if(gameOver){
+        return 0; // only option left
+    }
+
+    // copy my pits
+    int* myPits = southTurn ? southPits : northPits;
+    int myPitsCpy[MAX_PIT_SIZE];
+    for(int i = 0; i < pits; i++){
+        myPitsCpy[i] = myPits[i];
+    }
+
+    // do all possible extra moves from right to left
+    int move = pits - 1;
+    while(move >= 0){
+        
+        if(move + myPitsCpy[move] == pits){
+            myPitsCpy[move] = 0;
+            for(int i = move + 1; i < pits; i++){
+                myPitsCpy[i]++;
+            }
+            myStore++;
+            move = pits -1;
+        } else {
+            move--;
+        }
+    }
+
+    return myStore - theirStore - 0.25f;
 }

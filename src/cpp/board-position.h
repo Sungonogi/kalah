@@ -9,6 +9,9 @@
 #define MAX_SCORE 1000000
 #define MIN_SCORE -1000000
 
+#define MIN_SCOREF -1000000.0
+#define MAX_SCOREF 1000000.0
+
 #define MAX_PIT_SIZE 14
 
 /* 
@@ -30,10 +33,12 @@ struct BoardPosition {
 
     std::string toString() const;
     std::array<int, MAX_PIT_SIZE + 1> getMoves(); // -1 terminated array
+    std::array<int, MAX_PIT_SIZE + 1> getMoves2(); // -1 terminated array
     std::vector<int> getMovesVector();
     void doMove(int move);
     int getScore();
     int getScore2();
+    float getScore3();
 };
 
 #endif

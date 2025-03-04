@@ -18,10 +18,17 @@ struct MinMaxResult {
 };
 
 // Iterative deepening Minimax with a time limit
-MinMaxResult doMinMaxWithTimeLimit(BoardPosition &bp, int milliseconds);
+class MinMax {
+    public:
+        virtual ~MinMax() = default;
+        virtual MinMaxResult doMinMaxWithTimeLimit(BoardPosition &bp, int milliseconds) = 0;
+        virtual MinMaxResult doMinMaxWithMaxDepth(BoardPosition &bp, int maxDepth) = 0;
+        virtual float getAvgDepth() = 0;
 
-MinMaxResult doMinMaxWithMaxDepth(BoardPosition &bp, int maxDepth);
-
-float getAvgDepth();
+        int getCurrentMillis(){
+            auto now = std::chrono::system_clock::now().time_since_epoch();
+            return std::chrono::duration_cast<std::chrono::milliseconds>(now).count();
+        }
+    };
 
 #endif

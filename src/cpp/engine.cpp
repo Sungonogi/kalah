@@ -5,7 +5,7 @@
 #include "json.hpp"
 
 #include "board-position.h"
-#include "min-max.h"
+#include "min-max.cpp"
 
 using namespace std;
 using json = nlohmann::json;
@@ -91,7 +91,7 @@ string getBestMove(string jsonString) {
     } else if(playerType == "Hard Com"){
         cr = HardCom(bp, maxDepth, timeLimit);
     } else if(playerType == "Stickfish"){
-        cr = Stickfish(bp, maxDepth, timeLimit);
+        return quitWithMessage("Stickfish not implemented yet");
     } else {
         return quitWithMessage("Unknown player type");
     }
@@ -110,6 +110,7 @@ EMSCRIPTEN_BINDINGS(my_module) {
 }
 
 string quitWithMessage(const char* msg){
+    cout << "Error: " << msg << endl;
     json responseJson = {
         {"move", -1},
         {"comment", msg}
@@ -168,11 +169,13 @@ ComResponse MediumCom(BoardPosition &bp){
 // HardCom is a bot that uses minmax to find the best move
 ComResponse HardCom(BoardPosition &bp, int maxDepth, int timeLimit){
 
+    MinMaxAlphaBeta mma = MinMaxAlphaBeta();
+
     MinMaxResult mmr;
     if(maxDepth == -1){
-        mmr = doMinMaxWithTimeLimit(bp, timeLimit);
+        mmr = mma.doMinMaxWithTimeLimit(bp, timeLimit);
     } else {
-        mmr = doMinMaxWithMaxDepth(bp, maxDepth);
+        mmr = mma.doMinMaxWithMaxDepth(bp, maxDepth);
     }
         
     ComResponse cr;
@@ -184,20 +187,4 @@ ComResponse HardCom(BoardPosition &bp, int maxDepth, int timeLimit){
     return cr;
 }
 
-ComResponse Stickfish(BoardPosition &bp, int maxDepth, int timeLimit){
-    
-    MinMaxResult mmr;
-    if(maxDepth == -1){
-        mmr = doMinMaxWithTimeLimit2(bp, timeLimit);
-    } else {
-        mmr = doMinMaxWithMaxDepth2(bp, maxDepth);
-    }
 
-    ComResponse cr;
-    cr.move = mmr.move;
-    cr.comment = "I am a fish and evaluate this position as " +
-        to_string(mmr.score) + " with a depth of " + to_string(mmr.maxDepth) + 
-        " and suggest move " + to_string(mmr.move);
-
-    return cr;
-}

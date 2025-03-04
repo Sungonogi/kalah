@@ -104,13 +104,13 @@ const getRand = (n) => sfc32(3569758038, 1525327611, 2985216974, n);
  * @param {number} n - The number of pairs of boards to generate.
  * @returns {Array} - An array of randomly generated board positions.
  */
-function generateBoards(n) {
+async function generateBoards(n) {
     const rand = getRand(n);
 
     const boards = [];
     for (let i = 0; i < n; i++) {
-        const pits = Math.floor(rand() * 13) + 2; // Random number between 2 and 14
-        const southPits = Array.from({ length: pits }, () => Math.floor(rand() * 5)); // Random seeds between 0 and 4
+        const pits = Math.floor(rand() * 4) + 5; // Random number between 2 and 14
+        const southPits = Array.from({ length: pits }, () => Math.floor(rand() * 4) + 1); // Random seeds between 0 and 4
         if(southPits.reduce((a, b) => a + b, 0) === 0) {
             southPits[Math.floor(rand() * pits)] = 1; // Ensure at least one seed
         }

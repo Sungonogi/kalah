@@ -3,7 +3,6 @@ import { getStickfishMove, getEngineMove, getStickfishAvgResponseTime, getEngine
 
 document.getElementById("startButton").addEventListener("click", () => {
     const amount = parseInt(document.getElementById("simulationAmount").value);
-    console.log("player1 is Stickfish, player2 is Engine");
     simulateGame(amount);
 });
 
@@ -20,16 +19,23 @@ async function simulateGame(amount) {
     let eWins = 0;
     let ties = 0;
 
-    const boards = generateBoards(amount);
+    const boards = await generateBoards(amount);
 
-    for (let board of boards) {
+    for (let i = 0; i < 2 * amount; i++) {
+        let board = boards[i];
         let move;
+
+        if(i % 2 == 0){
+            console.log("Starting new game", board);
+        } else {
+            console.log("Rematch");
+        }
 
         while (!board.gameOver) {
             if (board.southTurn) {
-                move = await getStickfishMove(board);
+                move = (await getStickfishMove(board)).move;
             } else {
-                move = await getEngineMove(board);
+                move = (await getEngineMove(board)).move;
             }
 
             if (move === null) {
@@ -40,6 +46,8 @@ async function simulateGame(amount) {
             // Apply the move to the board position
             board = performLegalMove(board, move);
         }
+
+        console.log("Game over" + (board.southStore > board.northStore ? " - Stickfish wins" : board.northStore > board.southStore ? " - Engine wins" : " - Tie"));
 
         // Determine the winner
         if (board.southStore > board.northStore) {

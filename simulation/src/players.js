@@ -1,6 +1,6 @@
 // Global variables for time limits
-let STICKFISH_TIME_LIMIT = 10; // Example time limit for Stickfish
-let ENGINE_TIME_LIMIT = 10; // Example time limit for Engine
+let STICKFISH_TIME_LIMIT = 100; // Example time limit for Stickfish
+let ENGINE_TIME_LIMIT = 100; // Example time limit for Engine
 
 const worker = new Worker("worker.js");
 
@@ -39,7 +39,9 @@ async function getStickfishMove(boardPosition) {
         stickfishResponseTime += (endTime - startTime);
         stickfishRequestCount++;
 
-        return data.move;
+        console.debug("Stickfish ", data.comment);
+
+        return data;
     } catch (error) {
         console.error("Error when communicating with the backend:", error);
         return null;
@@ -64,7 +66,9 @@ function getEngineMove(boardPosition) {
             engineResponseTime += (endTime - startTime);
             engineRequestCount++;
 
-            resolve(response.move);
+            console.debug("Engine ", response.comment);
+
+            resolve(response);
         };
 
         worker.onerror = (error) => {

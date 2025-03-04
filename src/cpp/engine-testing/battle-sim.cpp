@@ -31,7 +31,7 @@ vector<BoardPosition> generateRandomBoards(int numBoards) {
 
         // do some random moves
         bool retry = false;
-        int moves = rand() % 5;
+        int moves = rand() % 3;
         for(int i = 0; i < moves; i++){
             vector<int> validMoves = b.getMovesVector();
             if(validMoves.size() == 0){
@@ -43,7 +43,10 @@ vector<BoardPosition> generateRandomBoards(int numBoards) {
             b.doMove(move);
         }
 
-        if(retry){
+        // get rid of already decided games
+        BoardPosition tmp = b;
+        MinMaxResult m = doMinMaxWithMaxDepth(tmp, 5);
+        if(retry || m.score < 4 || m.score > 4){
             i--;
             continue;
         }
@@ -60,9 +63,6 @@ vector<BoardPosition> generateRandomBoards(int numBoards) {
             continue;
         }
 
-        cout << b.toString() << endl;
-        cout << cpy.toString() << endl;
-
         boards.push_back(b);
         boards.push_back(cpy);
     }
@@ -71,10 +71,12 @@ vector<BoardPosition> generateRandomBoards(int numBoards) {
 
 int main(int argc, char** argv) {
     // read numBoards from argv
-    if (argc < 2)
-        cerr << "Usage: " << argv[0] << " <numBoards>" << endl;
+    if (argc < 3)
+        cerr << "Usage: " << argv[0] << " <numBoards>" << " <timeOrDepthLimit>" << endl;
 
     int numBoards = stoi(argv[1]);
+
+    int timeOrDepthLimit = stoi(argv[2]);
 
     int p1Wins = 0;
     int p2Wins = 0;
@@ -94,9 +96,9 @@ int main(int argc, char** argv) {
             BoardPosition cpy = board;
             MinMaxResult m;
             if(board.southTurn){
-                m = doMinMaxWithTimeLimit(cpy, 4);
+                m = doMinMaxWithMaxDepth(cpy, timeOrDepthLimit);
             } else {
-                m = doMinMaxWithTimeLimit2(cpy, 4);
+                m = doMinMaxWithMaxDepth(cpy, timeOrDepthLimit + 1);
             }
             
             auto end = high_resolution_clock::now();
@@ -120,8 +122,10 @@ int main(int argc, char** argv) {
             draws++;
         }
 
-        cout << "P1: " << p1Wins << ", P2: " << p2Wins << ", Draws: " << draws << " p1 time: " << p1TotalTime / p1ReqCount << ", p2 time: " << p2TotalTime / p2ReqCount << endl;
+        cout << "P1: " << p1Wins << ", P2: " << p2Wins << ", Draws: " << draws << " p1 time: " << p1TotalTime / p1ReqCount << ", p2 time: " << p2TotalTime / p2ReqCount << ", avgDepth1 " << getAvgDepth1() << ", avgDepth2 " << getAvgDepth2() << endl;
     }
+
+    cout << "P1 won " << (100.0 * ( (float) p1Wins - p2Wins)) / ( (float) numBoards * 2) << " percent more games" << endl;
 
     return 0;
 }

@@ -24,4 +24,7 @@ MinMaxResult doMinMaxWithTimeLimit2(BoardPosition &bp, int milliseconds);
 MinMaxResult doMinMaxWithMaxDepth(BoardPosition &bp, int maxDepth);
 MinMaxResult doMinMaxWithMaxDepth2(BoardPosition &bp, int maxDepth);
 
+float getAvgDepth1();
+float getAvgDepth2();
+
 #endif

@@ -10,6 +10,12 @@ int getCurrentMillis(){
     return std::chrono::duration_cast<std::chrono::milliseconds>(now).count();
 }
 
+static int depthSum1 = 0;
+static int depthSum2 = 0;
+
+static int depthCount1 = 0;
+static int depthCount2 = 0;
+
 // variables for minMax
 static int maxDepth, actualBestMove;
 static bool maxDepthReached; // tells us if all nodes were explored
@@ -51,7 +57,7 @@ int minMax(BoardPosition &bp, int depth, int alpha, int beta) {
             tmpScore = -tmpScore;
         }
 
-        if(tmpScore >= bestScore){
+        if(tmpScore > bestScore || bestScore == MIN_SCORE){
             bestScore = tmpScore;
             bestMove = move;
         }
@@ -93,6 +99,11 @@ MinMaxResult doMinMaxWithTimeLimit(BoardPosition &bp, int milliseconds){
         maxDepth++;
     }
 
+    if(!maxDepthReached){
+        depthSum1 += maxDepth;
+        depthCount1++;
+    }
+
     MinMaxResult result;
     result.score = score;
     result.move = actualBestMove;
@@ -120,7 +131,7 @@ MinMaxResult doMinMaxWithMaxDepth(BoardPosition &bp, int maxDepth){
 // recursive min max function
 int minMax2(BoardPosition &bp, int depth, int alpha, int beta) {
 
-    int score = bp.getScore2();
+    int score = bp.getScore();
 
     if(bp.gameOver || score == MAX_SCORE || score == MIN_SCORE){
         return score;
@@ -154,12 +165,10 @@ int minMax2(BoardPosition &bp, int depth, int alpha, int beta) {
             tmpScore = -tmpScore;
         }
 
-        if(tmpScore >= bestScore){
+        if(tmpScore > bestScore || bestScore == MIN_SCORE){
             bestScore = tmpScore;
             bestMove = move;
         }
-
-        
         if(bestScore > beta){
             break;
         }
@@ -196,6 +205,11 @@ MinMaxResult doMinMaxWithTimeLimit2(BoardPosition &bp, int milliseconds){
         maxDepth++;
     }
 
+    if(!maxDepthReached){
+        depthSum2 += maxDepth;
+        depthCount2++;
+    }
+
     MinMaxResult result;
     result.score = score;
     result.move = actualBestMove;
@@ -219,4 +233,12 @@ MinMaxResult doMinMaxWithMaxDepth2(BoardPosition &bp, int maxDepth){
     result.maxDepth = maxDepth;
 
     return result;
+}
+
+float getAvgDepth1(){
+    return depthCount1 == 0 ? 0.0 : (float) depthSum1 / depthCount1;
+}
+
+float getAvgDepth2(){
+    return depthCount2 == 0 ? 0 : (float) depthSum2 / depthCount2;
 }

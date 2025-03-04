@@ -1,5 +1,5 @@
 #include "board-position.h"
-#include <sstream>
+#include <iostream>
 
 using namespace std;
 
@@ -58,7 +58,7 @@ void BoardPosition::doMove(int move) {
 
     // check for steal
     int oppositePit = pits - move - 1;
-    if(currentlyMySide && myPits[move] == 1 && hisPits[oppositePit] > 0){
+    if(currentlyMySide && move != - 1 && myPits[move] == 1 && hisPits[oppositePit] > 0){
         myStore += hisPits[oppositePit] + 1;
         myPits[move] = 0;
         hisPits[oppositePit] = 0;
@@ -159,6 +159,16 @@ int BoardPosition::getScore(){
         return MIN_SCORE;
     }
 
+    if(gameOver){
+        if(myStore > theirStore){
+            return MAX_SCORE;
+        } else if(myStore < theirStore){
+            return MIN_SCORE;
+        } else {
+            return 0;
+        }
+    }
+
     return myStore - theirStore;
 }
 
@@ -174,6 +184,16 @@ int BoardPosition::getScore2(){
 
     if(theirStore >= seedsToWin){
         return MIN_SCORE;
+    }
+
+    if(gameOver){
+        if(myStore > theirStore){
+            return MAX_SCORE;
+        } else if(myStore < theirStore){
+            return MIN_SCORE;
+        } else {
+            return 0;
+        }
     }
 
     // count all extra moves from right to left

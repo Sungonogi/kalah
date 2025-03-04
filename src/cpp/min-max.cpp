@@ -131,7 +131,7 @@ MinMaxResult doMinMaxWithMaxDepth(BoardPosition &bp, int maxDepth){
 // recursive min max function
 int minMax2(BoardPosition &bp, int depth, int alpha, int beta) {
 
-    int score = bp.getScore();
+    int score = bp.getScore2();
 
     if(bp.gameOver || score == MAX_SCORE || score == MIN_SCORE){
         return score;
@@ -168,9 +168,6 @@ int minMax2(BoardPosition &bp, int depth, int alpha, int beta) {
         if(tmpScore > bestScore || bestScore == MIN_SCORE){
             bestScore = tmpScore;
             bestMove = move;
-        }
-        if(bestScore > beta){
-            break;
         }
 
         if(bestScore > alpha){

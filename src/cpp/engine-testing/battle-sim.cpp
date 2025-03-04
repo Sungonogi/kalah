@@ -96,9 +96,9 @@ int main(int argc, char** argv) {
             BoardPosition cpy = board;
             MinMaxResult m;
             if(board.southTurn){
-                m = doMinMaxWithMaxDepth(cpy, timeOrDepthLimit);
+                m = doMinMaxWithTimeLimit(cpy, timeOrDepthLimit);
             } else {
-                m = doMinMaxWithMaxDepth(cpy, timeOrDepthLimit + 1);
+                m = doMinMaxWithTimeLimit2(cpy, timeOrDepthLimit);
             }
             
             auto end = high_resolution_clock::now();

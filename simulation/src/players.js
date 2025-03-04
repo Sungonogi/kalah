@@ -11,7 +11,7 @@ let engineResponseTime = 0;
 let engineRequestCount = 0;
 
 // Function to get a move from the backend (Stickfish)
-async function getStickfishBackendMove(boardPosition) {
+async function getStickfishMove(boardPosition) {
     const request = {
         playerType: "Stickfish",
         boardPosition: boardPosition,
@@ -46,21 +46,13 @@ async function getStickfishBackendMove(boardPosition) {
     }
 }
 
-function getHardComMove(boardPosition) {
-    return getEngineMove(boardPosition, "Hard Com");
-}
-
-function getStickfishEngineMove(boardPosition) {
-    return getEngineMove(boardPosition, "Stickfish");
-}
-
 // Function to get a move from the web worker (Engine)
-function getEngineMove(boardPosition, playerType) {
+function getEngineMove(boardPosition) {
     return new Promise((resolve, reject) => {
         const request = {
-            playerType: playerType,
+            playerType: 'Hard Com',
             boardPosition: boardPosition,
-            maxDepth: 8
+            timeLimit: ENGINE_TIME_LIMIT
         };
 
         const startTime = performance.now();
@@ -69,13 +61,8 @@ function getEngineMove(boardPosition, playerType) {
             const response = event.data;
             const endTime = performance.now();
 
-            if(playerType === "Stickfish") {
-                stickfishResponseTime += (endTime - startTime);
-                stickfishRequestCount++;
-            } else {
-                engineResponseTime += (endTime - startTime);
-                engineRequestCount++;
-            }
+            engineResponseTime += (endTime - startTime);
+            engineRequestCount++;
 
             resolve(response.move);
         };
@@ -100,4 +87,4 @@ function getEngineAvgResponseTime() {
 }
 
 // Export the functions for use in other files
-export { getStickfishBackendMove, getHardComMove, getStickfishEngineMove, getStickfishAvgResponseTime, getEngineAvgResponseTime };
+export { getStickfishMove, getEngineMove, getStickfishAvgResponseTime, getEngineAvgResponseTime };

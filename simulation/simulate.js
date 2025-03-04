@@ -1,10 +1,10 @@
 import { performLegalMove, generateBoards } from './src/board.js';
-import { getStickfishEngineMove, getHardComMove, getStickfishAvgResponseTime, getEngineAvgResponseTime } from './src/players.js';
+import { getStickfishMove, getEngineMove, getStickfishAvgResponseTime, getEngineAvgResponseTime } from './src/players.js';
 
 document.getElementById("startButton").addEventListener("click", () => {
     const amount = parseInt(document.getElementById("simulationAmount").value);
     console.log("player1 is Stickfish, player2 is Engine");
-    simulateGame(amount, getStickfishEngineMove, getHardComMove);
+    simulateGame(amount);
 });
 
 
@@ -15,9 +15,9 @@ function updateWins(stickfishWins, engineWins, ties) {
 }
 
 // Simulates 2*amount games between Stickfish and the Engine
-async function simulateGame(amount, p1, p2) {
-    let p1Wins = 0;
-    let p2Wins = 0;
+async function simulateGame(amount) {
+    let sWins = 0;
+    let eWins = 0;
     let ties = 0;
 
     const boards = generateBoards(amount);
@@ -27,9 +27,9 @@ async function simulateGame(amount, p1, p2) {
 
         while (!board.gameOver) {
             if (board.southTurn) {
-                move = await p1(board);
+                move = await getStickfishMove(board);
             } else {
-                move = await p2(board);
+                move = await getEngineMove(board);
             }
 
             if (move === null) {
@@ -43,17 +43,17 @@ async function simulateGame(amount, p1, p2) {
 
         // Determine the winner
         if (board.southStore > board.northStore) {
-            p1Wins++;
+            sWins++;
         } else if (board.northStore > board.southStore) {
-            p2Wins++;
+            eWins++;
         } else {
             ties++;
         }
 
-        updateWins(p1Wins, p2Wins, ties);
+        updateWins(sWins, eWins, ties);
     }
 
-    console.log(`Simulation complete. Stickfish wins: ${p1Wins}, Engine wins: ${p2Wins}, Ties: ${ties}`);
+    console.log(`Simulation complete. Stickfish wins: ${sWins}, Engine wins: ${eWins}, Ties: ${ties}`);
 
     console.log(`Average response time for Stickfish: ${getStickfishAvgResponseTime()} ms`);
     console.log(`Average response time for Engine: ${getEngineAvgResponseTime()} ms`);

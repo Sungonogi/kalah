@@ -1,11 +1,11 @@
 #include "../board-position.cpp"
 #include "../min-max.cpp"
+#include "../min-max2.cpp"
 #include <iostream>
 #include <chrono>
 
 using namespace std;
 using namespace std::chrono;
-
 
 vector<BoardPosition> generateRandomBoards(int numBoards) {
 
@@ -26,7 +26,7 @@ vector<BoardPosition> generateRandomBoards(int numBoards) {
             b.southPits[i] = seeds;
             b.northPits[i] = seeds;
         }
-        b.seedsToWin = (seeds * b.pits) / 2 + 1;
+        b.seedsToWin = (seeds * b.pits) + 1;
 
 
         // do some random moves
@@ -45,7 +45,8 @@ vector<BoardPosition> generateRandomBoards(int numBoards) {
 
         // get rid of already decided games
         BoardPosition tmp = b;
-        MinMaxResult m = doMinMaxWithMaxDepth(tmp, 5);
+        MinMaxAlphaBeta mma = MinMaxAlphaBeta();
+        MinMaxResult m = mma.doMinMaxWithMaxDepth(tmp, 5);
         if(retry || m.score < 4 || m.score > 4){
             i--;
             continue;
@@ -88,6 +89,9 @@ int main(int argc, char** argv) {
     int p2TotalTime = 0;
     int p2ReqCount = 0;
 
+    MinMaxAlphaBeta mma1 = MinMaxAlphaBeta();
+    MinMaxDumb mma2 = MinMaxDumb();
+
     for(auto board : generateRandomBoards(numBoards)){
 
         while(!board.gameOver){
@@ -96,11 +100,11 @@ int main(int argc, char** argv) {
             BoardPosition cpy = board;
             MinMaxResult m;
             if(board.southTurn){
-                m = doMinMaxWithTimeLimit(cpy, timeOrDepthLimit);
+                m = mma1.doMinMaxWithTimeLimit(cpy, timeOrDepthLimit);
             } else {
-                m = doMinMaxWithTimeLimit2(cpy, timeOrDepthLimit);
+                m = mma2.doMinMaxWithMaxDepth(cpy, timeOrDepthLimit);
             }
-            
+
             auto end = high_resolution_clock::now();
             auto duration = duration_cast<milliseconds>(end - start).count();
             if(board.southTurn){
@@ -122,7 +126,7 @@ int main(int argc, char** argv) {
             draws++;
         }
 
-        cout << "P1: " << p1Wins << ", P2: " << p2Wins << ", Draws: " << draws << " p1 time: " << p1TotalTime / p1ReqCount << ", p2 time: " << p2TotalTime / p2ReqCount << ", avgDepth1 " << getAvgDepth1() << ", avgDepth2 " << getAvgDepth2() << endl;
+        cout << "P1: " << p1Wins << ", P2: " << p2Wins << ", Draws: " << draws << " p1 time: " << p1TotalTime / p1ReqCount << ", p2 time: " << p2TotalTime / p2ReqCount << ", avgDepth1 " << mma1.getAvgDepth() << ", avgDepth2 " << mma2.getAvgDepth() << endl;
     }
 
     cout << "P1 won " << (100.0 * ( (float) p1Wins - p2Wins)) / ( (float) numBoards * 2) << " percent more games" << endl;

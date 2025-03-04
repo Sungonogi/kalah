@@ -23,7 +23,8 @@ int main() {
     // Measure the time taken by doMinMaxWithMaxDepth
     auto start = high_resolution_clock::now();
     
-    doMinMaxWithMaxDepth2(mockBoard, 12);
+    MinMaxAlphaBeta mma = MinMaxAlphaBeta();
+    mma.doMinMaxWithMaxDepth(mockBoard, 12);
 
     auto end = high_resolution_clock::now();
     auto duration = duration_cast<milliseconds>(end - start).count();

@@ -36,3 +36,12 @@ h1 {
     font-weight: bold;
     color: #333;
 }
+
+.measurement-label {
+    display: inline-block;
+    width: 220px; /* Adjust this width as needed */
+}
+
+.measurement-value {
+    display: inline-block;
+}

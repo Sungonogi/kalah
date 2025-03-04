@@ -139,25 +139,25 @@ array<int, MAX_PIT_SIZE + 1> BoardPosition::getMoves2() {
 
     int moveCount = 0;
 
-    // add extra moves first
+    // extra moves from right to
     for (int i = pits - 1; i >= 0; i--) {
         if (i + myPits[i] == pits) {
             moves[moveCount++] = i;
         }
     }
 
-    // add steals
-    for (int i = pits - 1; i >= 0; i--) {
+    // steals from left to right
+    for (int i = 0; i < pits; i++) {
         int val = myPits[i];
-        if (i + val < pits && myPits[i + val] == 0) {
+        if (val > 0 && i + val < pits && myPits[i + val] == 0) {
             moves[moveCount++] = i;
         }
     }
 
-    // add normal moves
+    // normal moves from right to left
     for (int i = pits - 1; i >= 0; i--) {
         int val = myPits[i];
-        if (myPits[i] > 0 && i + val != pits && !(i + val < pits && myPits[i + val] == 0)) {
+        if (val && i + val != pits && !(i + val < pits && myPits[i + val] == 0)) {
             moves[moveCount++] = i;
         }
     }

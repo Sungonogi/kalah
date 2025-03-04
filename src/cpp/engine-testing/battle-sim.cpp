@@ -100,7 +100,7 @@ int main(int argc, char** argv) {
     int p2TotalTime = 0;
     int p2ReqCount = 0;
 
-    MinMaxAB mma1 = MinMaxAB();
+    MinMaxABS2EC mma1 = MinMaxABS2EC();
     MinMaxABS2ECO2 mma2 = MinMaxABS2ECO2();
 
     for(auto board : generateRandomBoards(numBoards)){
@@ -159,7 +159,5 @@ normal: ab-s2
 
 normal: ab-s2-ec
     normal vs s3: depth: s3 is 6% better, time: s3 is slightly worse
-    normal vs o3: depth: o3 is 20% better, time: o3 is 25% better, surprising as p1depth was 11.9 and p2depth 9.0
-    so it seems like the move ordering for pruning is worse but picking the steal move is better
-
+    normal vs o3: depth: o3 is 8% better, time: o3 is 9% better with depth (11.96 greater than 11.71)
 */

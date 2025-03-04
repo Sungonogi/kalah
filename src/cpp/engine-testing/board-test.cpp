@@ -40,8 +40,19 @@ int main() {
 }
 
 void assertSameMoves(BoardPosition bp){
-    auto moves = bp.getMoves();
+    cout << bp.toString() << endl;
+
+    auto moves = bp.getMoves2();
     vector<int> actualMoves = bp.getMovesVector();
+
+    cout << "Moves: ";
+    for(int i = 0; i < bp.pits; i++){
+        if(moves[i] == -1){
+            break;
+        }
+        cout << moves[i] << " ";
+    }
+
     int length = 0;
     for(int i = 0; i < bp.pits; i++){
         if(moves[i] != -1){

@@ -21,7 +21,7 @@ string BoardPosition::toString() const {
     result += "| " + to_string(southStore) + "\n";
 
     // Print metadata
-    // result += "southTurn: " + string(southTurn ? "true" : "false") + ", gameOver: " + string(gameOver ? "true" : "false") + ", pits: " + to_string(pits) + "\n";
+    result += "southTurn: " + string(southTurn ? "true" : "false") + ", gameOver: " + string(gameOver ? "true" : "false") + ", pits: " + to_string(pits) + "\n";
 
     return result;
 }

@@ -159,5 +159,5 @@ normal: ab-s2
 
 normal: ab-s2-ec
     normal vs s3: depth: s3 is 6% better, time: s3 is slightly worse
-    normal vs o3: depth: o3 is 8% better, time: o3 is 9% better with depth (11.96 greater than 11.71)
+    normal vs o3: depth: o3 is 8% better, time: o3 is 9% better with depth 11.96 (greater than normal 11.71)
 */

@@ -159,16 +159,6 @@ int BoardPosition::getScore(){
         return MIN_SCORE;
     }
 
-    if(gameOver){
-        if(myStore > theirStore){
-            return MAX_SCORE;
-        } else if(myStore < theirStore){
-            return MIN_SCORE;
-        } else {
-            return 0;
-        }
-    }
-
     return myStore - theirStore;
 }
 
@@ -187,6 +177,10 @@ int BoardPosition::getScore2(){
     }
 
     if(gameOver){
+        if(myStore != theirStore){
+            cout << "error" << endl;
+        }
+
         if(myStore > theirStore){
             return MAX_SCORE;
         } else if(myStore < theirStore){

@@ -19,12 +19,9 @@ struct MinMaxResult {
 
 // Iterative deepening Minimax with a time limit
 MinMaxResult doMinMaxWithTimeLimit(BoardPosition &bp, int milliseconds);
-MinMaxResult doMinMaxWithTimeLimit2(BoardPosition &bp, int milliseconds);
 
 MinMaxResult doMinMaxWithMaxDepth(BoardPosition &bp, int maxDepth);
-MinMaxResult doMinMaxWithMaxDepth2(BoardPosition &bp, int maxDepth);
 
-float getAvgDepth1();
-float getAvgDepth2();
+float getAvgDepth();
 
 #endif

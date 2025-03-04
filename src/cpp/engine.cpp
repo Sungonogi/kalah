@@ -5,7 +5,7 @@
 #include "json.hpp"
 
 #include "board-position.h"
-#include "min-max.cpp"
+#include "min-max-ab.cpp"
 
 using namespace std;
 using json = nlohmann::json;
@@ -169,7 +169,7 @@ ComResponse MediumCom(BoardPosition &bp){
 // HardCom is a bot that uses minmax to find the best move
 ComResponse HardCom(BoardPosition &bp, int maxDepth, int timeLimit){
 
-    MinMaxAlphaBeta mma = MinMaxAlphaBeta();
+    MinMaxAB mma = MinMaxAB();
 
     MinMaxResult mmr;
     if(maxDepth == -1){

@@ -5,7 +5,8 @@
 #include "board-position.h"
 #include "min-max.h"
 
-class MinMaxAlphaBetaScore2: public MinMax {
+// alpha beta and score 2
+class MinMaxABS2: public MinMax {
 private:
     // just for tracking
     int depthSum = 0;

@@ -1,7 +1,9 @@
 #include "../board-position.cpp"
-#include "../min-max-alpha-beta.cpp"
-#include "../min-max-alpha-beta-score2.cpp"
-#include "../min-max-dumb.cpp"
+#include "../min-max-nab.cpp"
+#include "../min-max-ab.cpp"
+#include "../min-max-ab-s2.cpp"
+#include "../min-max-ab-s2-do.cpp"
+
 #include <iostream>
 #include <chrono>
 
@@ -46,7 +48,7 @@ vector<BoardPosition> generateRandomBoards(int numBoards) {
 
         // get rid of already decided games
         BoardPosition tmp = b;
-        MinMaxAlphaBeta mma = MinMaxAlphaBeta();
+        MinMaxAB mma = MinMaxAB();
         MinMaxResult m = mma.doMinMaxWithMaxDepth(tmp, 5);
         if(retry || m.score < 4 || m.score > 4){
             i--;
@@ -90,8 +92,8 @@ int main(int argc, char** argv) {
     int p2TotalTime = 0;
     int p2ReqCount = 0;
 
-    MinMaxAlphaBeta mma1 = MinMaxAlphaBeta();
-    MinMaxAlphaBetaScore2 mma2 = MinMaxAlphaBetaScore2();
+    MinMaxAB mma1 = MinMaxAB();
+    MinMaxABS2 mma2 = MinMaxABS2();
 
     for(auto board : generateRandomBoards(numBoards)){
 
@@ -101,9 +103,9 @@ int main(int argc, char** argv) {
             BoardPosition cpy = board;
             MinMaxResult m;
             if(board.southTurn){
-                m = mma1.doMinMaxWithTimeLimit(cpy, timeOrDepthLimit);
+                m = mma1.doMinMaxWithMaxDepth(cpy, timeOrDepthLimit);
             } else {
-                m = mma2.doMinMaxWithTimeLimit(cpy, timeOrDepthLimit);
+                m = mma2.doMinMaxWithMaxDepth(cpy, timeOrDepthLimit);
             }
 
             auto end = high_resolution_clock::now();

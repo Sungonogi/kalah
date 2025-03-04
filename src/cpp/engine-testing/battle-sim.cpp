@@ -4,6 +4,8 @@
 #include "../min-max-ab-s2.cpp"
 #include "../min-max-ab-s2-do.cpp"
 #include "../min-max-ab-s2-ge.cpp"
+#include "../min-max-ab-s2-ec.cpp"
+
 
 #include <iostream>
 #include <chrono>
@@ -77,11 +79,14 @@ vector<BoardPosition> generateRandomBoards(int numBoards) {
 int main(int argc, char** argv) {
     // read numBoards from argv
     if (argc < 3)
-        cerr << "Usage: " << argv[0] << " <numBoards>" << " <timeOrDepthLimit>" << endl;
+        cerr << "Usage: " << argv[0] << " <numBoards>" << " <timeOrDepthLimit>" << "<useTimeLimit so 0/1 (optional)>" << endl;
 
     int numBoards = stoi(argv[1]);
 
+
     int timeOrDepthLimit = stoi(argv[2]);
+
+    bool useTimeLimit = argc > 3 && stoi(argv[3]) == 1;
 
     int p1Wins = 0;
     int p2Wins = 0;
@@ -94,11 +99,7 @@ int main(int argc, char** argv) {
     int p2ReqCount = 0;
 
     MinMaxABS2 mma1 = MinMaxABS2();
-    MinMaxABS2GE mma2 = MinMaxABS2GE();
-
-    // normal vs do -> p1 15% better
-    // do vs ge -> p2 is 2% better
-    // normal vs ge -> p2 is 10% better, for depth
+    MinMaxABS2EC mma2 = MinMaxABS2EC();
 
     for(auto board : generateRandomBoards(numBoards)){
 
@@ -108,9 +109,9 @@ int main(int argc, char** argv) {
             BoardPosition cpy = board;
             MinMaxResult m;
             if(board.southTurn) {
-                m = mma1.doMinMaxWithTimeLimit(cpy, timeOrDepthLimit);
+                m = useTimeLimit ? mma1.doMinMaxWithTimeLimit(cpy, timeOrDepthLimit) : mma1.doMinMaxWithMaxDepth(cpy, timeOrDepthLimit);
             } else {
-                m = mma2.doMinMaxWithTimeLimit(cpy, timeOrDepthLimit);
+                m = useTimeLimit ? mma2.doMinMaxWithTimeLimit(cpy, timeOrDepthLimit) : mma2.doMinMaxWithMaxDepth(cpy, timeOrDepthLimit);
             }
 
             auto end = high_resolution_clock::now();
@@ -141,3 +142,16 @@ int main(int argc, char** argv) {
 
     return 0;
 }
+
+/*
+To document some findings
+usually test with 400 boards and maxDepth 6
+for Time I use 400 boards and timelimit 3
+
+normal: ab-s2
+    normal vs do -> depth: p1 15% better
+    do vs ge -> depth: p2 is 2% better
+    normal vs ge -> depth: p2 is 10% better, time: p1 10% better
+
+    normal vs ec -> depth: equal, time: p2 is 7% better and reached further depths
+*/

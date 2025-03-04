@@ -1,6 +1,7 @@
 #include "../board-position.cpp"
-#include "../min-max.cpp"
-#include "../min-max2.cpp"
+#include "../min-max-alpha-beta.cpp"
+#include "../min-max-alpha-beta-score2.cpp"
+#include "../min-max-dumb.cpp"
 #include <iostream>
 #include <chrono>
 
@@ -90,7 +91,7 @@ int main(int argc, char** argv) {
     int p2ReqCount = 0;
 
     MinMaxAlphaBeta mma1 = MinMaxAlphaBeta();
-    MinMaxDumb mma2 = MinMaxDumb();
+    MinMaxAlphaBetaScore2 mma2 = MinMaxAlphaBetaScore2();
 
     for(auto board : generateRandomBoards(numBoards)){
 
@@ -102,7 +103,7 @@ int main(int argc, char** argv) {
             if(board.southTurn){
                 m = mma1.doMinMaxWithTimeLimit(cpy, timeOrDepthLimit);
             } else {
-                m = mma2.doMinMaxWithMaxDepth(cpy, timeOrDepthLimit);
+                m = mma2.doMinMaxWithTimeLimit(cpy, timeOrDepthLimit);
             }
 
             auto end = high_resolution_clock::now();

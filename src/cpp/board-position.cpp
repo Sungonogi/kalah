@@ -177,17 +177,7 @@ int BoardPosition::getScore2(){
     }
 
     if(gameOver){
-        if(myStore != theirStore){
-            cout << "error" << endl;
-        }
-
-        if(myStore > theirStore){
-            return MAX_SCORE;
-        } else if(myStore < theirStore){
-            return MIN_SCORE;
-        } else {
-            return 0;
-        }
+        return 0; // only option left
     }
 
     // count all extra moves from right to left

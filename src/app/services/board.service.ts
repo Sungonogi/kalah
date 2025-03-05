@@ -170,9 +170,7 @@ export class BoardService {
         if (lastBoard.gameOver) {
             this.animationTimeout = setTimeout(() => {
                 this.animatedBoardPosition.set(lastBoard);
-                this.animationTimeout = setTimeout(() => {
-                    this.audioService.endAudio();
-                }, env.gameOverModalTime);
+                this.audioService.endAudio();
             }, env.gameOverAnimationTime);
         } else {
             this.checkAndPerformComMove();

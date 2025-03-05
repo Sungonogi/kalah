@@ -1,6 +1,6 @@
 // Global variables for time limits
-let STICKFISH_TIME_LIMIT = 100; // Example time limit for Stickfish
-let ENGINE_TIME_LIMIT = 100; // Example time limit for Engine
+let STICKFISH_TIME_LIMIT = 10; // Example time limit for Stickfish
+let ENGINE_TIME_LIMIT = 10; // Example time limit for Engine
 
 const worker = new Worker("worker.js");
 

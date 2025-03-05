@@ -5,6 +5,8 @@
 #include "json.hpp"
 
 #include "board-position.h"
+
+// I include the cpp files here because I want to use the classes directly (not really proficient in C++)
 #include "hard-com.cpp"
 #include "stickfish.cpp"
 
@@ -80,7 +82,7 @@ string getBestMove(string jsonString) {
                 return quitWithMessage("maxDepth must be positive");
             }
         } else {
-            return quitWithMessage("Either timeLimit(ms) or maxDepth must be set for Hard Com");
+            return quitWithMessage("Either timeLimit(ms) or maxDepth must be set for Hard Com and Stickfish");
         }
     }
 
@@ -193,6 +195,7 @@ ComResponse HardCom(BoardPosition &bp, int maxDepth, int timeLimit){
 }
 
 // Stickfish is a bot that uses more advanced minmax to find the best move
+// function exactly like above, I tried templating but it didn't compile anymore, maybe because I included the cpp files
 ComResponse Stickfish(BoardPosition &bp, int maxDepth, int timeLimit){
 
     StickfishMM sf = StickfishMM();

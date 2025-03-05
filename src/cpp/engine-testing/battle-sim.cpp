@@ -11,6 +11,7 @@
 #include "../min-max-ab-s2-ec-o3.cpp"
 #include "../min-max-ab-s2-ec-o4.cpp"
 #include "../min-max-ab-s2-ec-o2-dc.cpp"
+#include "../min-max-ab-s2-ec-o2-h.cpp"
 
 #include <iostream>
 #include <chrono>
@@ -106,7 +107,7 @@ int main(int argc, char** argv) {
     int p2ReqCount = 0;
 
     auto mma1 = MinMaxABS2ECO2();
-    auto mma2 = MinMaxABS2ECO2DC();
+    auto mma2 = MinMaxABS2ECO2H();
 
     for(auto board : generateRandomBoards(numBoards)){
 
@@ -123,6 +124,13 @@ int main(int argc, char** argv) {
 
             auto end = high_resolution_clock::now();
             auto duration = duration_cast<milliseconds>(end - start).count();
+
+            
+            if(m.move == -1){
+                cout << "Error move was -1" << endl;
+            }
+
+
             if(board.southTurn){
                 p1TotalTime += duration;
                 p1ReqCount++;
@@ -184,7 +192,10 @@ normal: ab-s2-ec-o2
         o4 with left right always: loses on time
         o4 with a bunch of other things: never worked
 
-    start with depthChange (i/2)
+    
     o2 vs dc: depth: o2 is 3% better which makes sense as dc just searches less, time: dc is 1% better 
+    o2 vs hash: time: hash is consistently 1-1.5% better
+    dc vs hash: time: hash is 5% better
+    
 
 */

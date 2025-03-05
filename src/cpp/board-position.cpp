@@ -204,6 +204,44 @@ array<int, MAX_PIT_SIZE + 1> BoardPosition::getMoves2() {
     return moves;
 }
 
+// byte
+array<int8_t, MAX_PIT_SIZE + 1> BoardPosition::getMoves2Byte() {
+
+    array<int8_t, MAX_PIT_SIZE + 1> moves = {};
+    const int* myPits = southTurn ? southPits : northPits;
+    const int* hisPits = southTurn ? northPits : southPits;
+
+    int moveCount = 0;
+
+    // extra moves from right to
+    for (int i = pits - 1; i >= 0; i--) {
+        if (i + myPits[i] == pits) {
+            moves[moveCount++] = i;
+        }
+    }
+
+    // steals from left to right
+    for (int i = 0; i < pits; i++) {
+        int val = myPits[i];
+        if (val > 0 && i + val < pits && myPits[i + val] == 0  && hisPits[pits - (i + val) - 1] > 0) {
+            moves[moveCount++] = i;
+        }
+    }
+
+    // normal moves from right to left
+    for (int i = pits - 1; i >= 0; i--) {
+        int val = myPits[i];
+        if (val && i + val != pits && !(i + val < pits && myPits[i + val] == 0 && hisPits[pits - (i + val) - 1] > 0)) {
+            moves[moveCount++] = i;
+        }
+    }
+
+    moves[moveCount] = -1; // terminator
+
+    return moves;
+}
+
+
 
 // this one also recognizes steals/ extra Moves when you loop around
 array<int, MAX_PIT_SIZE + 1> BoardPosition::getMoves3() {

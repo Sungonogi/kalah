@@ -63,7 +63,7 @@ void assertSameMoves(BoardPosition bp){
     }
 
     if(length != actualMoves.size()){
-        cerr << "getMoves and getMovesVector return different results" << endl;
+        cerr << "getMoves and getMovesVector have different length" << endl;
         exit(1);
     }
 
@@ -73,7 +73,7 @@ void assertSameMoves(BoardPosition bp){
                 break;
             }
             if(i == length - 1){
-                cerr << "getMoves and getMovesVector return different results" << endl;
+                cerr << "getMoves is missing a valid move" << endl;
                 exit(1);
             }
         }

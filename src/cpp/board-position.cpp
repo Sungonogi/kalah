@@ -484,3 +484,38 @@ float BoardPosition::getScore4(){
 
     return myStore - theirStore;
 }
+
+
+int BoardPosition::getScore5(){
+
+    int myStore = southTurn ? southStore : northStore;
+
+    if(myStore >= seedsToWin){
+        return MAX_SCORE;
+    }
+
+    int theirStore = southTurn ? northStore : southStore;
+
+    if(theirStore >= seedsToWin){
+        return MIN_SCORE;
+    }
+
+    if(gameOver){
+        return 0; // only option left
+    }
+
+    // count all extra moves from right to left
+    int extraMoves = 0;
+    const int* myPits = southTurn ? southPits : northPits;
+    for(int i = 0; i < pits; i++){
+        if(i + myPits[i] == pits){
+            extraMoves++;
+        }
+    }
+
+    if(extraMoves > 0){
+        extraMoves += 2;
+    }
+
+    return extraMoves + myStore - theirStore;
+}

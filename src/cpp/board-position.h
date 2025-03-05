@@ -44,6 +44,7 @@ struct BoardPosition {
     int getScore2();
     float getScore3();
     float getScore4();
+    int getScore5();
 };
 
 #endif

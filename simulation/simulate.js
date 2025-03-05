@@ -63,6 +63,8 @@ async function simulateGame(amount) {
 
     console.log(`Simulation complete. Stickfish wins: ${sWins}, Engine wins: ${eWins}, Ties: ${ties}`);
 
+    console.log(`<span class="measurement-label">Stickfish vs ...:</span> <span class="measurement-value">${sWins}, ${eWins}, ${ties}</span> <br>`)
+
     console.log(`Average response time for Stickfish: ${getStickfishAvgResponseTime()} ms`);
     console.log(`Average response time for Engine: ${getEngineAvgResponseTime()} ms`);
 }

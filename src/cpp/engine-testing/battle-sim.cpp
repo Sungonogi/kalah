@@ -13,6 +13,7 @@
 #include "../min-max-ab-s2-ec-o2-dc.cpp"
 #include "../min-max-ab-s2-ec-o2-h.cpp"
 #include "../min-max-ab-s4-ec-o2-h.cpp"
+#include "../min-max-ab-s5-ec-o2-h.cpp"
 
 #include <iostream>
 #include <chrono>
@@ -107,8 +108,8 @@ int main(int argc, char** argv) {
     int p2TotalTime = 0;
     int p2ReqCount = 0;
 
-    auto mma1 = MinMaxABS2ECO2H();
-    auto mma2 = MinMaxABS4ECO2H();
+    auto mma1 = MinMaxABS4ECO2H();
+    auto mma2 = MinMaxABS5ECO2H();
 
     for(auto board : generateRandomBoards(numBoards)){
 

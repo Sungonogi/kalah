@@ -28,8 +28,8 @@ vector<BoardPosition> generateRandomBoards(int numBoards) {
         b.gameOver = false;
         b.southTurn = false;
 
-        b.pits = rand() % 6 + 2;
-        int seeds = rand() % 10 + b.pits;
+        b.pits = rand() % 6 + 3;
+        int seeds = rand() % 4 + 1;
 
         for(int i = 0; i < b.pits; i++){
             b.southPits[i] = seeds;
@@ -165,6 +165,12 @@ normal: ab-s2-ec
     normal vs o2: depth: o2 is 8% better, time: o2 is 9% better with depth 11.96 (greater than normal 11.71)
 
 normal: ab-s2-ec-o2
+
+    found bug in getMoves that added non steal moves first
+    normal vs o2bug: depth: no measurable difference (-1% to 1%), time: -3 to 3% depending on if we have loop boards
+    -> I'll still keep the fixed version because it's more logical
+
     tested with b.pits = rand() % 6 + 2; int seeds = rand() % 10 + b.pits;
     normal vs o3: depth: o2 won -0.25% more, time: normal won 4% more games, avgDepth: o2 has 12.365, o3 has 12.523
+
 */

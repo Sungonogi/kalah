@@ -5,7 +5,7 @@
 #include "board-position.h"
 #include "min-max.h"
 
-// alpha beta and score 2 and early cutoff, getMoves2
+// alpha beta and score 2 and early cutoff, getMoves2Bug that adds non steal moves
 class MinMaxABS2ECO2Bug: public MinMax {
 private:
     // just for tracking

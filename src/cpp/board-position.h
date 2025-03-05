@@ -36,6 +36,7 @@ struct BoardPosition {
     std::array<int, MAX_PIT_SIZE + 1> getMoves2(); // -1 terminated array
     std::array<int, MAX_PIT_SIZE + 1> getMoves2Bug(); // -1 terminated array
     std::array<int, MAX_PIT_SIZE + 1> getMoves3(); // -1 terminated array
+    std::array<int, MAX_PIT_SIZE + 1> getMoves4(); // -1 terminated array
     std::vector<int> getMovesVector();
     void doMove(int move);
     int getScore();

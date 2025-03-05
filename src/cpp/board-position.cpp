@@ -252,6 +252,49 @@ array<int, MAX_PIT_SIZE + 1> BoardPosition::getMoves3() {
     return moves;
 }
 
+array<int, MAX_PIT_SIZE + 1> BoardPosition::getMoves4() {
+
+    const int* myPits = southTurn ? southPits : northPits;
+    const int* hisPits = southTurn ? northPits : southPits;
+
+    // 0 means invalid, 1 means extra, 2 means never left our half, 3 means we left our side
+    int moveTypes[MAX_PIT_SIZE] = {};
+
+    int circle = 2*pits + 1;
+
+    for(int i = 0; i < pits; i++){
+        int val = myPits[i];
+        if(val == 0){
+            moveTypes[i] = 0;
+        } else if(i + (val % circle) == pits){
+            moveTypes[i] = 1;
+        } else if(i + val < pits){
+            moveTypes[i] = 2;
+        } else {
+            moveTypes[i] = 3;
+        }
+    }
+
+    array<int, MAX_PIT_SIZE + 1> moves = {};
+    int moveCount = 0;
+    for(int type = 1; type <= 3; type++){
+        for(int i = pits - 1; i >= 0; i--){
+
+            // go from left to right for steals
+            int move = type != 2 ? i : pits - i - 1;
+
+            if(moveTypes[move] == type){
+                moves[moveCount++] = move;
+            }
+        }
+    }
+
+    moves[moveCount] = -1; // terminator
+
+    return moves;
+}
+
+
 // returns valid moves as a vector from left to right
 vector<int> BoardPosition::getMovesVector() {
     vector<int> moves;

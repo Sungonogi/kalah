@@ -23,21 +23,7 @@ export class ComMoveService {
             timeLimit: env.engineTimeLimit
         };
 
-        // adjust these as wanted
-        const wasm = playerType !== PlayerType.Stickfish;
-
-        let move$: Observable<ComMoveResponse | null>;
-
-        if (wasm) {
-            move$ = this.wasmService.askForMove(request);
-        } else {
-            move$ = this.http.post<ComMoveResponse | null>("http://localhost:9090/api/computerMove", request).pipe(
-                catchError((error) => {
-                    console.error("Error when communicating with the backend. Make sure it is running. ", error);
-                    return of(null);
-                }),
-            );
-        }
+        const move$ = this.wasmService.askForMove(request);
 
         // wait at least env.minimumWaitTime milliseconds if the computer is too fast
         return forkJoin([move$, timer(env.minimumWaitTime)]).pipe(
@@ -46,7 +32,7 @@ export class ComMoveService {
                     return null;
                 }
         
-                console.log(response.comment);
+                console.log(playerType + ": " + response.comment);
                 return response.move;
             })
         );

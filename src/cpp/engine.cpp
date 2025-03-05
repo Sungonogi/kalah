@@ -5,7 +5,8 @@
 #include "json.hpp"
 
 #include "board-position.h"
-#include "min-max-ab-s5-ec-o2-h.cpp"
+#include "hard-com.cpp"
+#include "stickfish.cpp"
 
 using namespace std;
 using json = nlohmann::json;
@@ -91,7 +92,7 @@ string getBestMove(string jsonString) {
     } else if(playerType == "Hard Com"){
         cr = HardCom(bp, maxDepth, timeLimit);
     } else if(playerType == "Stickfish"){
-        return quitWithMessage("Stickfish not implemented yet");
+        cr = Stickfish(bp, maxDepth, timeLimit);
     } else {
         return quitWithMessage("Unknown player type");
     }
@@ -166,23 +167,46 @@ ComResponse MediumCom(BoardPosition &bp){
     return cr;
 }
 
-// HardCom is a bot that uses minmax to find the best move
+string getMMComment(MinMaxResult mmr){
+    return "I did minmax and evaluate this position as " +
+        to_string(mmr.score) + " with a depth of " + to_string(mmr.maxDepth) + 
+        " and suggest move " + to_string(mmr.move);
+}
+
+// HardCom is a bot that uses basic minmax to find the best move
 ComResponse HardCom(BoardPosition &bp, int maxDepth, int timeLimit){
 
-    auto mma = MinMaxABS5ECO2H();
+    HardComMM hc = HardComMM();
 
     MinMaxResult mmr;
     if(maxDepth == -1){
-        mmr = mma.doMinMaxWithTimeLimit(bp, timeLimit);
+        mmr = hc.doMinMaxWithTimeLimit(bp, timeLimit);
     } else {
-        mmr = mma.doMinMaxWithMaxDepth(bp, maxDepth);
+        mmr = hc.doMinMaxWithMaxDepth(bp, maxDepth);
     }
-        
+
     ComResponse cr;
     cr.move = mmr.move;
-    cr.comment = "I did minmax and evaluate this position as " +
-        to_string(mmr.score) + " with a depth of " + to_string(mmr.maxDepth) + 
-        " and suggest move " + to_string(mmr.move);
+    cr.comment = getMMComment(mmr);
+
+    return cr;
+}
+
+// Stickfish is a bot that uses more advanced minmax to find the best move
+ComResponse Stickfish(BoardPosition &bp, int maxDepth, int timeLimit){
+
+    StickfishMM sf = StickfishMM();
+
+    MinMaxResult mmr;
+    if(maxDepth == -1){
+        mmr = sf.doMinMaxWithTimeLimit(bp, timeLimit);
+    } else {
+        mmr = sf.doMinMaxWithMaxDepth(bp, maxDepth);
+    }
+
+    ComResponse cr;
+    cr.move = mmr.move;
+    cr.comment = getMMComment(mmr);
 
     return cr;
 }

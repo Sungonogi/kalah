@@ -52,7 +52,7 @@ async function getStickfishMove(boardPosition) {
 function getEngineMove(boardPosition, timeLimit = ENGINE_TIME_LIMIT) {
     return new Promise((resolve, reject) => {
         const request = {
-            playerType: 'Hard Com',
+            playerType: 'Stickfish',
             boardPosition: boardPosition,
             timeLimit
         };

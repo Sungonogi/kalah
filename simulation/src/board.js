@@ -83,8 +83,8 @@ function performLegalMove(board, position) {
     return newBoard;
 }
 
-getLegalMoves() {
-    const pits = this.southTurn ? this.southPits : this.northPits;
+function getLegalMoves(board) {
+    const pits = board.southTurn ? board.southPits : board.northPits;
     const moves = [];
     for(let i = 0; i < pits.length; i++){
         if(pits[i] > 0){
@@ -116,7 +116,7 @@ const getRand = (n) => sfc32(3569758038, 1525327611, 2985216974, n);
  * @param {number} n - The number of pairs of boards to generate.
  * @returns {Array} - An array of randomly generated board positions.
  */
-async function generateBoards(n, getMoveFn) {
+async function generateBoards(n) {
     const rand = getRand(n);
 
     const boards = [];
@@ -124,7 +124,7 @@ async function generateBoards(n, getMoveFn) {
         const pits = Math.floor(rand() * 9) + 2; // Random number between 2 and 10
         const seeds = Math.floor(rand() * 6) + 1; // Random number between 1 and 6
 
-        const board1 = {
+        let board1 = {
             pits,
             southPits: Array(pits).fill(seeds),
             northPits: Array(pits).fill(seeds),
@@ -139,7 +139,7 @@ async function generateBoards(n, getMoveFn) {
         for(let j = 0; j < amountOfMoves && !board1.gameOver; j++){
             const moves = getLegalMoves(board1);
             const move = moves[Math.floor(rand() * moves.length)];
-            performLegalMove(board1, move);
+            board1 = performLegalMove(board1, move);
         }
 
         if(board1.gameOver){

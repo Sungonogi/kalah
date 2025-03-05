@@ -463,5 +463,24 @@ float BoardPosition::getScore4(){
         }
     }
 
-    return extraMoves + myStore - theirStore;
+    myStore += 3 * extraMoves;
+
+    // attempt to add bonus to side with more seeds
+    /*int total = (seedsToWin - 1) * 2;
+    if(total - myStore - theirStore < 3 * pits){
+        int mySum = 0;
+        int hisSum = 0;
+        for(int i = 0; i < pits; i++){
+            mySum += southPits[i];
+            hisSum += northPits[i];
+        }
+
+        mySum -= extraMoves; // put into our store
+
+        float scale = 1.0f - (float) ( (float) mySum +  (float) hisSum) / (3.0f*  (float) pits);
+
+        bonus += 0.6f * scale * (mySum - hisSum);
+    } */
+
+    return myStore - theirStore;
 }

@@ -26,7 +26,7 @@ private:
 
 public: 
     // recursive min max function
-    int minMax(BoardPosition &bp, int depth, float alpha, float beta, long long hash) {
+    float minMax(BoardPosition &bp, int depth, float alpha, float beta, long long hash) {
 
         float score = bp.getScore4();
 
@@ -61,7 +61,7 @@ public:
 
         // since the game is not over we can always make a move
         int8_t bestMove = -1;
-        int bestScore = MIN_SCOREF;
+        float bestScore = MIN_SCOREF;
 
         for(int i = 0; i < MAX_PIT_SIZE + 1; i++){
             int8_t move = moves[i];
@@ -74,12 +74,12 @@ public:
 
             bool sideChanged = bp.southTurn != bpCopy.southTurn;
 
-            int nAlpha = sideChanged ? -beta : alpha;
-            int nBeta = sideChanged ? -alpha : beta;
+            float nAlpha = sideChanged ? -beta : alpha;
+            float nBeta = sideChanged ? -alpha : beta;
 
             long long newHash = hash * bp.pits + move; // might overflow :D
 
-            int tmpScore = minMax(bpCopy, depth + 1, nAlpha, nBeta, newHash);
+            float tmpScore = minMax(bpCopy, depth + 1, nAlpha, nBeta, newHash);
 
             if(sideChanged) {
                 tmpScore = -tmpScore;
@@ -166,7 +166,7 @@ public:
         actualBestMove = bp.getMoves()[0]; // fallback to first move
         maxDepthReached = false;
 
-        int score = minMax(bp, 0, MIN_SCOREF, MAX_SCOREF, 1LL);
+        float score = minMax(bp, 0, MIN_SCOREF, MAX_SCOREF, 1LL);
 
         MinMaxResult result;
         result.score = score;

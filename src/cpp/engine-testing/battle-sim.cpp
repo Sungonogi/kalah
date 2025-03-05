@@ -107,8 +107,8 @@ int main(int argc, char** argv) {
     int p2TotalTime = 0;
     int p2ReqCount = 0;
 
-    auto mma1 = MinMaxABS4ECO2H();
-    auto mma2 = MinMaxABS2ECO2H();
+    auto mma1 = MinMaxABS2ECO2H();
+    auto mma2 = MinMaxABS4ECO2H();
 
     for(auto board : generateRandomBoards(numBoards)){
 
@@ -198,5 +198,10 @@ normal: ab-s2-ec-o2
     o2 vs hash: time: hash is consistently 1-1.5% better
     dc vs hash: time: hash is 5% better
     
+normal: ab-s2-ec-o2-h
+    s4 with reward for more seeds: not better on time
+    s4 with -0.75 or -0.25: not better
+    s4 with 3*extraMoves: depth: 8% better, time: 10-15% better
+
 
 */

@@ -1,10 +1,13 @@
 import { performLegalMove, generateBoards } from './src/board.js';
 import { getStickfishMove, getEngineMove, getStickfishAvgResponseTime, getEngineAvgResponseTime } from './src/players.js';
 
-document.getElementById("startButton").addEventListener("click", () => {
-    const amount = parseInt(document.getElementById("simulationAmount").value);
-    simulateGame(amount);
-});
+// when windows loaded
+window.onload = () => {
+    document.getElementById("startButton").addEventListener("click", () => {
+        const amount = parseInt(document.getElementById("simulationAmount").value);
+        simulateGame(amount);
+    });
+};
 
 
 function updateWins(stickfishWins, engineWins, ties) {

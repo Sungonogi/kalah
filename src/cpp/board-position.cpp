@@ -27,6 +27,7 @@ string BoardPosition::toString() const {
 }
 
 void BoardPosition::doMove(int move) {
+    // I thought about if this readable "s ? a : b" is slow and if should do if else but it will be optimized anyway
     int* myPits = southTurn ? southPits : northPits;
     int* hisPits = southTurn ? northPits : southPits;
     int &myStore = southTurn ? southStore : northStore;
@@ -51,9 +52,15 @@ void BoardPosition::doMove(int move) {
                 hand--;
                 myStore++;
             }
-            move = -1; // reset move to -1 so it will be incremented to 0
+            move = -1; // reset move to -1, it will be incremented to 0
             currentlyMySide = !currentlyMySide;
         }
+    }
+
+    // switch side if no bonus move
+    // if there was a bonus move then we stopped at currentlyMySide=false and move=-1 
+    if(currentlyMySide || move != -1){
+        southTurn = !southTurn;
     }
 
     // check for steal
@@ -95,13 +102,6 @@ void BoardPosition::doMove(int move) {
         }
         gameOver = true;
         return;
-    }
-
-    // switch side if no bonus move (do this after gameOver otherwise hisStore could be incorrect)
-    // if there was a bonus move then we stopped at move=0 and currentlyMySide=false
-    southTurn = !southTurn;
-    if(!currentlyMySide && move == -1){
-        southTurn = !southTurn;
     }
 }
 

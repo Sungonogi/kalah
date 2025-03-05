@@ -135,7 +135,7 @@ async function generateBoards(n, getMoveFn) {
         };
 
         // do 0 to 2 random moves
-        const amountOfMoves = Math.floor(rand() % 3);
+        const amountOfMoves = Math.floor(rand() * 3);
         for(let j = 0; j < amountOfMoves && !board1.gameOver; j++){
             const moves = getLegalMoves(board1);
             const move = moves[Math.floor(rand() * moves.length)];

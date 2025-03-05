@@ -33,8 +33,8 @@ vector<BoardPosition> generateRandomBoards(int numBoards) {
         b.gameOver = false;
         b.southTurn = false;
 
-        b.pits = rand() % 6 + 3;
-        int seeds = rand() % 4 + 1;
+        b.pits = rand() % 9 + 2; // random between 2 and 10
+        int seeds = rand() % 6 + 1; // random between 1 and 6
 
         for(int i = 0; i < b.pits; i++){
             b.southPits[i] = seeds;
@@ -43,25 +43,16 @@ vector<BoardPosition> generateRandomBoards(int numBoards) {
         b.seedsToWin = (seeds * b.pits) + 1;
 
 
-        // do some random moves
+        // do some 0-2 random moves
         bool retry = false;
         int moves = rand() % 3;
-        for(int i = 0; i < moves; i++){
+        for(int i = 0; i < moves && !b.gameOver; i++){
             vector<int> validMoves = b.getMovesVector();
-            if(validMoves.size() == 0){
-                retry = true;
-                break;
-            }
-
             int move = validMoves[rand() % validMoves.size()];
             b.doMove(move);
         }
 
-        // get rid of already decided games
-        BoardPosition tmp = b;
-        MinMaxAB mma = MinMaxAB();
-        MinMaxResult m = mma.doMinMaxWithMaxDepth(tmp, 5);
-        if(retry || m.score < 4 || m.score > 4){
+        if(b.gameOver){
             i--;
             continue;
         }

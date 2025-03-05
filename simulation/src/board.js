@@ -110,11 +110,9 @@ async function generateBoards(n, getMoveFn) {
 
     const boards = [];
     for (let i = 0; i < n; i++) {
-        const pits = Math.floor(rand() * 4) + 5; // Random number between 2 and 14
-        const southPits = Array.from({ length: pits }, () => Math.floor(rand() * 4) + 1); // Random seeds between 0 and 4
-        if(southPits.reduce((a, b) => a + b, 0) === 0) {
-            southPits[Math.floor(rand() * pits)] = 1; // Ensure at least one seed
-        }
+        const pits = Math.floor(rand() * 9) + 2; // Random number between 2 and 10
+        const seeds = Math.floor(rand() * 6) + 1; // Random number between 1 and 6
+        const southPits = Array(pits).fill(seeds);
 
         const board1 = {
             pits,
@@ -127,13 +125,13 @@ async function generateBoards(n, getMoveFn) {
         };
 
     
-        const result = await getEngineMove(board1, 5);
+        /*const result = await getEngineMove(board1, 5);
         const evaluation = parseEvaluation(result.comment);
         if(Math.abs(evaluation) > 4){
             console.log("evaluation too high, skipping");
             i--;
             continue
-        }
+        }*/
 
         const board2 = {
             pits,

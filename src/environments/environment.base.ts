@@ -4,4 +4,5 @@ export const baseEnvironment = {
     disableAudio: false,
     gameOverAnimationTime: 800,
     gameOverModalTime: 200,
+    gameStartTime: 1000,
 };

@@ -63,7 +63,9 @@ export class BoardService {
         }
 
         this.audioService.startAudio();
-        this.checkAndPerformComMove();
+
+        // wait a little but not as long as the audio
+        this.animationTimeout = setTimeout(this.checkAndPerformComMove.bind(this), env.gameStartTime);
     }
 
     resetCallbacks(){
@@ -139,6 +141,10 @@ export class BoardService {
         // already set it to the last position
         this.boardPosition.set(result.boards[result.boards.length - 1]);
         this.animatedBoardPosition.set(result.boards[0]);
+
+        if(this.animationTimeout){
+            clearTimeout(this.animationTimeout);
+        }
 
         if (result.moveType === MoveType.CaptureMove) {
             const waitTime = this.audioService.moveAudio();

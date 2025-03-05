@@ -5,8 +5,8 @@
 #include "board-position.h"
 #include "min-max.h"
 
-// alpha beta and score 2 and early cutoff, getMoves3
-class MinMaxABS2ECO3: public MinMax {
+// alpha beta and score 2 and early cutoff, getMoves4
+class MinMaxABS2ECO4: public MinMax {
 private:
     // just for tracking
     int depthSum = 0;
@@ -34,7 +34,7 @@ public:
         int bestScore = MIN_SCORE;
 
         // since the game is not over we can always make a move
-        for(int move : bp.getMoves3()){
+        for(int move : bp.getMoves4()){
             if(move == -1){ // array is terminated with -1
                 break;
             }

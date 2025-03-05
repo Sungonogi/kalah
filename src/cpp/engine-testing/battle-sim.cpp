@@ -9,6 +9,7 @@
 #include "../min-max-ab-s2-ec-o2.cpp"
 #include "../min-max-ab-s2-ec-o2bug.cpp"
 #include "../min-max-ab-s2-ec-o3.cpp"
+#include "../min-max-ab-s2-ec-o4.cpp"
 
 #include <iostream>
 #include <chrono>
@@ -104,7 +105,7 @@ int main(int argc, char** argv) {
     int p2ReqCount = 0;
 
     auto mma1 = MinMaxABS2ECO2();
-    auto mma2 = MinMaxABS2ECO2Bug();
+    auto mma2 = MinMaxABS2ECO4();
 
     for(auto board : generateRandomBoards(numBoards)){
 
@@ -171,6 +172,16 @@ normal: ab-s2-ec-o2
     -> I'll still keep the fixed version because it's more logical
 
     tested with b.pits = rand() % 6 + 2; int seeds = rand() % 10 + b.pits;
-    normal vs o3: depth: o2 won -0.25% more, time: normal won 4% more games, avgDepth: o2 has 12.365, o3 has 12.523
+    bug vs o3: depth: o3 is 1-2% better, time: bug is 2-3% better
+    o2 vs o3: depth: o2 is 1% better, time: o2 is 4% better
+    -> no measurable improvement even for these specific boards
+    -> undo b.pits and seeds change
+
+    o2 vs o4: depth: o4 is 3-4% better, time: o2 is 10% better but similar depths
+    -> o4 (right left, except steals) is not better for time (for some reason)
+    adjust o4 more:
+        o4 with left right always: loses on time
+        o4 with a bunch of other things: never worked
+
 
 */

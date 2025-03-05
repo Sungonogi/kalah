@@ -260,13 +260,11 @@ array<int, MAX_PIT_SIZE + 1> BoardPosition::getMoves4() {
     // 0 means invalid, 1 means extra, 2 means never left our half, 3 means we left our side
     int moveTypes[MAX_PIT_SIZE] = {};
 
-    int circle = 2*pits + 1;
-
     for(int i = 0; i < pits; i++){
         int val = myPits[i];
         if(val == 0){
             moveTypes[i] = 0;
-        } else if(i + (val % circle) == pits){
+        } else if(i + val == pits){
             moveTypes[i] = 1;
         } else if(i + val < pits){
             moveTypes[i] = 2;

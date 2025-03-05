@@ -132,7 +132,7 @@ array<int, MAX_PIT_SIZE + 1> BoardPosition::getMoves() {
     return moves;
 }
 
-array<int, MAX_PIT_SIZE + 1> BoardPosition::getMoves2() {
+array<int, MAX_PIT_SIZE + 1> BoardPosition::getMoves2Bug() {
 
     array<int, MAX_PIT_SIZE + 1> moves = {};
     const int* myPits = southTurn ? southPits : northPits;
@@ -159,6 +159,91 @@ array<int, MAX_PIT_SIZE + 1> BoardPosition::getMoves2() {
         int val = myPits[i];
         if (val && i + val != pits && !(i + val < pits && myPits[i + val] == 0)) {
             moves[moveCount++] = i;
+        }
+    }
+
+    moves[moveCount] = -1; // terminator
+
+    return moves;
+}
+
+// fixed it to actually only move steals in front
+array<int, MAX_PIT_SIZE + 1> BoardPosition::getMoves2() {
+
+    array<int, MAX_PIT_SIZE + 1> moves = {};
+    const int* myPits = southTurn ? southPits : northPits;
+    const int* hisPits = southTurn ? northPits : southPits;
+
+    int moveCount = 0;
+
+    // extra moves from right to
+    for (int i = pits - 1; i >= 0; i--) {
+        if (i + myPits[i] == pits) {
+            moves[moveCount++] = i;
+        }
+    }
+
+    // steals from left to right
+    for (int i = 0; i < pits; i++) {
+        int val = myPits[i];
+        if (val > 0 && i + val < pits && myPits[i + val] == 0  && hisPits[pits - (i + val) - 1] > 0) {
+            moves[moveCount++] = i;
+        }
+    }
+
+    // normal moves from right to left
+    for (int i = pits - 1; i >= 0; i--) {
+        int val = myPits[i];
+        if (val && i + val != pits && !(i + val < pits && myPits[i + val] == 0 && hisPits[pits - (i + val) - 1] > 0)) {
+            moves[moveCount++] = i;
+        }
+    }
+
+    moves[moveCount] = -1; // terminator
+
+    return moves;
+}
+
+
+// this one also recognizes steals/ extra Moves when you loop around
+array<int, MAX_PIT_SIZE + 1> BoardPosition::getMoves3() {
+
+    const int* myPits = southTurn ? southPits : northPits;
+    const int* hisPits = southTurn ? northPits : southPits;
+
+    // 0 means invalid, 1 means extra, 2 means steal, 3 means normal
+    int moveTypes[MAX_PIT_SIZE] = {};
+
+    int circle = 2*pits + 1;
+
+    for(int i = 0; i < pits; i++){
+        int val = myPits[i];
+        if(val == 0){
+            moveTypes[i] = 0;
+        } else if(i + (val % circle) == pits){
+            moveTypes[i] = 1;
+        } else if(
+            (i + val < pits && myPits[i + val] == 0 && hisPits[pits - (i + val) - 1] > 0) || // steal immediately
+            (val == circle) || // loop around exactly once and end where we started
+            (val < circle && i + val - circle >= 0 && myPits[i + val - circle] == 0) // end behind starting pit and steal
+        ){
+            moveTypes[i] = 2;
+        } else {
+            moveTypes[i] = 3;
+        }
+    }
+
+    array<int, MAX_PIT_SIZE + 1> moves = {};
+    int moveCount = 0;
+    for(int type = 1; type <= 3; type++){
+        for(int i = pits - 1; i >= 0; i--){
+
+            // go from left to right for steals
+            int move = type != 2 ? i : pits - i - 1;
+
+            if(moveTypes[move] == type){
+                moves[moveCount++] = move;
+            }
         }
     }
 

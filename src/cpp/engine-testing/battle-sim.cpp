@@ -7,7 +7,8 @@
 #include "../min-max-ab-s2-ec.cpp"
 #include "../min-max-ab-s3-ec.cpp"
 #include "../min-max-ab-s2-ec-o2.cpp"
-
+#include "../min-max-ab-s2-ec-o2bug.cpp"
+#include "../min-max-ab-s2-ec-o3.cpp"
 
 #include <iostream>
 #include <chrono>
@@ -27,8 +28,8 @@ vector<BoardPosition> generateRandomBoards(int numBoards) {
         b.gameOver = false;
         b.southTurn = false;
 
-        b.pits = rand() % 6 + 4;
-        int seeds = rand() % 5 + 1;
+        b.pits = rand() % 6 + 2;
+        int seeds = rand() % 10 + b.pits;
 
         for(int i = 0; i < b.pits; i++){
             b.southPits[i] = seeds;
@@ -80,9 +81,11 @@ vector<BoardPosition> generateRandomBoards(int numBoards) {
 
 int main(int argc, char** argv) {
     // read numBoards from argv
-    if (argc < 3)
+    if (argc < 3) {
         cerr << "Usage: " << argv[0] << " <numBoards>" << " <timeOrDepthLimit>" << "<useTimeLimit so 0/1 (optional)>" << endl;
-
+        return 1;
+    }
+    
     int numBoards = stoi(argv[1]);
 
 
@@ -100,8 +103,8 @@ int main(int argc, char** argv) {
     int p2TotalTime = 0;
     int p2ReqCount = 0;
 
-    MinMaxABS2EC mma1 = MinMaxABS2EC();
-    MinMaxABS2ECO2 mma2 = MinMaxABS2ECO2();
+    auto mma1 = MinMaxABS2ECO2();
+    auto mma2 = MinMaxABS2ECO2Bug();
 
     for(auto board : generateRandomBoards(numBoards)){
 
@@ -159,5 +162,9 @@ normal: ab-s2
 
 normal: ab-s2-ec
     normal vs s3: depth: s3 is 6% better, time: s3 is slightly worse
-    normal vs o3: depth: o3 is 8% better, time: o3 is 9% better with depth 11.96 (greater than normal 11.71)
+    normal vs o2: depth: o2 is 8% better, time: o2 is 9% better with depth 11.96 (greater than normal 11.71)
+
+normal: ab-s2-ec-o2
+    tested with b.pits = rand() % 6 + 2; int seeds = rand() % 10 + b.pits;
+    normal vs o3: depth: o2 won -0.25% more, time: normal won 4% more games, avgDepth: o2 has 12.365, o3 has 12.523
 */

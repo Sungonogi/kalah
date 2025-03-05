@@ -83,6 +83,17 @@ function performLegalMove(board, position) {
     return newBoard;
 }
 
+getLegalMoves() {
+    const pits = this.southTurn ? this.southPits : this.northPits;
+    const moves = [];
+    for(let i = 0; i < pits.length; i++){
+        if(pits[i] > 0){
+            moves.push(i);
+        }
+    }
+    return moves;
+}
+
 // random number generator that allows for seeding, I want to seed with the amount of boards
 // https://stackoverflow.com/questions/521295/seeding-the-random-number-generator-in-javascript
 function sfc32(a, b, c, d) {
@@ -112,49 +123,44 @@ async function generateBoards(n, getMoveFn) {
     for (let i = 0; i < n; i++) {
         const pits = Math.floor(rand() * 9) + 2; // Random number between 2 and 10
         const seeds = Math.floor(rand() * 6) + 1; // Random number between 1 and 6
-        const southPits = Array(pits).fill(seeds);
 
         const board1 = {
             pits,
-            southPits: [...southPits],
-            northPits: [...southPits],
+            southPits: Array(pits).fill(seeds),
+            northPits: Array(pits).fill(seeds),
             southStore: 0,
             northStore: 0,
             southTurn: true,
             gameOver: false
         };
 
-    
-        /*const result = await getEngineMove(board1, 5);
-        const evaluation = parseEvaluation(result.comment);
-        if(Math.abs(evaluation) > 4){
-            console.log("evaluation too high, skipping");
+        // do 0 to 2 random moves
+        const amountOfMoves = Math.floor(rand() % 3);
+        for(let j = 0; j < amountOfMoves && !board1.gameOver; j++){
+            const moves = getLegalMoves(board1);
+            const move = moves[Math.floor(rand() * moves.length)];
+            performLegalMove(board1, move);
+        }
+
+        if(board1.gameOver){
             i--;
             continue
-        }*/
+        }
 
+        // exact mirror of board1
         const board2 = {
             pits,
-            southPits: [...southPits],
-            northPits: [...southPits],
-            southStore: 0,
-            northStore: 0,
-            southTurn: false,
+            southPits: [...board1.northPits],
+            northPits: [...board1.southPits],
+            southStore: board1.northStore,
+            northStore: board1.southStore,
+            southTurn: !board1.southTurn,
             gameOver: false
         };
 
         boards.push(board1, board2);
     }
     return boards;
-}
-
-function parseEvaluation(comment) {
-    const regex = /evaluate this position as (-?\d+)/;
-    const match = comment.match(regex);
-    if (match && match[1]) {
-        return parseInt(match[1], 10);
-    }
-    return null;
 }
 
 // Export the function for use in other files

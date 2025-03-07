@@ -1,36 +1,42 @@
 <div class="center">
-  <mat-card appearance="outlined">
+  <div>
+    <mat-card appearance="outlined">
 
-    <mat-form-field>
-      <mat-label>Player South</mat-label>
-      <mat-select [(value)]="startParams.playerSouth">
-        @for (p of playerTypes; track p) {
-          <mat-option [value]="p">{{ p }}</mat-option>
-        }
-      </mat-select>
-    </mat-form-field>
+        <mat-form-field>
+        <mat-label>Player South</mat-label>
+        <mat-select [(value)]="startParams.playerSouth">
+            @for (p of playerTypes; track p) {
+            <mat-option [value]="p">{{ p }}</mat-option>
+            }
+        </mat-select>
+        </mat-form-field>
 
-    <mat-form-field>
-      <mat-label>Player North</mat-label>
-      <mat-select [(value)]="startParams.playerNorth">
-        @for (p of playerTypes; track p) {
-          <mat-option [value]="p">{{ p }}</mat-option>
-        }
-      </mat-select>
-    </mat-form-field>
+        <mat-form-field>
+        <mat-label>Player North</mat-label>
+        <mat-select [(value)]="startParams.playerNorth">
+            @for (p of playerTypes; track p) {
+            <mat-option [value]="p">{{ p }}</mat-option>
+            }
+        </mat-select>
+        </mat-form-field>
 
-    <app-number-input [startValue]="startParams.seeds" label="seeds" [min]="1" [max]="20"
-                      (emitNumber)="startParams.seeds = $event" (emitError)="seedsValid = $event">
-    </app-number-input>
+        <app-number-input [startValue]="startParams.seeds" label="seeds" [min]="1" [max]="20"
+                        (emitNumber)="startParams.seeds = $event" (emitError)="seedsValid = $event">
+        </app-number-input>
 
-    <app-number-input [startValue]="startParams.pits" label="pits" [min]="2" [max]="14"
-                      (emitNumber)="startParams.pits = $event" (emitError)="pitsValid = $event">
-    </app-number-input>
+        <app-number-input [startValue]="startParams.pits" label="pits" [min]="2" [max]="14"
+                        (emitNumber)="startParams.pits = $event" (emitError)="pitsValid = $event">
+        </app-number-input>
 
-    <button mat-flat-button (click)="submitStartParams()" routerLink="/play"
-            [disabled]="!seedsValid || !pitsValid">
-      Start Playing
-    </button>
+        <button mat-flat-button (click)="submitStartParams()" routerLink="/play"
+                [disabled]="!seedsValid || !pitsValid">
+        Start Playing
+        </button>
 
-  </mat-card>
+    </mat-card>
+
+    <div class="about-link">
+        <a routerLink="/about">About this page</a>
+    </div>
+  </div>
 </div>

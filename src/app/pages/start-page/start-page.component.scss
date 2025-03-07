@@ -14,3 +14,12 @@ mat-card {
     align-items: center;
     gap: 3px;
 }
+
+.about-link {
+    margin-top: 10px;
+}
+
+.about-link a {
+    font-size: 16px;
+    color: #118bdd; // normal links are #0a5bcc
+}

@@ -13,8 +13,6 @@ import {
     ViewChildren,
     WritableSignal
 } from '@angular/core';
-import {MatButton} from "@angular/material/button";
-import {RouterLink} from "@angular/router";
 
 import {BoardPosition} from "../../../models/board-position.model";
 import {PlayerType} from "../../../models/player-type.enum";
@@ -29,8 +27,6 @@ import {StoneManagerComponent} from "./stone-manager/stone-manager.component";
     imports: [
         PitComponent,
         NgStyle,
-        MatButton,
-        RouterLink,
         StoneManagerComponent
     ],
     templateUrl: './board.component.html',

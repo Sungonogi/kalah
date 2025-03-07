@@ -75,6 +75,7 @@ export class BoardService {
         }
 
         if(this.animationTimeout !== undefined){
+            clearTimeout(this.animationTimeout);
             this.animationTimeout = undefined;
         }
     }
@@ -183,6 +184,15 @@ export class BoardService {
         const northUntouched = board.northPits.every((val, _, arr) => val === arr[0]);
         const storesUntouched = board.southStore === 0 && board.northStore === 0;
         return southUntouched && northUntouched && storesUntouched;
+    }
+
+    public pause() {
+        this.moveRequestSubscription?.unsubscribe();
+        this.moveRequestSubscription = undefined;
+    }
+
+    public unpause() {
+        this.checkAndPerformComMove();
     }
 
 }

@@ -1,9 +1,10 @@
-import {Component, effect, inject, ViewChild} from '@angular/core';
+import {Component, effect, inject, signal, ViewChild, WritableSignal} from '@angular/core';
 import {MatButton} from "@angular/material/button";
 import {MatDialog} from "@angular/material/dialog";
 import {Router, RouterLink} from "@angular/router";
 import {Observable} from "rxjs";
 
+import { environment as env} from '../../../environments/environment';
 import {BoardPosition} from "../../models/board-position.model";
 import {PlayerType} from "../../models/player-type.enum";
 import {BoardService} from "../../services/board.service";
@@ -34,21 +35,37 @@ export class GamePageComponent {
 
     private skipNaviWarning = false;
 
+    private currentlyInDialog: WritableSignal<boolean> = signal(false);
+    private shouldShowGameOver: WritableSignal<boolean> = signal(false);
+    
     constructor(
             private matDialog: MatDialog,
             private router: Router,
             private boardService: BoardService
     ) {
+        // detect gameOver and query it to show in some time
         effect(() => {
             const board = this.boardService.animatedBoardPosition();
             if(board.gameOver){
-                setTimeout(() => this.showGameOverDialog(board), 500);
+                setTimeout(() => this.shouldShowGameOver.set(true), env.gameOverModalTime);
+            }
+        });
+
+        // show gameOver as soon as all other dialogs are closed
+        effect(() => {
+            const shouldShowGameOver = this.shouldShowGameOver();
+            const currentlyInDialog = this.currentlyInDialog();
+            if(shouldShowGameOver && !currentlyInDialog){
+                this.showGameOverDialog(this.boardService.boardPosition());
+                this.shouldShowGameOver.set(false);
             }
         });
     }
     
     private restart(){
         this.skipNaviWarning = false;
+        this.shouldShowGameOver.set(false);
+        this.currentlyInDialog.set(false);
         this.boardComponent.resetBoard();
     }
 
@@ -77,11 +94,18 @@ export class GamePageComponent {
             text: 'Do you really want to restart the game?'
         };
 
+        this.boardService.pause();
+        this.currentlyInDialog.set(true);
+        
         const dialogRef = this.matDialog.open(WarningDialogComponent,{data});
+
         dialogRef.afterClosed().subscribe(result => {
             if (result) {
                 this.restart();
+            } else {
+                this.boardService.unpause();
             }
+            this.currentlyInDialog.set(false);
         });
     }
 
@@ -89,6 +113,7 @@ export class GamePageComponent {
     showNaviWarningDialog(): Observable<boolean> | boolean {
 
         if(this.skipNaviWarning || this.boardService.isBoardUntouched()){
+            this.boardService.resetCallbacks();
             return true;
         }
 
@@ -96,8 +121,21 @@ export class GamePageComponent {
             title: 'Warning',
             text: 'Do you really want to leave the game?'
         };
-        
-        return this.matDialog.open(WarningDialogComponent, {data}).afterClosed();
+
+        this.boardService.pause();
+        this.currentlyInDialog.set(true);
+
+        const result = this.matDialog.open(WarningDialogComponent, {data}).afterClosed();
+        result.subscribe(() => {
+            if(result) {
+                this.boardService.resetCallbacks();
+            } else {
+                this.boardService.unpause();
+            }
+            this.currentlyInDialog.set(false);
+        });
+
+        return result;
     }
 
 }

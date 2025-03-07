@@ -1,11 +1,10 @@
-import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
-import {forkJoin, Observable, of, timer} from 'rxjs';
-import {catchError,map} from 'rxjs/operators';
+import {forkJoin, Observable, timer} from 'rxjs';
+import {map} from 'rxjs/operators';
 
 import {environment as env} from '../../environments/environment';
 import {BoardPosition} from '../models/board-position.model';
-import {ComMoveRequest, ComMoveResponse} from '../models/COM.models';
+import {ComMoveRequest} from '../models/COM.models';
 import {PlayerType} from '../models/player-type.enum';
 import {WasmService} from './wasm.service';
 
@@ -14,7 +13,7 @@ import {WasmService} from './wasm.service';
     providedIn: 'root'
 })
 export class ComMoveService {
-    constructor(private wasmService: WasmService, private http: HttpClient) {}
+    constructor(private wasmService: WasmService) {}
 
     requestMove(boardPosition: BoardPosition, playerType: PlayerType): Observable<number | null> {
         const request: ComMoveRequest = {

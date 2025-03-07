@@ -4,7 +4,7 @@ import {MatDialog} from "@angular/material/dialog";
 import {Router, RouterLink} from "@angular/router";
 import {Observable} from "rxjs";
 
-import { environment as env} from '../../../environments/environment';
+import {environment as env} from '../../../environments/environment';
 import {BoardPosition} from "../../models/board-position.model";
 import {PlayerType} from "../../models/player-type.enum";
 import {BoardService} from "../../services/board.service";

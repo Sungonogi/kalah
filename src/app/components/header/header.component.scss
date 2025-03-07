@@ -21,12 +21,12 @@ h1 {
 }
 
 @media (max-width: 600px) {
-    button span {
+    .help-button-colored span {
         display: none;
     }
 }
 
-button {
+.help-button-colored {
     background: var(--pink);
     color: #5b005b;
     font-weight: bold;

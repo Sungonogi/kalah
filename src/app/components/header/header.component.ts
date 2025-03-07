@@ -1,9 +1,10 @@
 import {NgIf} from "@angular/common";
 import {Component, HostListener} from '@angular/core';
-import {MatButton, MatFabButton, MatMiniFabButton} from "@angular/material/button";
+import {MatButton, MatFabButton, MatIconButton, MatMiniFabButton} from "@angular/material/button";
 import {MatIcon} from "@angular/material/icon";
+import {MatMenuModule} from "@angular/material/menu";
 import {MatTooltip} from "@angular/material/tooltip";
-import {Router, RouterLink} from "@angular/router";
+import {RouterLink} from "@angular/router";
 
 @Component({
     selector: 'app-header',
@@ -15,23 +16,18 @@ import {Router, RouterLink} from "@angular/router";
         MatFabButton,
         NgIf,
         MatMiniFabButton,
-        MatTooltip
+        MatTooltip,
+        MatMenuModule,
+        MatIconButton
     ],
     templateUrl: './header.component.html',
     styleUrl: './header.component.scss'
 })
 export class HeaderComponent {
 
-    showHelp = false;
     extended = false;
 
-    constructor(router: Router) {
-
-        this.showHelp = router.url !== '/tutorial';
-        router.events.subscribe(() => {
-            this.showHelp = router.url !== '/tutorial';
-        });
-
+    constructor() {
         this.onResize();
     }
 

@@ -9,15 +9,28 @@
     so I did it manually
     -->
 
-    <button *ngIf="showHelp && !extended" mat-mini-fab routerLink="/tutorial"
-            matTooltip="How to Play" aria-labelledby="How to Play">
-      <mat-icon fontIcon="help"></mat-icon>
+    <button *ngIf="!extended" mat-mini-fab [matMenuTriggerFor]="menu" class="help-button-colored" matTooltip="Menu" aria-labelledby="Menu">
+        <mat-icon fontIcon="more_vert"></mat-icon>
     </button>
 
-    <button *ngIf="showHelp && extended" mat-flat-button routerLink="/tutorial">
-      <mat-icon fontIcon="help"></mat-icon>
-      <span>How to Play</span>
+    <button *ngIf="extended" mat-flat-button [matMenuTriggerFor]="menu" class="help-button-colored">
+        <mat-icon fontIcon="more_vert"></mat-icon>
+        <span>Menu</span>
     </button>
 
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item routerLink="/tutorial">
+        <mat-icon>menu_book</mat-icon>
+        <span>Kalah Rules</span>
+      </button>
+      <button mat-menu-item routerLink="/about">
+        <mat-icon>info-outline</mat-icon>
+        <span>About this page</span>
+      </button>
+      <button mat-menu-item routerLink="/license">
+        <mat-icon>attribution</mat-icon>
+        <span>License and Attribution</span>
+      </button>
+    </mat-menu>
   </div>
 </header>

@@ -1,11 +1,12 @@
-h1, h2 {
+h1, h2, h3 {
     text-align: left;
     margin-top: 0;
     margin-bottom: 10px;
 }
 
+
 p {
-    margin: 0 0 20px;
+    margin: 0 0 10px;
 }
 
 ul {
@@ -16,6 +17,10 @@ ul {
 p:last-child {
     margin-bottom: 0;
     margin-left: 0;
+}
+
+ul:last-child {
+    margin-bottom: 0;
 }
 
 a {

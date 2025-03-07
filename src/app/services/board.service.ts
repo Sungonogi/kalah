@@ -188,10 +188,10 @@ export class BoardService {
 
     public pause() {
         this.moveRequestSubscription?.unsubscribe();
-        this.moveRequestSubscription = undefined;
     }
 
     public unpause() {
+        this.moveRequestSubscription = undefined;
         this.checkAndPerformComMove();
     }
 

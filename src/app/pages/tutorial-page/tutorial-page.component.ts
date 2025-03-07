@@ -6,6 +6,8 @@ import {MatFormField, MatLabel} from "@angular/material/form-field";
 import {MatSelect} from "@angular/material/select";
 import {RouterLink} from "@angular/router";
 
+import {CenteredCardComponent} from "../../components/centered-card/centered-card.component";
+
 
 @Component({
     selector: 'app-tutorial-page',
@@ -17,7 +19,8 @@ import {RouterLink} from "@angular/router";
         MatLabel,
         MatOption,
         MatSelect,
-        RouterLink
+        RouterLink,
+        CenteredCardComponent
     ],
     templateUrl: './tutorial-page.component.html',
     styleUrl: './tutorial-page.component.scss'

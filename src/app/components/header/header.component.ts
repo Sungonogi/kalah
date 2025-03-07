@@ -13,12 +13,10 @@ import {RouterLink} from "@angular/router";
         RouterLink,
         MatButton,
         MatIcon,
-        MatFabButton,
         NgIf,
         MatMiniFabButton,
         MatTooltip,
         MatMenuModule,
-        MatIconButton
     ],
     templateUrl: './header.component.html',
     styleUrl: './header.component.scss'

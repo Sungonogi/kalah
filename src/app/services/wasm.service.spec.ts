@@ -32,9 +32,15 @@ describe("WasmService", () => {
     });
 
     it("should return the correct move for the testcases sequentially", async () => {
-        for (const testCase of testCases) {
+
+        const testPlayers = testCases.flatMap((testCase) => [
+            {testCase, player: PlayerType.HardCom},
+            {testCase, player: PlayerType.Stickfish}
+        ]);
+        
+        for (const {testCase, player} of testPlayers) {
             const request: ComMoveRequest = {
-                playerType: PlayerType.HardCom,
+                playerType: player,
                 boardPosition: testCase.boardPosition,
                 timeLimit: 1000,
             };
@@ -64,11 +70,11 @@ describe("WasmService", () => {
     });
 
     // mainly for measuring performance
-    it("should be somewhat fast", async () => {
+    it("HardCom should be somewhat fast", async () => {
         const request: ComMoveRequest = {
-            playerType: PlayerType.HardCom,
+            playerType: PlayerType.Stickfish,
             boardPosition: mockBoardPosition,
-            maxDepth: 12,
+            maxDepth: 11,
         };
 
         const startTime = new Date().getTime();
@@ -76,7 +82,26 @@ describe("WasmService", () => {
         await new Promise<void>((resolve) => {
             service.askForMove(request).subscribe(() => {
                 const time = new Date().getTime() - startTime;
-                console.log(`Time taken by minMax: ${time}ms`);
+                console.log(`Time taken by HardCom: ${time}ms`);
+                expect(time).toBeLessThan(1000);
+                resolve();
+            });
+        });
+    });
+
+    it("Stickfish should be somewhat fast", async () => {
+        const request: ComMoveRequest = {
+            playerType: PlayerType.Stickfish,
+            boardPosition: mockBoardPosition,
+            maxDepth: 11,
+        };
+
+        const startTime = new Date().getTime();
+
+        await new Promise<void>((resolve) => {
+            service.askForMove(request).subscribe(() => {
+                const time = new Date().getTime() - startTime;
+                console.log(`Time taken by Stickfish: ${time}ms`);
                 expect(time).toBeLessThan(1000);
                 resolve();
             });

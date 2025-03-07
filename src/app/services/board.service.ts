@@ -191,6 +191,7 @@ export class BoardService {
     }
 
     public unpause() {
+        // we have to set it to undefined here because otherwise the animation (which we want to go through) could lead to the next com move
         this.moveRequestSubscription = undefined;
         this.checkAndPerformComMove();
     }

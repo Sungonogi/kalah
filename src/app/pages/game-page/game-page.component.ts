@@ -125,8 +125,8 @@ export class GamePageComponent {
         this.boardService.pause();
         this.currentlyInDialog.set(true);
 
-        const result = this.matDialog.open(WarningDialogComponent, {data}).afterClosed();
-        result.subscribe(() => {
+        const ret = this.matDialog.open(WarningDialogComponent, {data}).afterClosed();
+        ret.subscribe((result) => {
             if(result) {
                 this.boardService.resetCallbacks();
             } else {
@@ -135,7 +135,7 @@ export class GamePageComponent {
             this.currentlyInDialog.set(false);
         });
 
-        return result;
+        return ret;
     }
 
 }

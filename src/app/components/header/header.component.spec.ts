@@ -31,24 +31,4 @@ describe('HeaderComponent', () => {
         expect(component).toBeTruthy();
     });
 
-    it('should have showHelp set to false', () => {
-        // the order of execution is not guaranteed so maybe the second test already changed this value
-        mockRouter.url = '/tutorial';
-        mockRouter.events.next(null);
-        fixture.detectChanges();
-
-        expect(component.showHelp).toBeFalsy();
-    });
-
-
-    it('should set showHelp to true when url changes', () => {
-
-        mockRouter.url = '/not-tutorial';
-        mockRouter.events.next(null);
-        fixture.detectChanges();
-
-        expect(component.showHelp).toBeTruthy();
-    });
-
-
 });

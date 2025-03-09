@@ -1,4 +1,5 @@
 import {ComponentFixture, TestBed} from "@angular/core/testing";
+import {ActivatedRoute} from '@angular/router';
 
 import {CenteredCardComponent} from "./centered-card.component";
 
@@ -9,6 +10,7 @@ describe("CenteredCardComponent", () => {
     beforeEach(async () => {
         await TestBed.configureTestingModule({
             imports: [CenteredCardComponent],
+            providers: [{provide: ActivatedRoute, useValue: {}}]
         }).compileComponents();
 
         fixture = TestBed.createComponent(CenteredCardComponent);

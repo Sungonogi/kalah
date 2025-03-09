@@ -25,7 +25,7 @@ For more details on the rules, you can refer to the ["How to Play"](https://ingo
 
 ## Documentation
 
-For a detailed documentation on my design choices and the architecture of this repository you can check out the [DOCUMENTATION](DOCUMENTATION).
+For a detailed documentation on my design choices and the architecture of this repository you can check out the [DOCUMENTATION](DOCUMENTATION.md).
 
 ## Credits
 

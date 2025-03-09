@@ -1,6 +1,6 @@
 import {TestBed} from "@angular/core/testing";
 
-import {testCases} from "../mocks/minMax";
+import {testCases} from "../mocks/min-max";
 import {mockBoardPosition} from "../mocks/mocks";
 import {ComMoveRequest, ComMoveResponse} from "../models/COM.models";
 import {PlayerType} from "../models/player-type.enum";

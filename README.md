@@ -23,6 +23,10 @@ For more details on the rules, you can refer to the ["How to Play"](https://ingo
 ![alt text](assets/image-1.png)
 
 
+## Documentation
+
+For a detailed documentation on my design choices and the architecture of this repository you can check out the [DOCUMENTATION](DOCUMENTATION).
+
 ## Credits
 
 This website is a personal project, and while it does not require any licensing, I want to acknowledge some of the tools and resources that helped me make it possible. See on the [website](https://sungonogi.github.io/kalah/credits).

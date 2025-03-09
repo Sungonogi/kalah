@@ -43,9 +43,9 @@ The most important commands (found in `package.json`):
 - **Com difficulty levels**:
   - **Easy Com**: Returns a random move
   - **Medium Com**: Picks the move that maximizes **immediate points** (but does not plan ahead)
-  - **Hard Com and Stickfish**: Use **minimax with [alpha-beta pruning](https://en.wikipedia.org/wiki/Alpha%E2%80%93beta_pruning)** and [iterative deepening](https://en.wikipedia.org/wiki/Iterative_deepening_depth-first_search) until the time limit is reached
+  - **Hard Com and Stickfish**: Use **minimax with [alpha-beta pruning](https://en.wikipedia.org/wiki/Alpha%E2%80%93beta_pruning)** and **[iterative deepening](https://en.wikipedia.org/wiki/Iterative_deepening_depth-first_search)** until the time limit is reached
   - **Hard Com**: Optimizes for the **best store difference** `(our_store - their_store)`.
-  - **Stickfish AI**: Uses a more advanced **evaluation function** (not just store difference) and smarter **move ordering** to significantly improve the search speed
+  - **Stickfish AI**: Uses a more advanced **evaluation function** (not just store difference) and smarter **move ordering**, which significantly improve the search speed
 
 ### **Development Approach**
 - I tested **different implementations** for speed and efficiency (e.g., **fixed-size arrays** in the board struct were faster than using `std::vector`).

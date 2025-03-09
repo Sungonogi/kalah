@@ -1,6 +1,5 @@
 
 # ignore the json library that is a huge cpp file
+*.hpp linguist-vendored
 
 # ignore test files that are copies of others with only slight modifications
-src/cpp/engine-testing/engine-versions/ linguist-vendored
-src/cpp/engine-testing/board/ linguist-vendored

@@ -13,8 +13,8 @@ This project consists of **two parts**:
 - A challenge was making the board look good for all possible **pits** values (2-14)
 
 ### **Architecture Decisions**
-- I used **Angular 18 with Signals** and experimented with the[*Signal Store](https://ngrx.io/guide/signals/signal-store) by NgRx to track game parameters (seed count, pits, player types)
-- I created **general components** where possible, such as the **number input fields** (with the increment/decrement buttons) and the **centered card** used for the rules/credits/about pages
+- I used [Angular 18](https://v18.angular.dev/overview) with Signals and experimented with the [Signal Store](https://ngrx.io/guide/signals/signal-store) by NgRx to track game parameters (seed count, pits, player types)
+- I created **general components** where possible, such as the **number input fields** (with the increment/decrement buttons) and the **centered cards** used for the rules/credits/about pages
 - **GitHub Actions** were used mainly as a learning experience, automating **tests and linting** in the pipeline
 - For development, I followed a **single-branch workflow (`main`)**, with a separate branch for **GitHub Pages deployment**
 
@@ -25,8 +25,8 @@ This project consists of **two parts**:
 - These tests are located in `wasm.service.spec.ts` and the test data is in `min-max.ts`
 
 ### **Lessons Learned & Future Improvements**
-- **Using an HTML `<canvas>`** for the board would have been **easier** than managing standard HTML elements
-- **Managing board state** with resetting, doing computer moves etc. got pretty complicated and **Redux-based state management** (like the [Ngrx Store](https://ngrx.io/guide/store)) could have simplified this 
+- **Using an HTML `<canvas>`** for the board would have been easier than managing **standard HTML elements**
+- **Managing board state** with resetting, doing Com moves etc. got pretty complicated and **Redux-based state management** (like the [Ngrx Store](https://ngrx.io/guide/store)) could have simplified this 
 
 ### **Building the Project**
 The most important commands (found in `package.json`):

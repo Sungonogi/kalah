@@ -9,7 +9,7 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "lint": "ng lint",
-    "deploy": "ng deploy --base-href=/fe-kalah/",
+    "deploy": "ng deploy --base-href=/kalah/",
     "wasm:build": "emcc -O2 -lembind -o public/engine.js src/cpp/engine.cpp src/cpp/board-position.cpp src/cpp/stickfish.cpp src/cpp/hard-com.cpp"
   },
   "private": true,

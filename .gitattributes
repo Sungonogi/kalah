@@ -3,3 +3,5 @@
 *.hpp linguist-vendored
 
 # ignore test files that are copies of others with only slight modifications
+src/cpp/engine-testing/engine-versions/**.cpp linguist-vendored
+src/cpp/engine-testing/board/**.cpp linguist-vendored

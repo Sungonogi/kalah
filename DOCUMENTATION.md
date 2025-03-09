@@ -26,7 +26,7 @@ This project consists of **two parts**:
 
 ### **Lessons Learned & Future Improvements**
 - **Using an HTML `<canvas>`** for the board would have been **easier** than managing standard HTML elements
-- **Managing board state** (resets, AI moves, etc.) became quite complex; a **Redux-based state management solution** (like the NgRx Store) could have simplified this
+- **Managing board state** with resetting, doing computer moves etc. got pretty complicated and **Redux-based state management** (like the [Ngrx Store](https://ngrx.io/guide/store)) could have simplified this 
 
 ### **Building the Project**
 The most important commands (found in `package.json`):
@@ -43,15 +43,14 @@ The most important commands (found in `package.json`):
 - **Com difficulty levels**:
   - **Easy Com**: Returns a random move
   - **Medium Com**: Picks the move that maximizes **immediate points** (but does not plan ahead)
-  - **Hard Com and Stickfish**: Use **minimax with alpha-beta pruning** with iterative deepening until the time limit is reached
+  - **Hard Com and Stickfish**: Use **minimax with [alpha-beta pruning](https://en.wikipedia.org/wiki/Alpha%E2%80%93beta_pruning)** and [iterative deepening](https://en.wikipedia.org/wiki/Iterative_deepening_depth-first_search) until the time limit is reached
   - **Hard Com**: Optimizes for the **best store difference** `(our_store - their_store)`.
   - **Stickfish AI**: Uses a more advanced **evaluation function** (not just store difference) and smarter **move ordering** to significantly improve the search speed
 
 ### **Development Approach**
 - I tested **different implementations** for speed and efficiency (e.g., **fixed-size arrays** in the board struct were faster than using `std::vector`).
 - I  let different versions of the Coms play against each other (`battle-simulator.cpp`) to compare their strength
-- To benchmark my best C++ Com (**Engine**) vs. my older Java Program (**Stickfish**), I built a simple vanilla JS frontend in the `simulation` folder, which calls both the WASM Com and a simple Java api I made for the old Stickfish
-  _(See the example picture below)_  
+- To benchmark my best C++ Com (**Engine**) vs. my older Java Program (**Stickfish**), I built a simple vanilla JS frontend in the `simulation` folder, which calls both the WASM Com and a simple Java api I made for the old Stickfish. When a game is over the amount of wins etc. is **instantly** updated  _(See the picture below)_  
 ![image of simulation](assets/image.png)
 
 ### **Building the C++ Code**

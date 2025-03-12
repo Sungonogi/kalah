@@ -49,7 +49,7 @@ export class GamePageComponent {
             if(board.gameOver){
                 setTimeout(() => this.shouldShowGameOver.set(true), env.gameOverModalTime);
             }
-        });
+        }, {allowSignalWrites: true});
 
         // show gameOver as soon as all other dialogs are closed
         effect(() => {
@@ -59,7 +59,7 @@ export class GamePageComponent {
                 this.showGameOverDialog(this.boardService.boardPosition());
                 this.shouldShowGameOver.set(false);
             }
-        });
+        }, {allowSignalWrites: true});
     }
     
     private restart(){

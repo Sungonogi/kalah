@@ -46,14 +46,7 @@
                   "maximumError": "2MB"
                 }
               ],
-              "outputHashing": "all",
-              "assets": [
-                {
-                  "glob": "**/*",
-                  "input": "public",
-                  "ignore": ["sounds/licensed/**"]
-                }
-              ]
+              "outputHashing": "all"
             },
             "development": {
               "optimization": false,

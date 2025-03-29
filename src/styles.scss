@@ -1,14 +1,16 @@
-/* You can add global styles to this file, and also import other style files */
-
 // global variables
 :root {
-    --purple: #a829c3; // Purple
+    --purple: #a829c3; 
     --dark-purple: #5f00c0;
-    --blue: #58738e; // Slate blue
+    --blue: #58738e;
     --gray: #2c2c2c;
     --black: #161215;
     --pink: #ffabdc;
 }
+
+/* standard variables don't work for @media queries */
+$max-height-threshold: 400px;
+$max-width-threshold: 600px;
 
 html, body {
     height: 100%;

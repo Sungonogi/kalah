@@ -1,3 +1,5 @@
+@import '../../../styles.scss';
+
 $padding : min(1.5vw, 20px);
 .outer-board {
     width: calc(100vw - 2 * $padding);
@@ -5,7 +7,7 @@ $padding : min(1.5vw, 20px);
     padding: $padding;
 }
 
-@media (max-width: 600px) {
+@media (max-width: $max-width-threshold) {
     .outer-board {
         width: 100vw;
         background: none;
@@ -16,7 +18,15 @@ $padding : min(1.5vw, 20px);
 
 .game-button-container {
     // set it to have the same distance from the left as the board inside the outer-board
-    margin: 20px;
+    margin-left: 15px;
+    margin-top: 15px;
     display: flex;
     gap: 20px;
+}
+
+@media (max-height: $max-height-threshold) {
+    .game-button-container {
+        margin-top: 10px;
+        margin-left: 10px;
+    }
 }

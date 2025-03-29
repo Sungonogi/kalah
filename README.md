@@ -1,7 +1,6 @@
-# Kalah Game
-
 [![CI](https://github.com/Sungonogi/kalah/actions/workflows/ci.yml/badge.svg)](https://github.com/Sungonogi/kalah/actions/workflows/ci.yml)
 
+# Kalah Game
 
 Kalah is a traditional two-player strategy board game, also known as "Mancala." This project is a digital version of the game, created for fun, with both a computer opponent and a human player mode. Check it out [here](https://sungonogi.github.io/kalah/).
 
